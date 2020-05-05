@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorBlue"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_ques_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_circle"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:text="01"
+        android:textColor="@color/colorLightWhite"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/iv_ques_no_pointer"
+
+        android:layout_marginTop="@dimen/_1sdp"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="@dimen/_1sdp"/>
+</LinearLayout>
+<!--    android:src="@color/colorGreen"-->

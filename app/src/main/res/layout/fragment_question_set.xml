@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".quizz.view.QuestionSetFragment">
+
+   <RelativeLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="Quiz 1"
+            android:textColor="@color/colorGrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ibtn_close"
+            android:padding="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_more" />
+
+    </RelativeLayout>
+<!--    header-->
+    <ViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header">
+<!--       layout 1 -->
+        <include
+            android:id="@+id/ll_quiz_discription_i"
+            layout="@layout/layout_quiz_discription_i"/>
+<!--       layout 2 -->
+        <include
+            android:id="@+id/ll_quiz_discription_ii"
+            layout="@layout/layout_quiz_discription_ii"/>
+
+    </ViewFlipper>
+    <!--    body  -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_question_set"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/view_flipper"
+        tools:itemCount="2"
+        tools:listitem="@layout/list_item_question_set" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fbtn_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:paddingStart="0dp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Finish"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:visibility="invisible"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:backgroundTint="@color/colorLightBlue"
+        app:elevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/colorWhite" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

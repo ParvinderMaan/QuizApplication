@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">आर्मी ज्ञान</string>
+    <string name="sample_about_us"><![CDATA[The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another.\n\n The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another. ]]></string>
+
+    <string name="title_about_us">अबाउट अस्</string>
+    <string name="title_chapters">चैप्टर</string>
+    <string name="title_settings">सेटिंग</string>
+    <string name="title_notification">नोटिफ़िकेशन</string>
+    <string name="title_my_profile">माई प्रोफाइल</string>
+    <string name="title_study_material">स्टडी मटिरीअल</string>
+    <string name="title_play_quiz">प्ले क्विज़</string>
+    <string name="title_welcome">स्वागत हे,</string>
+    <string name="title_welcome_ii">बूस्ट यॉर नॉलिज् </string>
+    <string name="hint_usr_name">यूज़रनेम </string>
+    <string name="hint_usr_email">ईमेल</string>
+    <string name="hint_usr_gender">जेंडर</string>
+    <string name="hint_usr_type">यूज़र टाइप</string>
+    <string name="action_edit">इडिट</string>
+    <string name="action_save">सेव </string>
+    <string name="title_select_quiz">सिलेक्ट क्विज़</string>
+    <string name="title_result">यॉर रिज़ल्ट</string>
+    <string name="title_over_all_performance">ओवर्ऑल पर्फ़ॉर्मन्स </string>
+    <string name="title_total_ques">टोटल क्वेस्चॅन :</string>
+    <string name="title_total_ques_attpmt">टोटल क्वेस्चॅन अटिम्प्टड :</string>
+    <string name="title_total_correct_ans">टोटल करेक्ट ऐन्सर :</string>
+    <string name="title_total_wrong_ans">टोटल रॉन्ग ऐन्सर :</string>
+    <string name="title_ur_score">यॉर स्कोर (%) :</string>
+    <string name="action_ok">ओके</string>
+    <string name="action_show_answer">शो ऐन्सर</string>
+    <string name="title_language">लेंग्ग्वज</string>
+    <string name="title_term_and_condition">टर्म ऐन्ड कंडीशन </string>
+    <string name="title_invite_friend">इनवाइट अ फ्रेन्ड</string>
+    <string name="title_sign_out">साइन आउट</string>
+    <string name="title_english">इंग्लिश </string>
+    <string name="title_hindi">हिंदी</string>
+    <string name="title_no_of_ques">नम्बर ऑफ क्वेस्चॅन :</string>
+    <string name="title_level">लेवॅल :</string>
+    <string name="title_show_ques">शो क्वेस्चॅन.</string>
+    <string name="title_change_language">परिवर्तनों को प्रतिबिंबित करने के लिए ऐप को पुनः आरंभ करने की आवश्यकता है !</string>
+    <string name="action_yes">हाँ</string>
+    <string name="action_no">नहीं</string>
+    <string name="title_log_out">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
+    <string name="title_show_results">परिणाम दिखाओ</string>
+    <string name="title_restart">पुनर्प्रारंभ करें</string>
+    <string name="title_quit_quiz">क्विज से बाहर निकलें</string>
+    <string name="title_slogan">सेवा परमो धर्म</string>
+    <string name="action_back">वापस</string>
+    <string name="alert_no_category">कोई श्रेणी नहीं</string>
+    <string name="alert_no_chapters">कोई अध्याय नहीं</string>
+    <string name="alert_no_quiz">कोई क्विज़ नहीं</string>
+
+</resources>

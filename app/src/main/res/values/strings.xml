@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Army Gyan</string>
+
+    <string name="sample_about_us"><![CDATA[The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another.\n\n The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another. ]]></string>
+    <string name="title_about_us">About Us</string>
+    <string name="title_chapters">Chapters</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_notification">Notification</string>
+    <string name="title_my_profile">My Profile</string>
+    <string name="title_study_material">Study Material</string>
+    <string name="title_play_quiz">Play Quiz</string>
+    <string name="title_welcome">Welcome,</string>
+    <string name="title_welcome_ii">boost your knowledge</string>
+    <string name="hint_usr_name">Username</string>
+    <string name="hint_usr_email">Email</string>
+    <string name="hint_usr_gender">Gender</string>
+    <string name="hint_usr_type">User type</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_save">Save</string>
+    <string name="title_select_quiz">Select Quiz</string>
+    <string name="title_result">Your Result</string>
+    <string name="title_over_all_performance">Overall performance</string>
+    <string name="title_total_ques">Total Questions :</string>
+    <string name="title_total_ques_attpmt">Total Questions attempted :</string>
+    <string name="title_total_correct_ans">Total Correct Answers :</string>
+    <string name="title_total_wrong_ans">Total Wrong Answers :</string>
+    <string name="title_ur_score">Your Score (in %) :</string>
+    <string name="action_ok">OK</string>
+    <string name="action_show_answer">Show Answer</string>
+    <string name="title_language">Language</string>
+    <string name="title_term_and_condition">Terms and conditions</string>
+    <string name="title_invite_friend">Invite a friend</string>
+    <string name="title_sign_out">Sign out</string>
+    <string name="title_english">English</string>
+    <string name="title_hindi">Hindi</string>
+    <string name="title_no_of_ques">No of Questions :</string>
+    <string name="title_level">Level :</string>
+    <string name="title_show_ques">Show Q.</string>
+    <string name="title_change_language">App needs to be restarted to reflect changes !</string>
+    <string name="action_yes">YES</string>
+    <string name="action_no">NO</string>
+    <string name="title_log_out">Are you sure you would like to logout ?</string>
+    <string name="title_show_results">Show Results</string>
+    <string name="title_restart">Restart</string>
+    <string name="title_quit_quiz">Quit Quiz</string>
+
+    <string name="title_slogan">Service is our duty</string>
+    <string name="action_back">Back</string>
+    <string name="alert_no_category">No Category</string>
+    <string name="alert_no_chapters">No Chapters</string>
+    <string name="alert_no_quiz">No Quiz</string>
+
+</resources>

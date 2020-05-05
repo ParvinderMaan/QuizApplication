@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+    app:cardBackgroundColor="@color/colorBlue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    card_view:cardCornerRadius="@dimen/_15sdp"
+    card_view:cardElevation="0dp"
+    app:cardElevation="0dp"
+    android:layout_gravity="center"
+    card_view:contentPadding="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1AFFFFFF">
+
+        <TextView
+            android:id="@+id/tv_ques_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="1"
+            android:text="Question 1"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_category_name_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="1"
+            android:text="/10"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_ques_no"
+            app:layout_constraintStart_toEndOf="@+id/tv_ques_no" />
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/dotted_thin_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_name_" />
+
+        <TextView
+            android:id="@+id/tv_ques_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="5"
+            android:minLines="1"
+            android:paddingBottom="@dimen/_16sdp"
+            android:text="कैसे दिशामे एसलिये विनिमय सक्षम संसाध आवश्यक सुविधा पासपाई सहित द्वारा वास्तविक प्रव्रुति सके"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_line" />
+
+
+        <TextView
+            android:id="@+id/tv_ans_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/_5sdp"
+            android:text="कैसे दिशामे एसलिये विनिमय सक्षम"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ques_name" />
+
+
+        <TextView
+            android:id="@+id/tv_ans_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/_5sdp"
+            android:text="कैसे दिशामे एसलिये विनिमय सक्षम"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ans_one" />
+
+        <TextView
+            android:id="@+id/tv_ans_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/_5sdp"
+            android:text="कैसे दिशामे एसलिये विनिमय सक्षम"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ans_two" />
+
+        <TextView
+            android:id="@+id/tv_ans_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="0sp"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/_5sdp"
+            android:text="कैसे दिशामे एसलिये विनिमय सक्षम"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ans_three" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ans_four" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_right_cut"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_line" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_left_cut"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_line" />
+
+        <TextView
+            android:id="@+id/iv_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_circle_curvy"
+            android:gravity="center"
+            android:text="A"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_one"
+            app:layout_constraintEnd_toStartOf="@+id/tv_ans_one"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_one" />
+
+        <TextView
+            android:id="@+id/iv_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_circle_curvy"
+            android:gravity="center"
+            android:text="B"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_two"
+            app:layout_constraintEnd_toStartOf="@+id/tv_ans_two"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_two" />
+
+        <TextView
+            android:id="@+id/iv_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_circle_curvy"
+            android:gravity="center"
+            android:text="C"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_three"
+            app:layout_constraintEnd_toStartOf="@+id/tv_ans_three"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_three" />
+
+
+        <TextView
+            android:id="@+id/iv_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_circle_curvy"
+            android:elevation="0dp"
+            android:gravity="center"
+            android:text="D"
+            android:textColor="@color/colorLightWhite"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_four"
+            app:layout_constraintEnd_toStartOf="@+id/tv_ans_four"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_four" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbtn_ans_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:visibility="invisible"
+            android:src="@drawable/ic_check"
+            app:backgroundTint="@color/colorLightBlue"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_one"
+            app:layout_constraintStart_toEndOf="@+id/tv_ans_one"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_one"
+            app:tint="@android:color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbtn_ans_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_check"
+            android:visibility="invisible"
+            app:backgroundTint="@color/colorLightBlue"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_two"
+            app:layout_constraintStart_toEndOf="@+id/tv_ans_two"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_two"
+            app:tint="@android:color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbtn_ans_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_check"
+            android:visibility="invisible"
+            app:backgroundTint="@color/colorLightBlue"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_three"
+            app:layout_constraintStart_toEndOf="@+id/tv_ans_three"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_three"
+            app:tint="@android:color/white" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbtn_ans_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_check"
+            android:visibility="invisible"
+            app:backgroundTint="@color/colorLightBlue"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ans_four"
+            app:layout_constraintStart_toEndOf="@+id/tv_ans_four"
+            app:layout_constraintTop_toTopOf="@+id/tv_ans_four"
+            app:rippleColor="@color/colorWhite"
+            app:tint="@android:color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
+
