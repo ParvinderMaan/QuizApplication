@@ -74,7 +74,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorLightBlue"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -91,7 +91,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorLightBlue"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -2,10 +2,10 @@ package com.app.quiz
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import com.app.quiz.annotation.FragmentType
 import com.app.quiz.helper.LocaleHelper
@@ -17,6 +17,7 @@ import com.app.quiz.miscellaneous.view.SplashFragment
 import com.app.quiz.miscellaneous.view.TermAndConditionFragment
 import com.app.quiz.notification.view.NotificationFragment
 import com.app.quiz.profile.view.ProfileFragment
+import com.app.quiz.quizz.view.AnswerFragment
 import com.app.quiz.quizz.view.QuestionSetFragment
 import com.app.quiz.quizz.view.QuizCategoryFragment
 import com.app.quiz.quizz.view.ScoreCardFragment
@@ -45,18 +46,12 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
         when (tag) {
             FragmentType.SPLASH_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fl_container, SplashFragment.newInstance())
-                    .addToBackStack(FragmentType.SPLASH_FRAGMENT)
+                    .replace(R.id.fl_container, SplashFragment.newInstance())  // #
+                    .addToBackStack(FragmentType.SPLASH_FRAGMENT)              //
                     .commitAllowingStateLoss()
             }
             FragmentType.SIGN_IN_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, SignInFragment.newInstance())
                     .addToBackStack(FragmentType.SIGN_IN_FRAGMENT)
                     .commit()
@@ -64,24 +59,12 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
             }
             FragmentType.HOME_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, HomeFragment.newInstance())
                     .addToBackStack(FragmentType.HOME_FRAGMENT)
                     .commit()
             }
             FragmentType.SETTING_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, SettingFragment.newInstance())
                     .addToBackStack(FragmentType.SETTING_FRAGMENT)
                     .commit()
@@ -89,12 +72,6 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
             }
             FragmentType.PROFILE_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, ProfileFragment.newInstance())
                     .addToBackStack(FragmentType.PROFILE_FRAGMENT)
                     .commit()
@@ -102,12 +79,6 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
             }
             FragmentType.ABOUT_US_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, AboutUsFragment.newInstance())
                     .addToBackStack(FragmentType.ABOUT_US_FRAGMENT)
                     .commit()
@@ -115,12 +86,6 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
             }
             FragmentType.NOTIFICATION_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, NotificationFragment.newInstance())
                     .addToBackStack(FragmentType.NOTIFICATION_FRAGMENT)
                     .commit()
@@ -128,98 +93,56 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
             }
             FragmentType.STUDY_MATERIAL_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, StudyMaterialFragment.newInstance())
                     .addToBackStack(FragmentType.STUDY_MATERIAL_FRAGMENT )
                     .commit()
 
             }
-
             FragmentType.CHAPTER_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
-                    .replace(R.id.fl_container, ChapterFragment.newInstance())
+                    .replace(R.id.fl_container, ChapterFragment.newInstance(payload))
                     .addToBackStack(FragmentType.CHAPTER_FRAGMENT)
                     .commit()
 
             }
-
             FragmentType.CHAPTER_DETAIL_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
-                    .replace(R.id.fl_container, ChapterDetailFragment.newInstance())
+                    .replace(R.id.fl_container, ChapterDetailFragment.newInstance(payload))
                     .addToBackStack(FragmentType.CHAPTER_DETAIL_FRAGMENT)
                     .commit()
 
             }
             FragmentType.QUESTION_SET_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
-                    .replace(R.id.fl_container, QuestionSetFragment.newInstance())
+                    .replace(R.id.fl_container, QuestionSetFragment.newInstance(payload))
                     .addToBackStack(FragmentType.QUESTION_SET_FRAGMENT)
                     .commit()
 
             }
-
             FragmentType.SCORECARD_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.enter_from_right,
-                        R.anim.exit_to_left,
-                        R.anim.enter_from_left,
-                        R.anim.exit_to_right
-                    )
-                    .replace(R.id.fl_container, ScoreCardFragment.newInstance(""))
+                    .replace(R.id.fl_container, ScoreCardFragment.newInstance(payload))
                     .addToBackStack(FragmentType.SCORECARD_FRAGMENT)
                     .commit()
             }
             FragmentType.QUIZ_CATEGORY_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, QuizCategoryFragment.newInstance())
                     .addToBackStack(FragmentType.QUIZ_CATEGORY_FRAGMENT)
                     .commit()
             }
-
             FragmentType.TERM_CONDITION_FRAGMENT -> {
                 supportFragmentManager.beginTransaction()
-//                    .setCustomAnimations(
-//                        R.anim.enter_from_right,
-//                        R.anim.exit_to_left,
-//                        R.anim.enter_from_left,
-//                        R.anim.exit_to_right
-//                    )
                     .replace(R.id.fl_container, TermAndConditionFragment.newInstance())
                     .addToBackStack(FragmentType.TERM_CONDITION_FRAGMENT)
                     .commit()
             }
-
-            else ->{}
+            FragmentType.SHOW_ANSWER -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_container, AnswerFragment.newInstance(payload))
+                    .addToBackStack(FragmentType.SHOW_ANSWER)
+                    .commit()
+            }
         }
     }
 
@@ -249,8 +172,16 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
 
     }
 
+    override fun shareApp() {
+        ShareCompat.IntentBuilder.from(this)
+            .setType("text/plain")
+            .setChooserTitle("Check out ")
+            .setText("https://play.google.com/store/apps/details?id=" + packageName)
+            .startChooser()
+    }
 
-    fun onBackPressDoubleClick(){
+
+    private fun onBackPressDoubleClick(){
         if (backPressedTwice) finish()
 
         backPressedTwice = true;
@@ -280,3 +211,8 @@ class MainActivity : AppCompatActivity(), HomeFragmentSelectedListener {
         return true
     }
 }
+
+/*
+                    .setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,
+                        R.anim.enter_from_left,R.anim.exit_to_right)
+ */

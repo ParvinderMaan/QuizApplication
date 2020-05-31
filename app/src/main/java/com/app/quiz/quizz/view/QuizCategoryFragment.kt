@@ -12,12 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.quiz.R
 import com.app.quiz.annotation.FragmentType
-import com.app.quiz.annotation.Status
-import com.app.quiz.base.BaseFragment
 import com.app.quiz.interfacor.HomeFragmentSelectedListener
+import com.app.quiz.quizz.model.QuizDetail
 import com.app.quiz.quizz.viewmodel.QuizCategoryViewModel
-import com.app.quiz.quizz.viewmodel.ScoreCardViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_quiz_category.*
 import kotlinx.android.synthetic.main.fragment_quiz_category.ibtn_close
 
@@ -61,14 +58,11 @@ class QuizCategoryFragment : Fragment() {
 
             quizCategoryAdapter?.setOnItemClickListener(object :
                 QuizCategoryAdapter.OnItemClickListener{
-                override fun onItemClick() {
-                    mFragmentListener?.showFragment(FragmentType.QUESTION_SET_FRAGMENT,null)
+                override fun onItemClick(quizDetail: QuizDetail?) {
+                    mFragmentListener?.showFragment(FragmentType.QUESTION_SET_FRAGMENT,quizDetail)
                 }
             })
         }
-
-
-
 
     }
 
@@ -84,13 +78,11 @@ class QuizCategoryFragment : Fragment() {
         viewModel.isListEmpty.observe(viewLifecycleOwner,
             Observer { if (it) tv_empty_view?.visibility = View.VISIBLE })
 
-
-
         viewModel.userPagedList.observe(viewLifecycleOwner, Observer { quizCategoryAdapter?.submitList(it)})
 
+
+
     }
-
-
 
 }
 

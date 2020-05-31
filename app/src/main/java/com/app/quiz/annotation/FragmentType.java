@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
         FragmentType.HOME_FRAGMENT,FragmentType.PROFILE_FRAGMENT,FragmentType.ABOUT_US_FRAGMENT,
         FragmentType.NOTIFICATION_FRAGMENT,FragmentType.STUDY_MATERIAL_FRAGMENT,FragmentType.CHAPTER_FRAGMENT,
         FragmentType.CHAPTER_DETAIL_FRAGMENT,FragmentType.QUESTION_SET_FRAGMENT,FragmentType.SCORECARD_FRAGMENT
-        ,FragmentType.QUIZ_CATEGORY_FRAGMENT,FragmentType.TERM_CONDITION_FRAGMENT,FragmentType.SETTING_FRAGMENT })
+        ,FragmentType.QUIZ_CATEGORY_FRAGMENT,FragmentType.TERM_CONDITION_FRAGMENT,FragmentType.SETTING_FRAGMENT,FragmentType.SHOW_ANSWER })
 public @interface FragmentType {
     String SPLASH_FRAGMENT = "SplashFragment";
     String SIGN_IN_FRAGMENT= "SignInFragment";
@@ -25,5 +25,6 @@ public @interface FragmentType {
     String SCORECARD_FRAGMENT = "ScoreCardFragment";
     String QUIZ_CATEGORY_FRAGMENT= "QuizCategoryFragment";
     String TERM_CONDITION_FRAGMENT="TermAndConditionFragment";
+    String SHOW_ANSWER="AnswerFragment";
 }
     // Declare the constants

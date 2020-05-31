@@ -1,5 +1,6 @@
 package com.app.quiz.studymaterial
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.app.quiz.QuizApplication
@@ -18,13 +19,13 @@ class CategoryDataSource(private var webService: WebService)
             override fun onResponse(call: Call<StudyMaterialCategoryResponse>, response: Response<StudyMaterialCategoryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()
-                    if (result?.data?.categories!=null)
-                        callback.onResult(result.data.categories,null,2)
+                    if (result?.categories!=null)
+                        callback.onResult(result.categories,null,2)
                 }
             }
 
             override fun onFailure(call: Call<StudyMaterialCategoryResponse>, error: Throwable) {
-
+                Log.e("onFailure ....",""+error.printStackTrace())
                 //...................missing !!!
         }
         })
@@ -37,13 +38,13 @@ class CategoryDataSource(private var webService: WebService)
             override fun onResponse(call: Call<StudyMaterialCategoryResponse>, response: Response<StudyMaterialCategoryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()
-                    if (result?.data?.categories!=null)
-                        callback.onResult(result.data.categories,params.key+1)
+                    if (result?.categories!=null)
+                        callback.onResult(result.categories,params.key+1)
                 }
             }
 
             override fun onFailure(call: Call<StudyMaterialCategoryResponse>, error: Throwable) {
-                //...................missing !!!
+                Log.e("onFailure....",""+error.printStackTrace())
             }
         })
 

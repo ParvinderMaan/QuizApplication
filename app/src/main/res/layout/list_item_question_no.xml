@@ -20,9 +20,9 @@
         android:textStyle="bold" />
     <ImageView
         android:id="@+id/iv_ques_no_pointer"
-
         android:layout_marginTop="@dimen/_1sdp"
-        android:layout_width="@dimen/_1sdp"
+        android:layout_width="@dimen/_10sdp"
+        android:background="@color/colorWhite"
         android:layout_height="@dimen/_1sdp"/>
 </LinearLayout>
 <!--    android:src="@color/colorGreen"-->

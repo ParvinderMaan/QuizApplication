@@ -8,7 +8,7 @@ data class StudyMaterialCategory(@SerializedName("id") var id:Long,
                                  @SerializedName("status") var status :String,
                                  @SerializedName("created_at") var createdAt :String,
                                  @SerializedName("chapters_count") var chapterCount:String,
-                                 @SerializedName("isFavourite") var isFavourite:String)
+                                 @SerializedName("is_fav") var isFavourite:Boolean)
 
 /*
 

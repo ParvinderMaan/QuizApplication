@@ -37,7 +37,13 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_hindi">Hindi</string>
     <string name="title_no_of_ques">No of Questions :</string>
     <string name="title_level">Level :</string>
+    <string name="title_question">Question</string>
     <string name="title_show_ques">Show Q.</string>
+    <string name="level_beginner">Beginner</string>
+    <string name="level_medium">Medium</string>
+    <string name="level_expert">Expert</string>
+
+
     <string name="title_change_language">App needs to be restarted to reflect changes !</string>
     <string name="action_yes">YES</string>
     <string name="action_no">NO</string>
@@ -51,5 +57,24 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="alert_no_category">No Category</string>
     <string name="alert_no_chapters">No Chapters</string>
     <string name="alert_no_quiz">No Quiz</string>
+    <string name="title_views">views</string>
+    <string name="title_admin">BY ADMIN</string>
+    <string name="title_total_chapters">Total chapters</string>
+    <string name="title_topics">Topics</string>
+    <string name="title_free">FREE</string>
+    <string name="title_excellent">EXCELLENT</string>
+    <string name="title_good">GOOD</string>
+    <string name="title_average">AVERAGE</string>
+    <string name="title_poor">POOR</string>
+
+    <string name="title_answers">Answers</string>
+    <string name="title_instruction">Instructions</string>
+    <string name="title_time_over">Time is over</string>
+    <string name="alert_no_notification">No Notification</string>
+    <string name="new_quiz_try_out_this_and_increase_your_knowledge">New Quiz ! Try out this and increase your knowledge</string>
+    <string name="title_previous">Prev</string>
+    <string name="title_next">Next</string>
+    <string name="title_explanation"><u>Explanation</u></string>
+
 
 </resources>

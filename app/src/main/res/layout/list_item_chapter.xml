@@ -37,7 +37,7 @@
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_view_count"
+            app:layout_constraintStart_toEndOf="@+id/tv_chapter_view_count"
             app:layout_constraintTop_toBottomOf="@+id/tv_topics" />
 
         <TextView
@@ -87,7 +87,7 @@ Number theory | Dynamical systems and differential equations"
 
 
         <TextView
-            android:id="@+id/tv_view_count"
+            android:id="@+id/tv_chapter_view_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

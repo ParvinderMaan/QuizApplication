@@ -19,15 +19,17 @@ import com.app.quiz.interfacor.HomeFragmentSelectedListener
 import com.app.quiz.notification.viewmodel.NotificationViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_notification.*
-import kotlinx.android.synthetic.main.fragment_setting.ibtn_close
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 
-class NotificationFragment : Fragment() {
+class NotificationFragment : BaseFragment() {
+    private  var notificationAdapter: NotificationAdapter?=null
     private lateinit var viewModel: NotificationViewModel
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
 
     companion object {
         fun newInstance() = NotificationFragment()
+    }
+    override fun getRootView(): View {
+        return cl_root
     }
 
     override fun onAttach(context: Context) {
@@ -38,6 +40,8 @@ class NotificationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+         notificationAdapter = NotificationAdapter()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,15 +55,14 @@ class NotificationFragment : Fragment() {
         ibtn_close?.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
-        ibtn_more?.setOnClickListener { showPopupMenu() }
+       // ibtn_more?.setOnClickListener { showPopupMenu() }
 
         rv_notification?.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            val notificationAdapter =
-                NotificationAdapter()
             adapter = notificationAdapter
-
         }
+
+        viewModel.fetchNotifications()
 
     }
 
@@ -78,28 +81,21 @@ class NotificationFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner,
             Observer {
-
+                if (it) progress_bar?.visibility = View.VISIBLE
+                else progress_bar?.visibility = View.INVISIBLE
             })
 
         viewModel.resultAllNotification.observe(viewLifecycleOwner, Observer {
 
             when(it.status){
-                Status.SUCCESS -> viewModel.lstOfNotifications.value=it.data?.data?.notifications
-                Status.FAILURE -> if (it.errorMsg != null)
-                    Snackbar.make(clRoot,""+it.errorMsg , Snackbar.LENGTH_LONG).show()
-            }
-        })
-        viewModel.resultDeleteNotification.observe(viewLifecycleOwner, Observer {
-
-            when(it.status){
-                Status.SUCCESS ->it.data?.message
-                Status.FAILURE -> if (it.errorMsg != null)
-                    Snackbar.make(clRoot,""+it.errorMsg , Snackbar.LENGTH_LONG).show()
+                Status.SUCCESS -> viewModel.lstOfNotifications.value=it.data?.notifications
+                Status.FAILURE -> if (it.errorMsg != null) showSnackBar(it.errorMsg.toString())
             }
         })
 
         viewModel.lstOfNotifications.observe(viewLifecycleOwner, Observer {
-
+            if(it.isNotEmpty()) notificationAdapter?.addAll(it)
+            else tv_empty_view?.visibility=View.VISIBLE
 
         })
 

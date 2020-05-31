@@ -1,15 +1,19 @@
 package com.app.quiz.studymaterial.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-data class StudyMaterialChapter(
+@Parcelize
+data class StudyMaterialChapter (
     @SerializedName("id") var chapterId: String,
     @SerializedName("chapter_name") var chapterName: String,
     @SerializedName("topics") var topics: String,
     @SerializedName("category_id") var catId: String,
+  //  @SerializedName("description") var description: String,
     @SerializedName("views_count") var viewCount: String,
     @SerializedName("created_at") var createdOn: String,
-    @SerializedName("status") var status: String)
+    @SerializedName("status") var status: String): Parcelable
 
 /*
 "id":1,

@@ -19,8 +19,6 @@ import retrofit2.Response
 class NotificationViewModel (application: Application) : AndroidViewModel(application) {
     private var webService: WebService
      var isLoading: MutableLiveData<Boolean>
-     var userId: MutableLiveData<Int>
-     var resultDeleteNotification: MutableLiveData<WebResponse<GeneralResponse>>
      var resultAllNotification: MutableLiveData<WebResponse<NotificationResponse>>
      var lstOfNotifications: MutableLiveData<List<NotificationResponse.Notification>>
 
@@ -29,15 +27,13 @@ class NotificationViewModel (application: Application) : AndroidViewModel(applic
         isLoading = MutableLiveData()
         lstOfNotifications= MutableLiveData()
         resultAllNotification = MutableLiveData()
-        resultDeleteNotification = MutableLiveData()
-        userId= MutableLiveData()
     }
 
     fun fetchNotifications() {
-        isLoading.setValue(true)
-        webService.fetchNotifications(userId.value).enqueue(object : Callback<NotificationResponse> {
+        isLoading.value=true
+        webService.fetchNotifications().enqueue(object : Callback<NotificationResponse> {
             override fun onResponse(call: Call<NotificationResponse>, response: Response<NotificationResponse>) {
-                isLoading.value=true
+                isLoading.value=false
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()
                     if (result!!.status) {
@@ -60,31 +56,5 @@ class NotificationViewModel (application: Application) : AndroidViewModel(applic
     }
 
 
-    fun deleteAllNotifications() {
-        isLoading.setValue(true)
-
-        webService.deleteAllNotifications(JSONObject()).enqueue(object : Callback<GeneralResponse> {
-            override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>) {
-                isLoading.value=true
-                if (response.isSuccessful && response.body() != null) {
-                    val result = response.body()
-                    if (result!!.status) {
-                        resultDeleteNotification.value= WebResponse(Status.SUCCESS, result, null)
-                    } else {
-                        resultDeleteNotification.value= WebResponse(Status.FAILURE, null, result.message)
-                    }
-                } else {
-                    val errorMsg: String = ErrorHandler.reportError(response.code())
-                    resultDeleteNotification.value= WebResponse(Status.FAILURE, null, errorMsg)
-                }
-            }
-
-            override fun onFailure(call: Call<GeneralResponse>, error: Throwable) {
-                isLoading.value=false
-                val errorMsg: String? = ErrorHandler.reportError(error)
-                resultDeleteNotification.value= WebResponse(Status.FAILURE, null, errorMsg)
-            }
-        })
-    }
 
 }

@@ -12,13 +12,12 @@ import kotlinx.android.synthetic.main.list_item_chapter.view.*
 import kotlinx.android.synthetic.main.list_item_chapter.view.tv_created_on
 import kotlinx.android.synthetic.main.list_item_chapter.view.tv_topics
 import kotlinx.android.synthetic.main.list_item_quiz_category.view.*
-import kotlin.collections.ArrayList
 
 class ChapterAdapter : PagedListAdapter<StudyMaterialChapter, ChapterAdapter.MiViewHolder>(ITEM_COMPARATOR) {
     private var mItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onItemClick(item: StudyMaterialChapter?)
     }
 
     public fun setOnItemClickListener(mItemClickListener: OnItemClickListener) {
@@ -42,7 +41,7 @@ class ChapterAdapter : PagedListAdapter<StudyMaterialChapter, ChapterAdapter.MiV
         item?.let { viewHolder.bindView(it, pos) }
         holder.itemView.setOnClickListener {
 
-            mItemClickListener?.onItemClick()
+            mItemClickListener?.onItemClick(item)
         }
     }
 
@@ -50,9 +49,9 @@ class ChapterAdapter : PagedListAdapter<StudyMaterialChapter, ChapterAdapter.MiV
         fun bindView(model: StudyMaterialChapter, pos: Int) {
             itemView.tv_chapter_name?.text = model.chapterName
             itemView.tv_topics?.text = model.topics
-            itemView.tv_created_on?.text = model.createdOn
+            itemView.tv_created_on?.text = model.createdOn.split(" ")[0]
            // tv_chapter_status
-           //tv_view_count
+            itemView.tv_chapter_view_count?.text=model.viewCount.plus(" ").plus(this.itemView.context.getString(R.string.title_views))
             if (pos % 4 == 0) {
                 itemView.tv_quiz_type?.setBackgroundResource(R.color.colorYellow)
                 itemView.tv_quiz_type?.text = "NEW"

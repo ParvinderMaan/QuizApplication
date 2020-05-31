@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:lineSpacingExtra="0sp"
         android:maxLines="1"
-        android:text="15"
+        android:text="00"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_ques_no"
@@ -48,6 +48,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ques_no" />
+
     <TextView
         android:id="@+id/tv_level_count"
         android:layout_width="wrap_content"
@@ -55,7 +56,7 @@
         android:gravity="center_vertical"
         android:lineSpacingExtra="0sp"
         android:maxLines="1"
-        android:text="Medium"
+        android:text="-------"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
@@ -63,19 +64,19 @@
         app:layout_constraintStart_toEndOf="@+id/tv_level" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/iv_timer"
+        android:id="@+id/tv_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/rounded_background_iii"
         android:drawablePadding="@dimen/_5sdp"
         android:elevation="@dimen/_5sdp"
         android:minHeight="0dp"
-        android:layout_marginEnd="@dimen/_20sdp"
         android:paddingStart="@dimen/_8sdp"
         android:paddingTop="@dimen/_2sdp"
         android:paddingEnd="@dimen/_8sdp"
         android:paddingBottom="@dimen/_2sdp"
-        android:text="15:00"
+        android:text="00:00"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/ic_time"
@@ -98,8 +99,8 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tv_level"
-        app:layout_constraintEnd_toEndOf="@+id/iv_timer"
-        app:layout_constraintStart_toStartOf="@+id/iv_timer"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timer" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_timer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

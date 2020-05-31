@@ -1,6 +1,7 @@
 package com.app.quiz.signin.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.app.quiz.QuizApplication
@@ -31,28 +32,29 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
         resultantSignIn = MutableLiveData()
     }
 
-    fun attemptSignIn() {
-        isLoading.value = true
+    suspend fun attemptSignIn() : SignInResponse? = suspendCoroutine {
+        isLoading.postValue(true)
         webService.attemptSignIn(headerMap,signInRequest.name,signInRequest.email,signInRequest.deviceId).enqueue(object : Callback<SignInResponse> {
             override fun onResponse(call: Call<SignInResponse>, response: Response<SignInResponse>) {
-                isLoading.value=false
+                isLoading.postValue(false)
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()
                     if (result!!.status) {
-                        resultantSignIn.value=WebResponse(SUCCESS, result, null)
+                       // resultantSignIn.value=WebResponse(SUCCESS, result, null)
+                        it.resume(result)
                     } else {
-                        resultantSignIn.value=WebResponse(FAILURE, null, result.message)
+                      //  resultantSignIn.value=WebResponse(FAILURE, null, result.message)
+                        it.resume(null)
                     }
-                } else {
-                    val errorMsg: String = ErrorHandler.reportError(response.code())
-                    resultantSignIn.value=WebResponse(FAILURE, null, errorMsg)
                 }
             }
 
             override fun onFailure(call: Call<SignInResponse?>, error: Throwable) {
-                isLoading.value=false
+                isLoading.postValue(false)
                 val errorMsg: String? = ErrorHandler.reportError(error)
-                resultantSignIn.value=WebResponse(FAILURE, null, errorMsg)
+                Log.e("onFailure", error.printStackTrace().toString())
+              //  resultantSignIn.value=WebResponse(FAILURE, null, errorMsg)
+                it.resume(null)
             }
         })
     }

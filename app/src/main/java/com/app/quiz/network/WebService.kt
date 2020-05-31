@@ -9,7 +9,6 @@ import com.app.quiz.profile.ProfileInfoResponse
 import com.app.quiz.profile.model.ProfileInfo
 import com.app.quiz.quizz.model.QuizDetailResponse
 import com.app.quiz.quizz.model.QuizzesResponse
-import com.app.quiz.signin.model.SignInRequest
 import com.app.quiz.signin.model.SignInResponse
 import com.app.quiz.studymaterial.FavouriteRequest
 import com.app.quiz.studymaterial.model.StudyMaterialCategoryResponse
@@ -27,7 +26,7 @@ interface WebService {
     fun attemptSignIn(@HeaderMap token:Map<String, String>,
                       @Field("name") name: String?,
                       @Field("email") email: String?,
-                      @Field("deviceId") deviceId: String?): Call<SignInResponse>
+                      @Field("device_id") deviceId: String?): Call<SignInResponse>
 
 
     @POST(WebUrl.SIGN_OUT)
@@ -49,30 +48,32 @@ interface WebService {
     @GET(WebUrl.STUDY_MATERIAL_CATEGORY)  //@HeaderMap token:Map<String, String>,
     fun fetchStudyMaterialCategories(@Query("page") pageNo: Long?): Call<StudyMaterialCategoryResponse>
 
+    @FormUrlEncoded
     @POST(WebUrl.FAVOURITE_CATEGORY)
-    fun isFavouriteCategory(@Body input: FavouriteRequest?): Call<GeneralResponse>
+    fun isFavouriteCategory(@Field("category_id") categoryId: Long?): Call<GeneralResponse>
 
 
     @GET(WebUrl.FETCH_CHAPTERS)
-    fun fetchStudyMaterialChapters(@Query("page") pageNo: Long?): Call<StudyMaterialChaptersResponse>
+    fun fetchStudyMaterialChapters(@Query("page") pageNo: Long?,@Query("id") categoryId: Long?): Call<StudyMaterialChaptersResponse>
 
     @FormUrlEncoded
     @POST(WebUrl.FETCH_CHAPTER_DETAIL)
-    fun fetchStudyMaterialChapterDetail(@Field("id") chapterId: Int?): Call<StudyMaterialChapterDetailResponse>
+    fun fetchStudyMaterialChapterDetail(@Field("id") chapterId: Long?): Call<StudyMaterialChapterDetailResponse>
 
 
     @GET(WebUrl.FETCH_QUIZZES)
     fun fetchQuizzes(@Query("page") pageNo: Long?): Call<QuizzesResponse>
 
-    @GET(WebUrl.FETCH_QUIZ_DETAIL)
-    fun fetchQuizDetail(@Query("quizId") quizId: Int?): Call<QuizDetailResponse>
+    @FormUrlEncoded
+    @POST(WebUrl.FETCH_QUIZ_DETAIL)
+    fun fetchQuizDetail(@Field("id") quizId: Long?): Call<QuizDetailResponse>
 
 
     @POST(WebUrl.EN_DI_NOTIFICATION)
     fun alterNotificationStatus(@Body input: NotificationStatusRequest?): Call<GeneralResponse>
 
     @GET(WebUrl.FETCH_NOTIFICATIONS)
-    fun fetchNotifications(@Query("userId") userId: Int?): Call<NotificationResponse>
+    fun fetchNotifications(): Call<NotificationResponse>
 
     @POST(WebUrl.DELETE_ALL_NOTIFICATIONS) //JSONObject== userId
     fun deleteAllNotifications(@Body input: JSONObject): Call<GeneralResponse>

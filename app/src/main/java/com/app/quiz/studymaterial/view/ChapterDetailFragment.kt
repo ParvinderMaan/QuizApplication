@@ -4,34 +4,40 @@ package com.app.quiz.studymaterial.view
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Html
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.app.quiz.QuizApplication
 import com.app.quiz.R
 import com.app.quiz.annotation.Status.FAILURE
 import com.app.quiz.annotation.Status.SUCCESS
 import com.app.quiz.base.BaseFragment
-import com.app.quiz.helper.SharedPrefHelper
 import com.app.quiz.interfacor.HomeFragmentSelectedListener
-import com.app.quiz.network.WebHeader
+import com.app.quiz.studymaterial.model.StudyMaterialChapter
 import com.app.quiz.studymaterial.model.StudyMaterialChapterData
 import com.app.quiz.studymaterial.viewmodel.ChapterDetailViewModel
 import kotlinx.android.synthetic.main.fragment_chapter_detail.*
-import kotlinx.android.synthetic.main.fragment_chapter_detail.textView
 
 
 class ChapterDetailFragment : BaseFragment() {
+    private var chapterInfo: StudyMaterialChapter?=null
     private lateinit var viewModel: ChapterDetailViewModel
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
 
 
     companion object {
-        fun newInstance() = ChapterDetailFragment()
+        fun newInstance(payload: Any?): ChapterDetailFragment {
+            var fragment = ChapterDetailFragment()
+            var bundle=Bundle()
+            if (payload is StudyMaterialChapter) bundle.putParcelable("KEY", payload)
+            fragment.arguments=bundle
+            return fragment
+        }
     }
 
     override fun getRootView(): View {
@@ -45,10 +51,17 @@ class ChapterDetailFragment : BaseFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ChapterDetailViewModel::class.java)
-        viewModel.chapterId=1 // static !!!
-        viewModel.fetchStudyMaterialChapterDetail()
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+             chapterInfo = it.getParcelable("KEY")
+             viewModel.chapterId= chapterInfo?.chapterId?.toLong()
+           //  viewModel.chapterId=1                                // static remove !!!!!!!
+        }
+
+
+           viewModel.fetchStudyMaterialChapterDetail()
+
     }
 
 
@@ -64,7 +77,8 @@ class ChapterDetailFragment : BaseFragment() {
             mFragmentListener?.popTopMostFragment()
         }
 
-       // tv_header_title?.text=""
+        tv_header_title?.text=chapterInfo?.chapterName
+        tv_chapter_created_on?.text=chapterInfo?.createdOn?.let{it.split(" ")[0]}
 
     }
 
@@ -78,7 +92,7 @@ class ChapterDetailFragment : BaseFragment() {
 
         viewModel.resultantChapterDetail.observe(viewLifecycleOwner, Observer {
             when(it.status){
-                SUCCESS -> it.data?.data?.let { itt -> loadChapterDetails(itt.get(0))}
+                SUCCESS -> it.data?.data?.let { itt -> loadChapterDetails(itt)}
                 FAILURE ->  it.errorMsg?.let { showSnackBar(it) }
             }
         })
@@ -87,13 +101,14 @@ class ChapterDetailFragment : BaseFragment() {
 
     private fun loadChapterDetails(chapterInfo: StudyMaterialChapterData) {
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(chapterInfo.desc, Html.FROM_HTML_MODE_LEGACY)
+            textView?.text = Html.fromHtml(chapterInfo.desc, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            textView.text = Html.fromHtml(chapterInfo.desc)
+            textView?.text = Html.fromHtml(chapterInfo.desc)
         }
 
-        tv_view_count?.text = "Created on : "+chapterInfo.createdAt
-        tv_created_on?.text="Viewed by  :"+chapterInfo.viewsCount
+//        tv_view_count?.text="Created on : ".plus(chapterInfo?.createdAt.split(" ")[0])
+//        tv_created_on?.text="Viewed by  :".plus(chapterInfo?.viewsCount)
+
     }
 
 }

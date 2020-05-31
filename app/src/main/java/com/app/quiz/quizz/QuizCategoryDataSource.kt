@@ -23,7 +23,7 @@ class QuizCategoryDataSource (private var webService: WebService) : PageKeyedDat
 
             override fun onFailure(call: Call<QuizzesResponse>, error: Throwable) {
                 //...................missing !!!
-                Log.e("onFailure",""+error.message)
+                Log.e("onFailure",""+error.printStackTrace())
             }
         })
 

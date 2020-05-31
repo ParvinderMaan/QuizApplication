@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:id="@+id/cl_root"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".quizz.view.AnswerFragment">
+<!--    header-->
+<RelativeLayout
+    android:id="@+id/ll_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/tv_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        tools:text="Quiz 1"
+        android:textColor="@color/colorGrey"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibtn_close"
+        android:visibility="invisible"
+        android:padding="@dimen/_5sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_more" />
+
+</RelativeLayout>
+<!--    body  -->
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_answer_set"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:overScrollMode="never"
+    android:background="@android:color/transparent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="@dimen/_10sdp"
+    app:layout_constraintTop_toBottomOf="@id/ll_header"
+    tools:itemCount="1"
+    tools:listitem="@layout/list_item_answer_set" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fbtn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/title_previous"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:minWidth="0dp"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:backgroundTint="@color/colorLightBlue"
+        app:elevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/colorWhite" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fbtn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/title_next"
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:minWidth="0dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:backgroundTint="@color/colorLightBlue"
+        app:elevation="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/colorWhite" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

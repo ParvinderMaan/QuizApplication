@@ -37,6 +37,11 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_hindi">हिंदी</string>
     <string name="title_no_of_ques">नम्बर ऑफ क्वेस्चॅन :</string>
     <string name="title_level">लेवॅल :</string>
+    <string name="title_question">सवाल</string>
+    <string name="level_beginner">शुरुआत</string>
+    <string name="level_medium">मध्यम</string>
+    <string name="level_expert">विशेषज्ञ</string>
+
     <string name="title_show_ques">शो क्वेस्चॅन.</string>
     <string name="title_change_language">परिवर्तनों को प्रतिबिंबित करने के लिए ऐप को पुनः आरंभ करने की आवश्यकता है !</string>
     <string name="action_yes">हाँ</string>
@@ -50,5 +55,21 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="alert_no_category">कोई श्रेणी नहीं</string>
     <string name="alert_no_chapters">कोई अध्याय नहीं</string>
     <string name="alert_no_quiz">कोई क्विज़ नहीं</string>
+    <string name="title_views">व्यू</string>
+    <string name="title_admin">व्यवस्थापक द्वारा</string>
+    <string name="title_total_chapters">कुल चैप्टर</string>
+    <string name="title_topics">विषय</string>
+    <string name="title_free">नि:शुल्क</string>
+    <string name="title_excellent">अति उत्कृष्ट</string>
+    <string name="title_good">अच्छा</string>
+    <string name="title_average">औसत</string>
+    <string name="title_poor">घटिया</string>
+    <string name="title_answers" >उत्तर</string>
+    <string name="title_instruction">निर्देश</string>
+    <string name="title_time_over">Time is over</string>
+    <string name="alert_no_notification">कोई अधिसूचना नहीं</string>
+    <string name="title_previous">पिछला</string>
+    <string name="title_next">आगे</string>
+    <string name="title_explanation"><u>व्याख्या</u></string>
 
 </resources>

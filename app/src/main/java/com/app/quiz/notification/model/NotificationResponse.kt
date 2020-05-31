@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class NotificationResponse(
     @SerializedName("status") var status: Boolean, @SerializedName("message") var message: String,
-    @SerializedName("data") var data: NotificationData
+    @SerializedName("data") var notifications: List<Notification>
 ) {
-    data class NotificationData(@SerializedName("notifications") var notifications: List<Notification>)
-    data class Notification(@SerializedName("notiId") var notiId: String,
-                            @SerializedName("notiName") var notiName: String,
-                            @SerializedName("createdOn") var createdOn: String)
+    data class Notification(@SerializedName("id") var notiId: Long,
+                            @SerializedName("notification_type") var notification_type: String,
+                            @SerializedName("content") var content: String,
+                            @SerializedName("created_at") var createdOn: String)
 
 }

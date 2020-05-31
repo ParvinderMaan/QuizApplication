@@ -2,45 +2,73 @@ package com.app.quiz.quizz.view
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.app.quiz.quizz.viewmodel.QuestionSetViewModel
 import com.app.quiz.R
 import com.app.quiz.annotation.FragmentType
 import com.app.quiz.annotation.Status
 import com.app.quiz.base.BaseFragment
+import com.app.quiz.dialog.InstructionDialogFragment
+import com.app.quiz.dialog.TimeOverDialogFragment
 import com.app.quiz.interfacor.HomeFragmentSelectedListener
-import com.app.quiz.quizz.model.QuestionSet
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_about_us.*
+import com.app.quiz.quizz.model.QuizDetail
+import com.app.quiz.quizz.viewmodel.QuestionSetViewModel
 import kotlinx.android.synthetic.main.fragment_question_set.*
-import kotlinx.android.synthetic.main.fragment_study_material.ibtn_close
 import kotlinx.android.synthetic.main.layout_quiz_discription_i.*
 import kotlinx.android.synthetic.main.layout_quiz_discription_ii.*
+import kotlinx.coroutines.*
 
 
-class QuestionSetFragment : Fragment() {
+class QuestionSetFragment : BaseFragment() {
     private lateinit var quesSetAdapter: QuestionSetAdapter
     private lateinit var quesNoAdapter: QuestionNoAdapter
     private lateinit var viewModel: QuestionSetViewModel
     private var mFragmentListener: HomeFragmentSelectedListener? = null
-    private lateinit var  linearLayoutManager:LinearLayoutManager
+    private lateinit var linearLayoutManager:LinearLayoutManager
+    private var alertDialogFragment:InstructionDialogFragment?=null
+    private var timeOverDialogFragment:TimeOverDialogFragment?=null
+    // Timer objects
+    private lateinit var timer: CountDownTimer
+    private var secondsRemaining: Long = 0
+    var mVisiblePos:Int=0
     companion object {
-        fun newInstance() = QuestionSetFragment()
+        fun newInstance(payload: Any?): QuestionSetFragment {
+            val fragment = QuestionSetFragment()
+            val bundle=Bundle()
+            if (payload is QuizDetail) bundle.putParcelable("KEY", payload)
+            fragment.arguments=bundle
+            return fragment
+        }
+    }
+
+    override fun getRootView(): View {
+        return cl_root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mFragmentListener = context as HomeFragmentSelectedListener
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this).get(QuestionSetViewModel::class.java)
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            viewModel.quizDetail.value=it.getParcelable("KEY")
+
+        }
+
+
     }
 
 
@@ -49,34 +77,50 @@ class QuestionSetFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this).get(QuestionSetViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        initListener()
         initObserver()
+        initQuesSetRecyclerView()
+        initQuesNoRecyclerView()
+        view_flipper?.flipInterval = 3000
+
+
+        viewModel.fetchQuizDetail()
+
+        // IO,Main,Default
+//        CoroutineScope(Dispatchers.Default).launch {
+//            delay(1000)
+//            withContext(Dispatchers.Main) {
+//
+//            }
+//        }
+
+
+
+    }
+
+
+
+    private fun initListener() {
         ibtn_close?.setOnClickListener { showPopupMenu() }
-        fbtn_finish?.setOnClickListener { showResult() }
         tv_show_more?.setOnClickListener {
-            view_flipper?.setInAnimation(requireActivity(),
-                R.anim.enter_from_right
-            )
-            view_flipper?.setOutAnimation(requireActivity(),
-                R.anim.exit_to_left
-            )
+            view_flipper?.setInAnimation(requireActivity(), R.anim.enter_from_right)
+            view_flipper?.setOutAnimation(requireActivity(), R.anim.exit_to_left)
             view_flipper?.showNext()
         }
         tv_hide_more?.setOnClickListener {
-            view_flipper?.setInAnimation(requireActivity(),
-                R.anim.enter_from_left
-            )
-            view_flipper?.setOutAnimation(requireActivity(),
-                R.anim.exit_to_right
-            )
+            view_flipper?.setInAnimation(requireActivity(), R.anim.enter_from_left)
+            view_flipper?.setOutAnimation(requireActivity(), R.anim.exit_to_right)
             view_flipper?.showPrevious()
         }
-        initQuesSetRecyclerView()
-        initQuesNoRecyclerView()
+        fbtn_previous?.setOnClickListener {
+            rv_question_set?.smoothScrollToPosition(mVisiblePos-1)
 
-        view_flipper?.setFlipInterval(3000)
 
+        }
+        fbtn_next?.setOnClickListener {
+            rv_question_set?.smoothScrollToPosition(mVisiblePos+1)
+        }
 
     }
 
@@ -85,19 +129,23 @@ class QuestionSetFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             quesNoAdapter = QuestionNoAdapter()
             adapter = quesNoAdapter
-            quesNoAdapter.addAll(getDummyQuestionSet())
             rv_question_no.setHasFixedSize(true)
             quesNoAdapter.setOnItemClickListener(object:
                 QuestionNoAdapter.OnItemClickListener{
                 override fun onItemClick(pos: Int) {
-                    rv_question_set?.scrollToPosition(pos);
+                    rv_question_set?.scrollToPosition(pos)
                 }
             })
         }
     }
 
     private fun showResult() {
-        mFragmentListener?.showFragment(FragmentType.SCORECARD_FRAGMENT,null);
+//        quesSetAdapter.items.forEach {
+//            println(it.toString())
+//        }
+
+        timer.cancel()
+        mFragmentListener?.showFragment(FragmentType.SCORECARD_FRAGMENT,quesSetAdapter.items)
 
     }
 
@@ -107,19 +155,32 @@ class QuestionSetFragment : Fragment() {
             layoutManager=linearLayoutManager
              quesSetAdapter = QuestionSetAdapter()
             adapter = quesSetAdapter
-            quesSetAdapter.addAll(getDummyQuestionSet());
             rv_question_set.setHasFixedSize(true)
-            var mPagerSnapHelper = PagerSnapHelper()
+            val mPagerSnapHelper = PagerSnapHelper()
             mPagerSnapHelper.attachToRecyclerView(rv_question_set);
             rv_question_set.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                var mVisiblePos:Int=0
+
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     mVisiblePos= linearLayoutManager.findLastCompletelyVisibleItemPosition()
-                    if((quesSetAdapter.items.size-1)==mVisiblePos){
-                        if(!fbtn_finish.isShown)  fbtn_finish.show()
-                    }else{
-                        if(fbtn_finish.isShown)  fbtn_finish.hide()
+
+                    if(mVisiblePos!=RecyclerView.NO_POSITION){
+                       // Log.e("QuestionSetFragment", mVisiblePos.toString())
+                        var item = quesNoAdapter.getItem(mVisiblePos)
+                        quesNoAdapter.setItemIndex(item,mVisiblePos)
                     }
+                    if((quesNoAdapter.items.size-1)==mVisiblePos){
+                        if(fbtn_next.isShown)  fbtn_next.hide()
+                    }else{
+                        if(!fbtn_next.isShown)  fbtn_next.show()
+                    }
+                    if(0==mVisiblePos){
+                        if(fbtn_previous.isShown)  fbtn_previous.hide()
+                    }else{
+                        if(!fbtn_previous.isShown)  fbtn_previous.show()
+                    }
+
+
+
                 }
             })
 
@@ -130,15 +191,20 @@ class QuestionSetFragment : Fragment() {
         val popupMenu = PopupMenu(requireActivity(), ibtn_close)
         val menu = popupMenu.menu
         menu.add(0, 1, 0, getString(R.string.title_show_results))
-        menu.add(0, 2, 0, getString(R.string.title_restart))
-        menu.add(0, 3, 0, getString(R.string.title_quit_quiz))
+//        menu.add(0, 2, 0, getString(R.string.title_restart))
+        menu.add(0, 2, 0, getString(R.string.title_quit_quiz))
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+
             when (item.itemId) {
-                1 -> mFragmentListener?.showFragment(FragmentType.SCORECARD_FRAGMENT,null)
+                1 -> {
+                  showResult()}
                 2 -> {
-                   // restart timer !!!!!
+                    timer.cancel()
+                    mFragmentListener?.popTopMostFragment()
                 }
-                3 -> mFragmentListener?.popTopMostFragment()
+                3 ->{
+                    // restart timer !!!!!
+                }
             }
             false
         }
@@ -146,170 +212,112 @@ class QuestionSetFragment : Fragment() {
     }
 
 
-    fun getDummyQuestionSet(): MutableList<QuestionSet> {
-        val lstOfQues = mutableListOf<QuestionSet>()
-        lstOfQues.add(
-            QuestionSet(
-                1,
-                "A connection from one HTML to another HTML document is called ",
-                "Hyper Link",
-                "Connecting Link",
-                "Icon",
-                "All of these",
-                1,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                2,
-                "The ........ lists the location of the files on the disk.",
-                "Boot sector",
-                "FAT",
-                "Data area",
-                "Root folder",
-                2,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                3,
-                "In context of Computers, FAT stands for",
-                "File Allocation Table",
-                "File Access Table",
-                "Folder Allocation Table",
-                "Folder Access Table",
-                1,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                4,
-                "Which American Computer Company is also known by the nick name “Big Blue” ?",
-                "Microsoft",
-                "Apple",
-                "Compaq Corporation",
-                "IBM",
-                4,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                5, "Which protocol is uesd to send E-mail ?  ", "HTTP", "SSH", "SMTP",
-                "POP3", 3,
-                false, false, 0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                6,
-                "The device used by banks to auto-matically read those special numbers on the bottom of cheques is ",
-                "MICR",
-                "OMR",
-                "UDIC",
-                "UPC",
-                1,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                7,
-                "What is full form of MICR ? ",
-                "Magnetic Ink Case Reader",
-                "Magnetic Ink Character Recognition",
-                "Magnetic Ink Card Recognition",
-                "Magnetic Ink Character Recoder",
-                2,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                8,
-                "Which company bought the popular video teleconferencing software ‘Skype’ ?",
-                "Google",
-                "Accenture",
-                "Oracle",
-                "Microsoft",
-                4,
-                false,
-                false,
-                0
-            )
-        );
-
-        lstOfQues.add(
-            QuestionSet(
-                9, "Which protocol is used to send E-mail ?", "SMTP", "POP3", "HTTP",
-                "FTP", 2,
-                false, false, 0
-            )
-        );
-
-
-        lstOfQues.add(
-            QuestionSet(
-                10,
-                "BIOS is used for ",
-                "Updating system information on network",
-                "It helps in routing",
-                "Loading operating system",
-                "It takes input from keyboard and other devices",
-                3,
-                false,
-                false,
-                0
-            )
-        );
-        return lstOfQues;
-    }
 
 
     private fun initObserver() {
-
         viewModel.isLoading.observe(viewLifecycleOwner,
             Observer {
 
             })
 
-        viewModel.resultQuizDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.isInstructDialogVisibility.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    if(it) {
+                        var noOfQues = viewModel.lstOfQuestions.value?.size;
+                        alertDialogFragment = InstructionDialogFragment.newInstance(noOfQues)
+                        alertDialogFragment?.show(childFragmentManager, "TAG")
+                        alertDialogFragment?.setOnInstructionDialogFragmentListener(object :
+                            InstructionDialogFragment.InstructionDialogFragmentListener {
+                            override fun onStartClick() {
+                                viewModel.isInstructDialogVisibility.value=false
+                            }
+                        })
+                    }else{
+                        alertDialogFragment?.dismiss()
+                        viewModel.lstOfQuestions.value?.let {
+                            startTimer(it.size.toLong() * 60000)
+                            tv_timer?.text=it.size.toString().plus(":00");
+                            startTimer(it.size.toLong() * 60000)
+                        }
 
-//            when(it.status){
-//                Status.SUCCESS -> viewModel.lstOfQuestions.value=it.data?.data?.quizDetail
-//                Status.FAILURE -> //if (it.errorMsg != null)
-//                   // Snackbar.make(cl_rootz,""+it.errorMsg , Snackbar.LENGTH_LONG).show()
-//            }
+                    }
+                }
+
+            })
+
+        viewModel.isTimeOverDialogVisibility.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if(it) {
+                    timeOverDialogFragment = TimeOverDialogFragment.newInstance()
+                    timeOverDialogFragment?.show(childFragmentManager, "TAG")
+                    timeOverDialogFragment?.setOnTimeOverDialogFragmentListener(object :
+                        TimeOverDialogFragment.TimeOverDialogFragmentListener {
+                        override fun onSubmitClick() {
+                            viewModel.isTimeOverDialogVisibility.value=false
+                            showResult()
+                        }
+                    })
+                }else{
+                    timeOverDialogFragment?.dismiss()
+                }
+            }
+
+        })
+
+
+        viewModel.quizDetail.observe(viewLifecycleOwner,
+            Observer {
+                tv_header_title?.text=it.name
+                when (it.level) {
+                    "1" -> tv_level_count?.text=resources.getString(R.string.level_beginner)
+                    "2" -> tv_level_count?.text=resources.getString(R.string.level_medium)
+                    "3" -> tv_level_count?.text=resources.getString(R.string.level_expert)
+                }
+
+            })
+
+        viewModel.resultQuizDetail.observe(viewLifecycleOwner, Observer {
+            when(it.status){
+                Status.SUCCESS ->{
+                    viewModel.lstOfQuestions.value=it.data?.data?.quizQuestion
+                    viewModel.isInstructDialogVisibility.value=true
+                }
+                Status.FAILURE -> it.errorMsg?.let { showSnackBar(it) }
+            }
         })
 
         viewModel.lstOfQuestions.observe(viewLifecycleOwner, Observer {
-            //it
-
+           if(it.isNotEmpty()) {
+               tv_ques_no_count?.text= it.size.toString()
+               tv_timer?.text=it.size.toString().plus(":").plus("00")
+               quesSetAdapter.addAll(it)
+               quesNoAdapter.addAll(it)
+           }
         })
 
 
     }
+
+    private fun startTimer(duration:Long) {
+        timer = object : CountDownTimer(duration, 1000) {
+            override fun onFinish(){
+                tv_timer?.text="00:00"
+                //show Dialog !!!!!
+                viewModel.isTimeOverDialogVisibility.value=true
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.e("onTick","millisUntilFinished");
+                secondsRemaining = millisUntilFinished / 1000
+                val minutesUntilFinished = secondsRemaining / 60
+                val secondsInMinuteUntilFinished = secondsRemaining - minutesUntilFinished * 60
+                val secondsStr = secondsInMinuteUntilFinished.toString()
+                var abc = "$minutesUntilFinished:${if (secondsStr.length == 2) secondsStr else "0" + secondsStr}"
+                tv_timer?.text =abc
+            }
+        }.start()
+    }
+
+
 }
 

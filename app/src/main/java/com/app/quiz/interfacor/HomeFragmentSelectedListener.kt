@@ -8,6 +8,6 @@ interface HomeFragmentSelectedListener {
     fun popTillFragment( tag:String,  flag:Int)
     fun popTopMostFragment()
     fun resetLocale(locale: String)
-
+    fun shareApp()
 
  }

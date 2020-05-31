@@ -3,28 +3,21 @@ package com.app.quiz.studymaterial.view
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.quiz.QuizApplication
 import com.app.quiz.R
 import com.app.quiz.annotation.FragmentType
-import com.app.quiz.annotation.Status
 import com.app.quiz.base.BaseFragment
-import com.app.quiz.helper.SharedPrefHelper
 import com.app.quiz.interfacor.HomeFragmentSelectedListener
-import com.app.quiz.network.WebHeader
+import com.app.quiz.studymaterial.model.StudyMaterialChapter
 import com.app.quiz.studymaterial.viewmodel.ChapterViewModel
-import com.app.quiz.studymaterial.viewmodel.StudyMaterialViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_chapter.*
 import kotlinx.android.synthetic.main.fragment_study_material.ibtn_close
 import kotlinx.android.synthetic.main.fragment_study_material.rv_category
-import java.util.HashMap
 
 
 class ChapterFragment : BaseFragment() {
@@ -33,7 +26,13 @@ class ChapterFragment : BaseFragment() {
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
 
     companion object {
-        fun newInstance() = ChapterFragment()
+        fun newInstance(payload: Any?): ChapterFragment {
+            var fragment = ChapterFragment()
+            var bundle=Bundle()
+            if (payload is Long) bundle.putLong("KEY", payload.toLong())
+            fragment.arguments=bundle
+            return fragment
+        }
     }
 
     override fun getRootView(): View {
@@ -46,8 +45,13 @@ class ChapterFragment : BaseFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ChapterViewModel::class.java)
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            viewModel.categoryId=it.getLong("KEY")
+        }
+
+        viewModel.fetchChapters()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,8 +70,8 @@ class ChapterFragment : BaseFragment() {
              adapter = chapterAdapter
             chapterAdapter?.setOnItemClickListener(object :
                 ChapterAdapter.OnItemClickListener{
-                override fun onItemClick() {
-                    mFragmentListener?.showFragment(FragmentType.CHAPTER_DETAIL_FRAGMENT,null)
+                override fun onItemClick(item: StudyMaterialChapter?) {
+                    mFragmentListener?.showFragment(FragmentType.CHAPTER_DETAIL_FRAGMENT,item)
                 }
             })
         }

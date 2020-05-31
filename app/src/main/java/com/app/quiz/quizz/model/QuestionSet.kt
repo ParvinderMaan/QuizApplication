@@ -1,15 +1,24 @@
 package com.app.quiz.quizz.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+data class QuestionSet(@SerializedName("id") var quesId:Int,
+                       @SerializedName("question") var quesName:String,
+                       @SerializedName("a") var optOne:String,
+                       @SerializedName("b") var optTwo:String,
+                       @SerializedName("c") var optThree:String,
+                       @SerializedName("d") var optFour:String,
+                       @SerializedName("answer") var ansOption:String,
+                       @Expose(serialize = false,deserialize = false) var isQuesAttempted:Boolean=false,
+                       @Expose(serialize = false,deserialize = false) var isAnsSelected:Boolean=false,
+                       @Expose(serialize = false,deserialize = false) var ansOptSelected:Int=0) : Parcelable {
 
-data class QuestionSet(@SerializedName("quesId") var quesId:Int,
-                       @SerializedName("quesName") var quesName:String,
-                       @SerializedName("optOne") var optOne:String,
-                       @SerializedName("optTwo") var optTwo:String,
-                       @SerializedName("optThree") var optThree:String,
-                       @SerializedName("optFour") var optFour:String,
-                       @SerializedName("ansOption") var ansOption:Int,
-                       @SerializedName("isQuesAttempted") var isQuesAttempted:Boolean,
-                       @SerializedName("isAnsSelected") var isAnsSelected:Boolean,
-                       @SerializedName("ansOptSelected") var ansOptSelected:Int=0)
+    override fun toString(): String {
+        return "QuestionSet(quesId=$quesId, quesName='$quesName', optOne='$optOne', optTwo='$optTwo', optThree='$optThree', optFour='$optFour', ansOption='$ansOption', isQuesAttempted=$isQuesAttempted, isAnsSelected=$isAnsSelected, ansOptSelected=$ansOptSelected)"
+    }
+
+}

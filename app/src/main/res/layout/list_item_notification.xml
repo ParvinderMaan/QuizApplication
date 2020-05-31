@@ -9,7 +9,7 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_notification"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
@@ -17,7 +17,7 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:lineSpacingExtra="0sp"
-        android:text="New Quiz ! Try out this and increase your knowledge"
+        android:text="@string/new_quiz_try_out_this_and_increase_your_knowledge"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         android:minLines="3"
@@ -48,8 +48,8 @@
         android:text="12 days ago"
         android:textColor="@color/colorLightWhite"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_notification"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notification" />
 
 
 

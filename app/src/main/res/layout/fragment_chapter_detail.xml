@@ -22,13 +22,17 @@ tools:context=".studymaterial.view.ChapterDetailFragment">
 
     <TextView
         android:id="@+id/tv_header_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:text="Chapter Title"
+        android:text="Chapter Title "
         android:textColor="@color/colorGrey"
         android:textSize="25sp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -45,55 +49,31 @@ tools:context=".studymaterial.view.ChapterDetailFragment">
 </RelativeLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:visibility="visible"
         android:id="@+id/shimmer_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header"
+        app:layout_constraintTop_toTopOf="@+id/textView"
         app:layout_constraintVertical_bias="0">
         <!-- add placeholders -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <include layout="@layout/shimmer_chapter" />
+
             <include layout="@layout/shimmer_chapter" />
+
             <include layout="@layout/shimmer_chapter" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <TextView
-        android:id="@+id/tv_created_on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:text=""
-        android:textColor="@color/colorLightBlue"
-        android:textSize="10sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
 
-
-    <TextView
-        android:id="@+id/tv_view_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:text=""
-        android:textColor="@color/colorLightBlue"
-        android:textSize="10sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_created_on" />
 
     <TextView
         android:id="@+id/textView"
@@ -105,12 +85,38 @@ tools:context=".studymaterial.view.ChapterDetailFragment">
         android:paddingEnd="@dimen/_20sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:scrollbars="none"
-        android:text="@string/sample_about_us"
         android:textColor="@color/colorWhite"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_view_count"
+        app:layout_constraintTop_toBottomOf="@+id/tv_chapter_created_on"
         app:layout_constraintVertical_bias="0" />
+    <TextView
+        android:id="@+id/tv_chapter_created_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/title_admin"
+        android:textColor="@color/colorLightBlue"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
 
+
+    <TextView
+        android:id="@+id/tv_chapter_created_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:text="2020-12-12"
+        android:textColor="@color/colorLightBlue"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_chapter_created_by" />
 </androidx.constraintlayout.widget.ConstraintLayout>

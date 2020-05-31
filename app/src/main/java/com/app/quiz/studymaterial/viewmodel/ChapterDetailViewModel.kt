@@ -16,7 +16,7 @@ import retrofit2.Response
 class ChapterDetailViewModel(application: Application) : AndroidViewModel(application) {
     private var webService: WebService
      var isLoading: MutableLiveData<Boolean>
-     var chapterId: Int = 0
+     var chapterId: Long? = 0
     var resultantChapterDetail: MutableLiveData<WebResponse<StudyMaterialChapterDetailResponse>>
     init {
         webService = (application as QuizApplication).getWebServiceInstance()

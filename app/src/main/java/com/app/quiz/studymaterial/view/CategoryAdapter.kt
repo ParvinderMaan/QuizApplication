@@ -23,15 +23,22 @@ class CategoryAdapter  : PagedListAdapter<StudyMaterialCategory,CategoryAdapter.
     override fun onBindViewHolder(holder: MiiViewHolder, pos: Int) {
         var item = getItem(pos)
         val viewHolder = holder as MiiViewHolder
-        viewHolder.bindView(item,viewHolder.adapterPosition )
+        item?.let {
+            viewHolder.bindView(it,viewHolder.adapterPosition )
+        }
         holder.itemView.setOnClickListener {
-            mItemClickListener?.onItemClick()
+            mItemClickListener?.onItemClick(item)
+        }
+        holder.itemView.iv_favourite.setOnClickListener {
+          holder.itemView.iv_favourite.setImageResource(R.drawable.ic_heart_fill);
+          mItemClickListener?.onItemFavouriteClick(item)
         }
 
     }
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onItemClick(item: StudyMaterialCategory?)
+        fun onItemFavouriteClick(item: StudyMaterialCategory?)
     }
 
     public fun setOnItemClickListener(mItemClickListener: OnItemClickListener) {
@@ -40,19 +47,24 @@ class CategoryAdapter  : PagedListAdapter<StudyMaterialCategory,CategoryAdapter.
 
     class MiiViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindView(model: StudyMaterialCategory?, pos: Int) {
+            val totalChapters = itemView.context.getString(R.string.title_total_chapters)
             itemView.tv_category_name?.text = model?.catName
-            itemView.tv_no_of_chapters?.text = "Total chapters ".plus(model?.chapterCount)
+            itemView.tv_no_of_chapters?.text = totalChapters.plus(" ").plus(model?.chapterCount)
             itemView.tv_desc?.text = model?.catDesc
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                itemView.tv_desc?.setText(Html.fromHtml(model?.catDesc, Html.FROM_HTML_MODE_LEGACY));
+                itemView.tv_desc?.text = Html.fromHtml(model?.catDesc, Html.FROM_HTML_MODE_LEGACY);
             } else {
-                itemView.tv_desc?.setText(Html.fromHtml(model?.catDesc))
+                itemView.tv_desc?.text = Html.fromHtml(model?.catDesc)
             }
 
-            itemView.iv_favourite.setOnClickListener {
-                itemView.iv_favourite.setImageResource(R.drawable.ic_heart_fill);
+            model?.isFavourite?.let {
+                if(it)
+                    itemView.iv_favourite?.setImageResource(R.drawable.ic_heart_fill)
+                else
+                    itemView.iv_favourite?.setImageResource(R.drawable.ic_heart_unfill)
             }
+
         }
     }
 

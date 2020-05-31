@@ -14,13 +14,15 @@ import com.app.quiz.studymaterial.model.StudyMaterialChapter
 
 
 class ChapterViewModel (application: Application) : AndroidViewModel(application) {
-     private var webService: WebService
+    private var config: PagedList.Config
+    private var webService: WebService
      var isLoading: MutableLiveData<Boolean>
      var userId: MutableLiveData<Int>
+     var categoryId: Long = 0
      var isListEmpty: MutableLiveData<Boolean>
-     private var itemDataSourceFactory: ChapterDataSourceFactory
-     private var liveDataSource: LiveData<ChapterDataSource>
-     var userPagedList: LiveData<PagedList<StudyMaterialChapter>>
+     private lateinit var itemDataSourceFactory: ChapterDataSourceFactory
+     private lateinit var liveDataSource: LiveData<ChapterDataSource>
+     lateinit var userPagedList: LiveData<PagedList<StudyMaterialChapter>>
 
 
     init {
@@ -28,15 +30,19 @@ class ChapterViewModel (application: Application) : AndroidViewModel(application
         isLoading = MutableLiveData()
         userId = MutableLiveData()
         isListEmpty = MutableLiveData()
-        itemDataSourceFactory = ChapterDataSourceFactory(webService)
-        liveDataSource = itemDataSourceFactory.userLiveDataSource
 
-        val config = PagedList.Config.Builder()
+         config = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
             .setInitialLoadSizeHint(10)
             .setPageSize(10)
             .build()
 
+    }
+
+
+    fun fetchChapters() {
+        itemDataSourceFactory = ChapterDataSourceFactory(webService,categoryId)
+        liveDataSource = itemDataSourceFactory.userLiveDataSource
         userPagedList = LivePagedListBuilder(itemDataSourceFactory, config)
             .setBoundaryCallback(object : PagedList.BoundaryCallback<StudyMaterialChapter>() {
                 override fun onZeroItemsLoaded() {
@@ -59,7 +65,6 @@ class ChapterViewModel (application: Application) : AndroidViewModel(application
                 }
             })
             .build()
-
     }
 
 

@@ -9,9 +9,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChapterDataSource(private var webService: WebService) : PageKeyedDataSource<Long, StudyMaterialChapter>() {
+class ChapterDataSource(private var webService: WebService,private var categoryId: Long) : PageKeyedDataSource<Long, StudyMaterialChapter>() {
     override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<Long, StudyMaterialChapter>) {
-        webService.fetchStudyMaterialChapters(1).enqueue(object :
+        webService.fetchStudyMaterialChapters(1,categoryId).enqueue(object :
             Callback<StudyMaterialChaptersResponse> {
             override fun onResponse(call: Call<StudyMaterialChaptersResponse>, response: Response<StudyMaterialChaptersResponse>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -30,7 +30,7 @@ class ChapterDataSource(private var webService: WebService) : PageKeyedDataSourc
     }
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<Long, StudyMaterialChapter>) {
-        webService.fetchStudyMaterialChapters(params.key).enqueue(object :
+        webService.fetchStudyMaterialChapters(params.key,categoryId).enqueue(object :
             Callback<StudyMaterialChaptersResponse> {
             override fun onResponse(call: Call<StudyMaterialChaptersResponse>, response: Response<StudyMaterialChaptersResponse>) {
                 if (response.isSuccessful && response.body() != null) {

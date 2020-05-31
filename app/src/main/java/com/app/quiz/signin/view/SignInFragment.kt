@@ -131,10 +131,46 @@ class SignInFragment : BaseFragment() {
         try {
             val acc = completedTask.getResult(ApiException::class.java)
             viewModel.signInRequest = SignInRequest(acc?.displayName, acc?.email, acc?.photoUrl.toString(), "12345")
-            viewModel.attemptSignIn()
+          //  viewModel.attemptSignIn()
+          // new
+            // IO,Main,Default
+            CoroutineScope(Dispatchers.Default).launch {
+                // async code can be written here ....
+                val isGoogleSignOut = async { attemptGoogleSignOut() }
+                val isAppSignIn = async {viewModel.attemptSignIn() }
+                val signInResponse=isAppSignIn.await()
+                var isGooglySignOut = isGoogleSignOut.await()
+                if(isGooglySignOut==true && signInResponse!=null){
+                    withContext(Dispatchers.Main) {
+                        handleSigInResult(signInResponse.data, signInResponse.token)
+                    }
+                }else{
+                    withContext(Dispatchers.Main) {
+                        showSnackBar("Something went wrong ! Please try again")
+                    }
+                }
+            }
+
+
+
+
+
+
+
         } catch (e: ApiException) {
           //  Log.e("SignInFragment", "signInResult:failed code=" + e.statusCode)
              showSnackBar("Please try  again")
+        }
+    }
+
+    private suspend fun attemptGoogleSignOut() : Boolean? = suspendCoroutine {
+        googleSignInClient?.signOut()?.addOnFailureListener { p0 ->
+            println("addOnFailureListener...")
+            showSnackBar(p0.message.toString())
+            it.resume(false)
+        }?.addOnSuccessListener{p0 ->
+            println("addOnSuccessListener...")
+            it.resume(true)
         }
     }
 }

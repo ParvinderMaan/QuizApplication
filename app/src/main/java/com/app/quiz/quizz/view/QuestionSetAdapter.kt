@@ -1,5 +1,7 @@
 package com.app.quiz.quizz.view
 
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +36,10 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
         var item = items.get(pos)
         val viewHolder = holder as QuestionSetViewHolder
         if(!payloads.isEmpty() ){
-            viewHolder.bindTwoView(item,pos)
+            item.let {
+                viewHolder.bindTwoView(it,pos)
+            }
+
         }else{
             super.onBindViewHolder(holder, pos, payloads)
         }
@@ -45,34 +50,37 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
       //  Log.e("onBindViewHolder", ".............normal............."+pos)
         var item = items.get(pos)
         val viewHolder = holder as QuestionSetViewHolder
-        viewHolder.bindOneView(item, pos)
-        viewHolder.bindTwoView(item, pos)
+        item.let {
+            viewHolder.bindOneView(it, pos)
+            viewHolder.bindTwoView(it, pos)
+        }
+
         // listener
         viewHolder.itemView.tv_ans_one?.setOnClickListener {
-            if (items.get(pos).ansOptSelected != 1) {
-                items.get(pos).ansOptSelected = 1
-//                viewHolder.itemView.fbtn_ans_one.show()
-             notifyItemChanged(viewHolder.adapterPosition,1)
+            if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
+                item.ansOptSelected != 4) {
+                item.ansOptSelected = 1
+                notifyItemChanged(viewHolder.adapterPosition,1)
             }
         }
         viewHolder.itemView.tv_ans_two?.setOnClickListener {
-            if (items.get(pos).ansOptSelected != 2) {
-                items.get(pos).ansOptSelected = 2
-//                viewHolder.itemView.fbtn_ans_two.show()
+            if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
+                item.ansOptSelected != 4) {
+                item.ansOptSelected = 2
                 notifyItemChanged(viewHolder.adapterPosition,1)
             }
         }
         viewHolder.itemView.tv_ans_three?.setOnClickListener {
-            if (items.get(pos).ansOptSelected != 3) {
-                items.get(pos).ansOptSelected = 3
-//                viewHolder.itemView.fbtn_ans_three.show()
+            if (item.ansOptSelected !=1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
+                item.ansOptSelected != 4) {
+                item.ansOptSelected = 3
                 notifyItemChanged(viewHolder.adapterPosition,1)
             }
         }
         viewHolder.itemView.tv_ans_four?.setOnClickListener {
-            if (items.get(pos).ansOptSelected != 4) {
-                items.get(pos).ansOptSelected = 4
-//                viewHolder.itemView.fbtn_ans_four.show()
+            if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
+                item.ansOptSelected != 4) {
+                item.ansOptSelected = 4
                 notifyItemChanged(viewHolder.adapterPosition,1)
             }
         }
@@ -94,7 +102,7 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
         notifyItemInserted(items.size - 1)
     }
 
-    fun addAll(items: MutableList<QuestionSet>) {
+    fun addAll(items: List<QuestionSet>) {
         for (item in items) {
             add(item)
         }
@@ -105,13 +113,24 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
 class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindOneView(model: QuestionSet, pos: Int) {
         // views
-        itemView.tv_ques_no?.text = ("Question").plus(" ").plus(model.quesId)
-        itemView.tv_ques_name?.text = model.quesName
-        itemView.tv_ans_one?.text = model.optOne
-        itemView.tv_ans_two?.text = model.optTwo
-        itemView.tv_ans_three?.text = model.optThree
-        itemView.tv_ans_four?.text = model.optFour
 
+        var quesTitle = itemView.context.resources.getString(R.string.title_question)
+        itemView.tv_ques_no?.text = (quesTitle).plus(" ").plus(adapterPosition+1)
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName, Html.FROM_HTML_MODE_LEGACY)
+            itemView.tv_ans_one?.text =Html.fromHtml(model.optOne, Html.FROM_HTML_MODE_LEGACY)
+            itemView.tv_ans_two?.text =Html.fromHtml(model.optTwo, Html.FROM_HTML_MODE_LEGACY)
+            itemView.tv_ans_three?.text =Html.fromHtml(model.optThree, Html.FROM_HTML_MODE_LEGACY)
+            itemView.tv_ans_four?.text =Html.fromHtml(model.optFour, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName)
+            itemView.tv_ans_one?.text =Html.fromHtml(model.optOne)
+            itemView.tv_ans_two?.text =Html.fromHtml(model.optTwo)
+            itemView.tv_ans_three?.text =Html.fromHtml(model.optThree)
+            itemView.tv_ans_four?.text =Html.fromHtml(model.optFour)
+        }
 
 
     }
@@ -136,7 +155,7 @@ class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 itemView.fbtn_ans_four.hide()
 
             }
-            3 -> {
+           3 -> {
                     if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
                 itemView.fbtn_ans_one.hide()
                     if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
@@ -145,7 +164,7 @@ class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     if (itemView.fbtn_ans_four.visibility == View.VISIBLE)
                 itemView.fbtn_ans_four.hide()
             }
-            4 -> {
+           4 -> {
                     if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
                 itemView.fbtn_ans_one.hide()
                     if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
@@ -167,4 +186,6 @@ class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
     }
+
+
 }

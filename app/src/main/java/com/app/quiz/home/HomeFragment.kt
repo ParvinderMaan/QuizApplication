@@ -11,6 +11,9 @@ import com.app.quiz.QuizApplication
 import com.app.quiz.R
 import com.app.quiz.annotation.FragmentType
 import com.app.quiz.base.BaseFragment
+import com.app.quiz.dialog.AlterLanguageDialogFragment
+import com.app.quiz.dialog.InstructionDialogFragment
+import com.app.quiz.dialog.TimeOverDialogFragment
 import com.app.quiz.helper.SharedPrefHelper
 import com.app.quiz.interfacor.HomeFragmentSelectedListener
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -71,6 +74,7 @@ class HomeFragment :Fragment() {
         btn_play_quiz?.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.QUIZ_CATEGORY_FRAGMENT,null)
         }
+
     }
 
 

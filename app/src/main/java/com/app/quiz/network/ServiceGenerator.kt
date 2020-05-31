@@ -2,12 +2,13 @@ package com.app.quiz.network
 
 import android.util.Log
 import androidx.annotation.NonNull
-import com.app.quiz.BuildConfig
 import com.app.quiz.QuizApplication
 import com.app.quiz.base.SingletonHolder
 import com.app.quiz.extra.NetworkUtil
 import com.app.quiz.helper.SharedPrefHelper
 import com.app.ticket.exception.NoInternetException
+import com.google.gson.GsonBuilder
+import com.intuit.sdp.BuildConfig
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -19,16 +20,26 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+
 class ServiceGenerator private constructor(var application: QuizApplication) {
     private val DISK_CACHE_SIZE = 10 * 1024 * 1024 // 10MB
     private var retrofit: Retrofit
     private  var accessToken: String
     init {
+   //    val gson = GsonBuilder().setLenient().create()
+        val gson = GsonBuilder()
+            .setPrettyPrinting()
+        .setLenient()
+//            .excludeFieldsWithoutExposeAnnotation()
+//            .serializeNulls()
+            .disableHtmlEscaping()
+//            .registerTypeAdapter(ActorGson::class.java, ActorGsonSerializer())
+            .create()
         // Init using context argument
          retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .client(getHttpClient())
             .baseUrl(WebUrl.BASE)
-             .build()
+            .build()
 
         accessToken= application.getSharedPrefInstance().read(SharedPrefHelper.KEY_ACCESS_TOKEN,"").toString()
 

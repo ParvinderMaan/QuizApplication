@@ -1,6 +1,7 @@
 package com.app.quiz.miscellaneous.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.app.quiz.QuizApplication
@@ -59,29 +60,30 @@ class SettingViewModel (application: Application) : AndroidViewModel(application
             }
         })
     }
-    suspend fun attemptSignOut() : Boolean? = suspendCoroutine {
+     fun attemptSignOut() {
+         isLoading.value=true
         webService.attemptSignOut(headerMap).enqueue(object : Callback<GeneralResponse> {
             override fun onResponse(call: Call<GeneralResponse>, response: Response<GeneralResponse>) {
+                isLoading.value=false
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()
                     if (result!!.status) {
-//                        resultSignOut.value= WebResponse(Status.SUCCESS, result, null)
-                          it.resume(true)
+                       resultSignOut.value= WebResponse(Status.SUCCESS, result, null)
                     } else {
-//                        resultSignOut.value= WebResponse(Status.FAILURE, null, result.message)
-                        it.resume(false)
+                       resultSignOut.value= WebResponse(Status.FAILURE, null, result.message)
                     }
                 } else {
                     val errorMsg: String = ErrorHandler.reportError(response.code())
-//                    resultSignOut.value= WebResponse(Status.FAILURE, null, errorMsg)
-                    it.resume(false)
+                    resultSignOut.value= WebResponse(Status.FAILURE, null, errorMsg)
+
                 }
             }
 
             override fun onFailure(call: Call<GeneralResponse>, error: Throwable) {
-                  it.resume(false)
-//                val errorMsg: String? = ErrorHandler.reportError(error)
-//                resultSignOut.value= WebResponse(Status.FAILURE, null, errorMsg)
+                isLoading.value=false
+                Log.e("onFailure", error.printStackTrace().toString())
+                val errorMsg: String? = ErrorHandler.reportError(error)
+                resultSignOut.value= WebResponse(Status.FAILURE, null, errorMsg)
             }
         })
     }

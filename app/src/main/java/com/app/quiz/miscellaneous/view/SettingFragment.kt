@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.quiz.QuizApplication
@@ -112,6 +113,10 @@ class SettingFragment :  BaseFragment() {
             showLanguagePopupMenu()
         }
 
+        tv_invite?.setOnClickListener {
+          mFragmentListener?.shareApp()
+        }
+
     }
 
     private fun showLanguagePopupMenu() {
@@ -144,22 +149,23 @@ class SettingFragment :  BaseFragment() {
         alertFragment.setOnAlertDialogListener(object :
             SignOutDialogFragment.AlertDialogListener {
             override fun onClickYes() {
+                viewModel.attemptSignOut()
                 // IO,Main,Default
-                CoroutineScope(Dispatchers.Default).launch {
-                    // async code can be written here ....
-                    val isGoogleSignOut = async { attemptGoogleSignOut() }
-                    val isAppSignOut = async {viewModel.attemptSignOut() }
-                    if(isGoogleSignOut.await()==true && isAppSignOut.await()==true){
-                        withContext(Dispatchers.Main) {
-                        sharedPrefs?.clear()
-                        mFragmentListener?.popTillFragment(FragmentType.SIGN_IN_FRAGMENT, 1)
-                        }
-                    }else{
-                        withContext(Dispatchers.Main) {
-                            showSnackBar("Please try again")
-                        }
-                    }
-                }
+//                CoroutineScope(Dispatchers.Default).launch {
+//                    // async code can be written here ....
+//                    val isGoogleSignOut = async { attemptGoogleSignOut() }
+//                    val isAppSignOut = async {viewModel.attemptSignOut() }
+//                    if(isGoogleSignOut.await()==true && isAppSignOut.await()==true){
+//                        withContext(Dispatchers.Main) {
+//                        sharedPrefs?.clear()
+//                        mFragmentListener?.popTillFragment(FragmentType.SIGN_IN_FRAGMENT, 1)
+//                        }
+//                    }else{
+//                        withContext(Dispatchers.Main) {
+//                            showSnackBar("Please try again")
+//                        }
+//                    }
+//                }
             }
 
             override fun onClickNo() {}

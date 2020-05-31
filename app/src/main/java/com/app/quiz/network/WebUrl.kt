@@ -18,18 +18,16 @@ class WebUrl private constructor() {
         const val UPDATE_PROFILE = ""
         const val ALTER_PROFILE_IMG = ""
         const val STUDY_MATERIAL_CATEGORY = "categories"
-        const val FAVOURITE_CATEGORY = ""
+        const val FAVOURITE_CATEGORY = "favourite-category"
         const val FETCH_CHAPTERS = "chapters"
         const val FETCH_CHAPTER_DETAIL = "chapter-details"
         const val FETCH_QUIZZES = "quizzes"
-        const val FETCH_QUIZ_DETAIL = ""
+        const val FETCH_QUIZ_DETAIL = "quiz-details"
         const val EN_DI_NOTIFICATION = ""
-        const val FETCH_NOTIFICATIONS = ""
+        const val FETCH_NOTIFICATIONS = "notifications"
         const val DELETE_ALL_NOTIFICATIONS = ""
         const val ABOUT_US = "page-details"
         const val TERMS_AND_CONDITIONS = "page-details"
-
-
 
     }
 
