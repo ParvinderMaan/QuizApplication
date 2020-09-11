@@ -326,6 +326,7 @@
             android:text="@string/title_explanation"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
+            android:padding="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_ans_four"
             app:layout_constraintTop_toBottomOf="@+id/fbtn_ans_four" />

@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".notification.view.NotificationFragment">
 
-
     <RelativeLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
@@ -60,17 +59,42 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notification"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:itemCount="5"
-        tools:listitem="@layout/list_item_notification"
-        app:layout_constraintVertical_bias="0"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+        <!-- add placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_notification"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header"
+        app:layout_constraintVertical_bias="0"
+        tools:itemCount="5"
+        tools:listitem="@layout/list_item_notification" />
 
 
     <TextView
@@ -87,18 +111,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_header" />
 
-
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:indeterminate="true"
-        android:minHeight="0dp"
-        android:visibility="invisible"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-7872107105590310/9798120009"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+        app:layout_constraintStart_toStartOf="parent">
+    </com.google.android.gms.ads.AdView>
 </androidx.constraintlayout.widget.ConstraintLayout>

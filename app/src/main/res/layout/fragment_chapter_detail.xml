@@ -1,122 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:id="@+id/cl_root"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".studymaterial.view.ChapterDetailFragment">
-<RelativeLayout
-    android:id="@+id/ll_header"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="@dimen/_10sdp"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    tools:context=".studymaterial.view.ChapterDetailFragment">
 
-    <TextView
-        android:id="@+id/tv_header_title"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="Chapter Title "
-        android:textColor="@color/colorGrey"
-        android:textSize="25sp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textStyle="bold" />
+        android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ibtn_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_return" />
 
-</RelativeLayout>
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        app:layout_constraintVertical_bias="0">
-        <!-- add placeholders -->
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <include layout="@layout/shimmer_chapter" />
+            <RelativeLayout
+                android:id="@+id/ll_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlue"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp">
 
-            <include layout="@layout/shimmer_chapter" />
+                <TextView
+                    android:id="@+id/tv_header_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/ibtn_more"
+                    android:layout_toEndOf="@+id/ibtn_close"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    tools:text="Chapter Title" />
 
-            <include layout="@layout/shimmer_chapter" />
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ibtn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_return" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ibtn_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_more" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
 
+    </com.google.android.material.appbar.AppBarLayout>
+     <FrameLayout
+         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <androidx.core.widget.NestedScrollView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clipToPadding="true">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:scrollbars="none"
-        android:textColor="@color/colorWhite"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_chapter_created_on"
-        app:layout_constraintVertical_bias="0" />
-    <TextView
-        android:id="@+id/tv_chapter_created_by"
+             <TextView
+                 android:id="@+id/textView"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:includeFontPadding="false"
+                 android:lineSpacingExtra="0dp"
+                 android:paddingStart="@dimen/_20sdp"
+                 android:paddingTop="@dimen/_10sdp"
+                 android:paddingEnd="@dimen/_20sdp"
+                 android:paddingBottom="@dimen/_20sdp"
+                 android:scrollbars="none"
+                 android:textSize="16sp" />
+
+
+         </androidx.core.widget.NestedScrollView>
+
+     </FrameLayout>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:text="@string/title_admin"
-        android:textColor="@color/colorLightBlue"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
+        android:layout_gravity="bottom|center"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-7872107105590310/7100638620"/>
 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <TextView
-        android:id="@+id/tv_chapter_created_on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:text="2020-12-12"
-        android:textColor="@color/colorLightBlue"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_chapter_created_by" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--live id-->
+    <!--app:adUnitId="ca-app-pub-7872107105590310/7331589401"-->

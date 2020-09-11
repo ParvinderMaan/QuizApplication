@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fbtn_sign_in"
@@ -37,11 +37,9 @@
         app:icon="@drawable/ic_sign_in"
         app:iconGravity="textEnd"
         app:iconTint="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".6"
+        app:layout_constraintTop_toBottomOf="parent"
         app:rippleColor="@color/colorWhite" />
 
 

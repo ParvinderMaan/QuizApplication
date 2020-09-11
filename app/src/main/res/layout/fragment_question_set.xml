@@ -8,41 +8,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".quizz.view.QuestionSetFragment">
 
-   <RelativeLayout
+    <RelativeLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tv_header_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:text="Quiz 1"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="15"
+            android:text="Quiz"
+            android:textAlignment="center"
             android:textColor="@color/colorGrey"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ibtn_close"
-            android:padding="@dimen/_5sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_more" />
 
     </RelativeLayout>
 <!--    header-->
@@ -65,6 +58,33 @@
             layout="@layout/layout_quiz_discription_ii"/>
 
     </ViewFlipper>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+        <!-- add placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_chapter" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <!--    body  -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_question_set"
@@ -81,45 +101,19 @@
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_previous"
+        android:id="@+id/fbtn_finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:gravity="center"
+        android:minWidth="0dp"
         android:minHeight="0dp"
-        android:layout_marginStart="@dimen/_20sdp"
         android:paddingStart="@dimen/_25sdp"
         android:paddingTop="@dimen/_5sdp"
         android:paddingEnd="@dimen/_25sdp"
-        android:minWidth="0dp"
-
         android:paddingBottom="@dimen/_5sdp"
-        android:text="@string/title_previous"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        app:backgroundTint="@color/colorLightBlue"
-        app:elevation="@dimen/_5sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/colorWhite" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:gravity="center"
-        android:minHeight="0dp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:paddingStart="@dimen/_25sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_25sdp"
-        android:minWidth="0dp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:text="@string/title_next"
+        android:text="@string/title_finish"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -128,7 +122,63 @@
         app:elevation="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/colorWhite" />
 
+    <TextView
+        android:id="@+id/tv_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_truck"
+        android:text="@string/alert_no_quiz_question"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header" />
 
+
+
+   <androidx.constraintlayout.widget.Group
+       android:id="@+id/group_content"
+       android:visibility="gone"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:constraint_referenced_ids="tv_timer,ibtn_close,view_flipper,rv_question_set,fbtn_finish"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:background="@drawable/rounded_background_iii"
+        android:drawablePadding="@dimen/_5sdp"
+        android:elevation="@dimen/_5sdp"
+        android:minHeight="0dp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:text="00:00"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtn_close"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibtn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_header"
+        app:layout_constraintEnd_toEndOf="@+id/ll_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/cl_root"
+    android:clickable="true"
+    android:background="@color/colorBlue"
+    android:focusable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".miscellaneous.view.AboutUsFragment">
 
@@ -64,9 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/shimmer_chapter" />
-            <include layout="@layout/shimmer_chapter" />
-            <include layout="@layout/shimmer_chapter" />
+            <include layout="@layout/shimmer_general" />
+
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
 

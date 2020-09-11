@@ -11,7 +11,7 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_my_profile">My Profile</string>
     <string name="title_study_material">Study Material</string>
     <string name="title_play_quiz">Play Quiz</string>
-    <string name="title_welcome">Welcome,</string>
+    <string name="title_welcome">Jai Hind,</string>
     <string name="title_welcome_ii">boost your knowledge</string>
     <string name="hint_usr_name">Username</string>
     <string name="hint_usr_email">Email</string>
@@ -26,9 +26,9 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_total_ques_attpmt">Total Questions attempted :</string>
     <string name="title_total_correct_ans">Total Correct Answers :</string>
     <string name="title_total_wrong_ans">Total Wrong Answers :</string>
-    <string name="title_ur_score">Your Score (in %) :</string>
+    <string name="title_ur_score">Your Score :</string>
     <string name="action_ok">OK</string>
-    <string name="action_show_answer">Show Answer</string>
+    <string name="action_show_answer">Answers</string>
     <string name="title_language">Language</string>
     <string name="title_term_and_condition">Terms and conditions</string>
     <string name="title_invite_friend">Invite a friend</string>
@@ -59,22 +59,58 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="alert_no_quiz">No Quiz</string>
     <string name="title_views">views</string>
     <string name="title_admin">BY ADMIN</string>
-    <string name="title_total_chapters">Total chapters</string>
+    <string name="title_total_chapters">Total chapters :</string>
     <string name="title_topics">Topics</string>
     <string name="title_free">FREE</string>
     <string name="title_excellent">EXCELLENT</string>
     <string name="title_good">GOOD</string>
     <string name="title_average">AVERAGE</string>
-    <string name="title_poor">POOR</string>
+    <string name="title_poor">WORK HARD</string>
 
     <string name="title_answers">Answers</string>
     <string name="title_instruction">Instructions</string>
     <string name="title_time_over">Time is over</string>
     <string name="alert_no_notification">No Notification</string>
-    <string name="new_quiz_try_out_this_and_increase_your_knowledge">New Quiz ! Try out this and increase your knowledge</string>
+    <string name="notif_new_quiz">New Quiz ! Try out this and increase your knowledge</string>
+    <string name="notif_new_chapter">New Chapter ! Try out this and increase your knowledge</string>
+
     <string name="title_previous">Prev</string>
     <string name="title_next">Next</string>
     <string name="title_explanation"><u>Explanation</u></string>
+    <string name="alert_no_quiz_question">कोई प्रश्न नहीं</string>
+    <string name="alert_one_minute">1 minute remaining</string>
+    <string name="question">Question</string>
+    <string name="alert_no_explanation">No Explanation</string>
+    <string name="title_explaination">Explanation</string>
+    <string name="title_new">NEW</string>
+    <string name="title_start_quiz">Start Quiz</string>
+    <string name="title_small">Small</string>
+    <string name="title_medium">Medium</string>
+    <string name="title_large">Large</string>
+    <string name="title_finish">Finish</string>
+    <string name="title_next_"><![CDATA[Next >>]]></string>
+    <string name="title_previous_"><![CDATA[<< Previous]]></string>
+    <string name="slash">/</string>
+    <string name="alert_back_press">Click back again to exit</string>
+    <string name="title_share_with">Share with</string>
+    <string name="alert_google_play_services">install google play services</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_select_your_language">Select Language</string>
+    <string name="alert_no_internet">No Internet</string>
+    <string name="alert_internet">Internet Available</string>
+    <string name="default_notification_channel_id">channel_one</string>
+    <string name="minutes">min</string>
+
+    <string name="title_i">\u2022 The quiz has</string>
+    <string name="title_ii">\u2022 Each question carries 2 mark</string>
+    <string name="title_iii">\u2022 0.5 negative marking for wrong answer</string>
+    <string name="title_iv">\u2022 Total duration is</string>
+    <string name="title_v">\u2022 Select the answer only at once</string>
+    <string name="title_minutes">minutes</string>
+    <string name="title_questions">questions</string>
+    <string name="title_version">version :</string>
+    <string name="action_google_sign_in" translatable="false">Google Sign In</string>
 
 
 </resources>

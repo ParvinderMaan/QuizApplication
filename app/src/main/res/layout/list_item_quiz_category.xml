@@ -22,23 +22,44 @@
         android:background="#1AFFFFFF">
 
         <TextView
-            android:id="@+id/tv_created_on"
+            android:id="@+id/tv_ques_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:drawableLeft="@drawable/ic_dot"
+            android:drawableStart="@drawable/ic_dot"
             android:drawablePadding="@dimen/_5sdp"
             android:paddingStart="@dimen/_6sdp"
             android:paddingEnd="@dimen/_6sdp"
-            android:text="02-02-2020"
-            android:textAllCaps="true"
+            android:text="10 Ques"
+            android:textAllCaps="false"
             android:textColor="#CCFFFFFF"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_view_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_topics" />
+
+
+        <TextView
+            android:id="@+id/tv_quiz_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:drawableStart="@drawable/ic_dot"
+            android:drawablePadding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:text="10 mins"
+            android:textAllCaps="false"
+            android:textColor="#CCFFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_ques_count"
             app:layout_constraintTop_toBottomOf="@+id/tv_topics" />
 
         <TextView

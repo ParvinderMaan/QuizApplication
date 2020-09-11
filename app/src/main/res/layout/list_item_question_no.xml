@@ -10,7 +10,7 @@
         android:id="@+id/tv_ques_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_circle"
+        android:background="@drawable/selector_quiz"
         android:gravity="center"
         android:layout_marginStart="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_2sdp"

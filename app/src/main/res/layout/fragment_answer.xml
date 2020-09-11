@@ -34,78 +34,61 @@ tools:context=".quizz.view.AnswerFragment">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/ibtn_close"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:padding="@dimen/_5sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_more" />
+        app:srcCompat="@drawable/ic_return" />
 
 </RelativeLayout>
 <!--    body  -->
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_answer_set"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:overScrollMode="never"
-    android:background="@android:color/transparent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="@dimen/_10sdp"
-    app:layout_constraintTop_toBottomOf="@id/ll_header"
-    tools:itemCount="1"
-    tools:listitem="@layout/list_item_answer_set" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_previous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:gravity="center"
-        android:minHeight="0dp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:text="@string/title_previous"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:paddingStart="@dimen/_25sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_25sdp"
-        android:minWidth="0dp"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        app:backgroundTint="@color/colorLightBlue"
-        app:elevation="@dimen/_5sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/colorWhite" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:gravity="center"
-        android:minHeight="0dp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:text="@string/title_next"
-        android:paddingStart="@dimen/_25sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_25sdp"
-        android:minWidth="0dp"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        app:backgroundTint="@color/colorLightBlue"
-        app:elevation="@dimen/_5sdp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_answer_set"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_previous"
+        tools:itemCount="1"
+        tools:listitem="@layout/list_item_answer_set" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/title_previous_"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header"
+        app:rippleColor="@color/colorWhite" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/title_next_"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header"
         app:rippleColor="@color/colorWhite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

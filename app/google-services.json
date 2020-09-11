@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "99425080706",
+    "firebase_url": "https://armygyanapplication.firebaseio.com",
+    "project_id": "armygyanapplication",
+    "storage_bucket": "armygyanapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99425080706:android:c56af60e1120485b722b9b",
+        "android_client_info": {
+          "package_name": "com.app.armygyan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99425080706-lfpvb58ckqocubuoske0ol1f861t23fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASVD6LdJLLHCflthgg5aE4R27j_U8cSks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99425080706-lfpvb58ckqocubuoske0ol1f861t23fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

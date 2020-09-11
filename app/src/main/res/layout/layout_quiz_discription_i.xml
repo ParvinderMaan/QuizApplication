@@ -1,106 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="@dimen/_20sdp"
     android:paddingBottom="@dimen/_20sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/tv_ques_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:ellipsize="end"
-        android:lineSpacingExtra="0sp"
-        android:maxLines="1"
-        android:text="@string/title_no_of_ques"
-        android:textColor="@color/colorGreen"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_ques_no_count"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/tv_hide_more"
+        android:padding="@dimen/_5sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lineSpacingExtra="0sp"
-        android:maxLines="1"
-        android:text="00"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_ques_no"
-        app:layout_constraintStart_toEndOf="@+id/tv_ques_no" />
-    <TextView
-        android:id="@+id/tv_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:ellipsize="end"
-        android:lineSpacingExtra="0sp"
-        android:maxLines="1"
-        android:text="@string/title_level"
-        android:textColor="@color/colorGreen"
-        android:textSize="14sp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ques_no" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_arrow" />
 
-    <TextView
-        android:id="@+id/tv_level_count"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_question_no"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="0sp"
-        android:maxLines="1"
-        android:text="-------"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_level"
-        app:layout_constraintStart_toEndOf="@+id/tv_level" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/rounded_background_iii"
-        android:drawablePadding="@dimen/_5sdp"
-        android:elevation="@dimen/_5sdp"
-        android:minHeight="0dp"
-        android:paddingStart="@dimen/_8sdp"
-        android:paddingTop="@dimen/_2sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_2sdp"
-        android:text="00:00"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_time"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:overScrollMode="never"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".9"
-        app:layout_constraintStart_toStartOf="@+id/rv_question_set"
-        app:layout_constraintTop_toTopOf="@+id/tv_ques_no" />
+        app:layout_constraintStart_toEndOf="@+id/tv_hide_more"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="1"
+        tools:listitem="@layout/list_item_question_no" />
 
 
-    <TextView
-        android:id="@+id/tv_show_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lineSpacingExtra="0sp"
-        android:maxLines="1"
-        android:text="@string/title_show_ques"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:textColor="@color/colorLightBlue"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_level"
-        app:layout_constraintEnd_toEndOf="@+id/tv_timer"
-        app:layout_constraintStart_toStartOf="@+id/tv_timer"
-        app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
