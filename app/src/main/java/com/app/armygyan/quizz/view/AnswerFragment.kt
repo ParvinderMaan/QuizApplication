@@ -80,12 +80,12 @@ class AnswerFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         tv_header_title?.text=resources.getString(R.string.title_answers)
         tv_previous?.setOnClickListener {
-            rv_answer_set?.smoothScrollToPosition(mVisiblePos-1)
+            if(mVisiblePos>=1) rv_answer_set?.smoothScrollToPosition(mVisiblePos-1)
 
 
         }
         tv_next?.setOnClickListener {
-            rv_answer_set?.smoothScrollToPosition(mVisiblePos+1)
+            if(mVisiblePos<answerAdapter.itemCount)  rv_answer_set?.smoothScrollToPosition(mVisiblePos+1)
         }
 
        ibtn_close?.setOnClickListener {

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="7903180715631665059" name="abc_action_bar_home_description">"होम पेज पर जाएं"</string>
+    <string msgid="6794660482873516081" name="abc_action_bar_up_description">"वापस जाएं"</string>
+    <string msgid="1155814932213556626" name="abc_action_menu_overflow_description">"ज़्यादा विकल्प"</string>
+    <string msgid="2571498368472823490" name="abc_action_mode_done">"हो गया"</string>
+    <string msgid="3732416590524162402" name="abc_activity_chooser_view_see_all">"सभी देखें"</string>
+    <string msgid="1798588241954930982" name="abc_activitychooserview_choose_application">"कोई ऐप्लिकेशन चुनें"</string>
+    <string msgid="3403923230105792483" name="abc_capital_off">"बंद"</string>
+    <string msgid="7831734969929204599" name="abc_capital_on">"चालू"</string>
+    <string msgid="5725160506500770567" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="944415252197684443" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="129742188101734366" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="6840127756824236027" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="4974283687810130415" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="8046416353848716905" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="3271697756921353410" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="2304645930658438191" name="abc_menu_space_shortcut_label">"space"</string>
+    <string msgid="8327365089695024394" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="3570106412128999382" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="940844115270746197" name="abc_search_hint">"खोजें…"</string>
+    <string msgid="1769270744562318534" name="abc_searchview_description_clear">"क्‍वेरी हटाएं"</string>
+    <string msgid="908784302972860853" name="abc_searchview_description_query">"सर्च क्वेरी"</string>
+    <string msgid="5466662225065974044" name="abc_searchview_description_search">"खोजें"</string>
+    <string msgid="8203855622131699655" name="abc_searchview_description_submit">"क्वेरी सबमिट करें"</string>
+    <string msgid="3478748990613108725" name="abc_searchview_description_voice">"बोलकर खोजें"</string>
+    <string msgid="2650565705514630347" name="abc_shareactionprovider_share_with">"इससे शेयर करें:"</string>
+    <string msgid="9009661856846212431" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g> से शेयर करें"</string>
+    <string msgid="6389460216547290468" name="abc_toolbar_collapse_description">"छोटा करें"</string>
+    <string name="action_back">वापस</string>
+    <string name="action_edit">इडिट</string>
+    <string name="action_no">नहीं</string>
+    <string name="action_ok">ओके</string>
+    <string name="action_save">सेव </string>
+    <string name="action_show_answer">सभी जवाब</string>
+    <string name="action_yes">हाँ</string>
+    <string name="alert_internet">इंटरनेट उपलब्ध है</string>
+    <string name="alert_no_category">कोई श्रेणी नहीं</string>
+    <string name="alert_no_chapters">कोई अध्याय नहीं</string>
+    <string name="alert_no_explanation">कोई स्पष्टीकरण नहीं</string>
+    <string name="alert_no_internet">इंटरनेट उपलब्ध नहीं है</string>
+    <string name="alert_no_notification">कोई अधिसूचना नहीं</string>
+    <string name="alert_no_quiz">कोई क्विज़ नहीं</string>
+    <string name="alert_no_quiz_question">कोई प्रश्न नही</string>
+    <string name="alert_one_minute">"1 मिनट शेष "</string>
+    <string name="app_name">आर्मी ज्ञान</string>
+    <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"चालू करें"</string>
+    <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"जब तक आप Google Play सेवाएं चालू नहीं करते, <ns1:g id="APP_NAME">%1$s</ns1:g> काम नहीं करेगा."</string>
+    <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Google Play सेवाएं चालू करें"</string>
+    <string msgid="9115728400623041681" name="common_google_play_services_install_button">"इंस्टॉल करें"</string>
+    <string msgid="8179894293032530091" name="common_google_play_services_install_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> उन Google Play सेवाओं के बिना नहीं चलेगा जो आपके डिवाइस में उपलब्ध नहीं हैं."</string>
+    <string msgid="7442193194585196676" name="common_google_play_services_install_title">"Google Play सेवाएं इंस्टॉल करें"</string>
+    <string msgid="4293541511340436975" name="common_google_play_services_notification_channel_name">"Google Play सेवाएं उपलब्ध हैं"</string>
+    <string msgid="180394615667698242" name="common_google_play_services_notification_ticker">"Google Play सेवाओं से जुड़ी गड़बड़ी"</string>
+    <string msgid="2518680582564677258" name="common_google_play_services_unknown_issue">"<ns1:g id="APP_NAME">%1$s</ns1:g> को Google Play सेवाओं के साथ समस्या आ रही है. कृपया फिर से कोशिश करें."</string>
+    <string msgid="5501187292256987189" name="common_google_play_services_unsupported_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> उन Google Play सेवाओं के बिना नहीं चलेगा, जो आपके डिवाइस पर काम नहीं करती हैं."</string>
+    <string msgid="8172070149091615356" name="common_google_play_services_update_button">"अपडेट करें"</string>
+    <string msgid="7773943415006962566" name="common_google_play_services_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> तब तक नहीं चलेगा जब तक आप Google Play सेवाओं को अपडेट नहीं करते."</string>
+    <string msgid="8706675115216073244" name="common_google_play_services_update_title">"Google Play सेवाओं को अपडेट करें"</string>
+    <string msgid="7894275749778928941" name="common_google_play_services_updating_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> उन Google Play सेवाओं के बिना नहीं चलेगा जो अभी अपडेट हो रही हैं."</string>
+    <string msgid="2804989272736383918" name="common_google_play_services_wear_update_text">"Google Play सेवाओं के नए वर्शन की ज़रूरत है. यह जल्द ही अपने आप अपडेट हो जाएगा."</string>
+    <string msgid="5201977337835724196" name="common_open_on_phone">"फ़ोन पर खोलें"</string>
+    <string msgid="3441753203274453993" name="common_signin_button_text">"साइन इन करें"</string>
+    <string msgid="669893613918351210" name="common_signin_button_text_long">"Google के ज़रिए साइन इन करें"</string>
+    <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"अन्य"</string>
+    <string name="hint_usr_email">ईमेल</string>
+    <string name="hint_usr_gender">जेंडर</string>
+    <string name="hint_usr_name">यूज़रनेम </string>
+    <string name="hint_usr_type">यूज़र टाइप</string>
+    <string name="level_beginner">शुरुआत</string>
+    <string name="level_expert">विशेषज्ञ</string>
+    <string name="level_medium">मध्यम</string>
+    <string name="minutes">मिनट</string>
+    <string name="notif_new_chapter">नया पाठ ! इसे आज़माएं और अपना ज्ञान बढ़ाएँ</string>
+    <string name="notif_new_quiz">नई प्रश्नोत्तरी! इसे आज़माएं और अपना ज्ञान बढ़ाएँ</string>
+    <string name="question">प्रश्न</string>
+    <string msgid="368094699078615544" name="s1">"इमेज सेव करें"</string>
+    <string msgid="4550830452390689489" name="s2">"विज्ञापन को तस्वीर गैलरी में इमेज सेव करने का अनुमति देना चाहते हैं?"</string>
+    <string msgid="2435407834265420668" name="s3">"मंज़ूरी दें"</string>
+    <string msgid="9167523597401839819" name="s4">"खारिज करें"</string>
+    <string msgid="1566682516266724847" name="s5">"कैलेंडर इवेंट बनाएं"</string>
+    <string msgid="5996672174517137271" name="s6">"विज्ञापन को कैलेंडर इवेंट बनाने दें?"</string>
+    <string msgid="7163549807207034258" name="s7">"जाँच विज्ञापन"</string>
+    <string name="sample_about_us"><![CDATA[The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another.\n\n The ConstraintLayout is a powerful new class, imagine a RelativeLayout on steroids - yea, that’s the ConstraintLayout. It allows us to lay out child views using ‘constraints’ to define position based relationships between different views found in our layout.
+The aim of the ConstraintLayout is to help reduce the number of nested views, which will improve the performance of our layout files. The layout class also makes it easier for us to define layouts than when using a RelativeLayout as we can now anchor any side of a view with any side of another, rather than having to place a whole view to any side of another. ]]></string>
+    <string msgid="730395136688082741" name="search_menu_title">"खोजें"</string>
+    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="title_about_us">हमारे बारें</string>
+    <string name="title_admin">व्यवस्थापक द्वारा</string>
+    <string name="title_answers">उत्तर</string>
+    <string name="title_average">औसत</string>
+    <string name="title_change_language">परिवर्तनों को प्रतिबिंबित करने के लिए ऐप को पुनः आरंभ करने की आवश्यकता है !</string>
+    <string name="title_chapters">अध्याय</string>
+    <string name="title_english">इंग्लिश</string>
+    <string name="title_excellent">अति उत्कृष्ट</string>
+    <string name="title_explaination">स्पष्टीकरण</string>
+    <string name="title_explanation"><u>व्याख्या</u></string>
+    <string name="title_finish">समाप्त</string>
+    <string name="title_free">नि:शुल्क</string>
+    <string name="title_good">अच्छा</string>
+    <string name="title_hindi">हिंदी</string>
+    <string name="title_i">\u2022 प्रश्नोत्तरी में</string>
+    <string name="title_ii">\u2022 प्रत्येक प्रश्न 2 अंक का होता है</string>
+    <string name="title_iii">\u2022  0.5 गलत उत्तर के लिए नकारात्मक अंकन</string>
+    <string name="title_instruction">निर्देश</string>
+    <string name="title_invite_friend">किसी मित्र को आमंत्रित करें</string>
+    <string name="title_iv">\u2022 कुल अवधि</string>
+    <string name="title_language">भाषा</string>
+    <string name="title_large">विशाल</string>
+    <string name="title_level">लेवॅल :</string>
+    <string name="title_log_out">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
+    <string name="title_medium">मध्यम</string>
+    <string name="title_minutes">मिनट</string>
+    <string name="title_my_profile">मेरा प्रोफाइल</string>
+    <string name="title_new">नया</string>
+    <string name="title_next">आगे</string>
+    <string name="title_next_"><![CDATA[आगे >>]]></string>
+    <string name="title_no_of_ques">नम्बर ऑफ क्वेस्चॅन :</string>
+    <string name="title_notification">नोटिफ़िकेशन</string>
+    <string name="title_over_all_performance">सम्पूर्ण प्रदर्शन</string>
+    <string name="title_play_quiz">प्रश्नोत्तरी खेलें</string>
+    <string name="title_poor">मेहनत करें</string>
+    <string name="title_previous">पिछला</string>
+    <string name="title_previous_"><![CDATA[<< पिछला]]></string>
+    <string name="title_question">सवाल</string>
+    <string name="title_questions">प्रश्न हैं</string>
+    <string name="title_quit_quiz">क्विज से बाहर निकलें</string>
+    <string name="title_restart">पुनर्प्रारंभ करें</string>
+    <string name="title_result">आपका परिणाम</string>
+    <string name="title_select_quiz">प्रश्नोत्तरी चुनें</string>
+    <string name="title_select_your_language">अपनी भाषा का चयन करें</string>
+    <string name="title_settings">सेटिंग</string>
+    <string name="title_show_ques">शो क्वेस्चॅन.</string>
+    <string name="title_show_results">परिणाम दिखाओ</string>
+    <string name="title_sign_out">प्रस्थान करें</string>
+    <string name="title_slogan">सेवा परमो धर्म</string>
+    <string name="title_small">छोटा</string>
+    <string name="title_start_quiz">प्रश्नोत्तरी शुरू करें</string>
+    <string name="title_study_material">अध्ययन सामग्री</string>
+    <string name="title_term_and_condition">नियम और शर्तें</string>
+    <string name="title_time_over">Time is over</string>
+    <string name="title_topics">विषय</string>
+    <string name="title_total_chapters">कुल अध्याय</string>
+    <string name="title_total_correct_ans">कुल सही ऊत्तर :</string>
+    <string name="title_total_ques">कुल प्रश्न :</string>
+    <string name="title_total_ques_attpmt">प्रयास किए प्रश्न :</string>
+    <string name="title_total_wrong_ans">कुल गलत उत्तर :</string>
+    <string name="title_ur_score">आपके अंक :</string>
+    <string name="title_v">\u2022 केवल एक बार उत्तर का चयन करें</string>
+    <string name="title_version">संस्करण :</string>
+    <string name="title_views">व्यू</string>
+    <string name="title_welcome">जय हिन्द ,</string>
+    <string name="title_welcome_ii">अपना ज्ञान बढ़ाओ</string>
+</resources>
