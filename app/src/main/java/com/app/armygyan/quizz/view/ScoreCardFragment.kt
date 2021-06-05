@@ -2,26 +2,22 @@ package com.app.armygyan.quizz.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
+import com.app.armygyan.databinding.FragmentScoreCardBinding
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.quizz.model.QuestionSet
 import com.app.armygyan.quizz.viewmodel.ScoreCardViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import kotlinx.android.synthetic.main.fragment_score_card.*
-import kotlinx.coroutines.*
 import java.util.*
-import kotlin.math.abs
-import kotlin.math.round
+
 
 
 class ScoreCardFragment :Fragment() {
@@ -29,13 +25,15 @@ class ScoreCardFragment :Fragment() {
     private var mFragmentListener: HomeFragmentSelectedListener? = null
     private lateinit var viewModel: ScoreCardViewModel
     private lateinit var mInterstitialAd: InterstitialAd
+    private var _binding: FragmentScoreCardBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun newInstance(payload: Any?):ScoreCardFragment{
-            var fragment =ScoreCardFragment()
+            val fragment =ScoreCardFragment()
             val bundle = Bundle()
-            var quizDetail = payload as ArrayList<QuestionSet>
+            val quizDetail = payload as ArrayList<QuestionSet>
             bundle.putParcelableArrayList("KEY", quizDetail)
             fragment.arguments = bundle
             return fragment
@@ -62,20 +60,21 @@ class ScoreCardFragment :Fragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_score_card, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentScoreCardBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
   super.onViewCreated(view, savedInstanceState)
-        fbtn_ok?.setOnClickListener {
+        binder.fbtnOk.setOnClickListener {
             mFragmentListener?.popTillFragment(FragmentType.QUIZ_CATEGORY_FRAGMENT, 0)
         }
-        fbtn_show_answers?.setOnClickListener {
+        binder.fbtnShowAnswers.setOnClickListener {
 
             mFragmentListener?.showFragment(FragmentType.SHOW_ANSWER, quizDetail)
         }
-        viewModel.quizDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.quizDetail.observe(viewLifecycleOwner, {
             val totQues:Int = it.size
             val totAttemptedQues:Int = it.filter { it.ansOptSelected!=0 }.size
             var correctAnsCount=0
@@ -91,20 +90,19 @@ class ScoreCardFragment :Fragment() {
             val totWrongQues=totAttemptedQues-correctAnsCount
             val totScore= ((correctAnsCount*2) - (totWrongQues*0.5))
 
-            tv_tot_ques?.text= String.format(Locale.getDefault(), "%02d", totQues)
-            tv_tot_attempted_ques?.text= String.format(Locale.getDefault(), "%02d", totAttemptedQues)
-            tv_tot_correct_ques?.text= String.format(Locale.getDefault(), "%02d", correctAnsCount)
-            tv_tot_wrong_ques?.text=String.format(Locale.getDefault(), "%02d", totWrongQues)
-            tv_your_score?.text= String.format(Locale.getDefault(), "%.01f", totScore)
+            binder.tvTotQues.text = String.format(Locale.getDefault(), "%02d", totQues)
+            binder.tvTotAttemptedQues.text = String.format(Locale.getDefault(), "%02d", totAttemptedQues)
+            binder.tvTotCorrectQues.text = String.format(Locale.getDefault(), "%02d", correctAnsCount)
+            binder.tvTotWrongQues.text =String.format(Locale.getDefault(), "%02d", totWrongQues)
+            binder.tvYourScore.text = String.format(Locale.getDefault(), "%.01f", totScore)
 
-            var percentage = (totScore * 100) / (totQues*2); //12
-           // Log.e("percentage",""+percentage.toInt())
+            val percentage = (totScore * 100) / (totQues*2)
             val performance = when(percentage.toInt()){
                 in 90..100 -> resources.getString(R.string.title_excellent)
                 in 80..90 -> resources.getString(R.string.title_good)
                 in 60..79 -> resources.getString(R.string.title_average)
                 else -> resources.getString(R.string.title_poor) }
-            tv_over_all_performance?.text=performance
+            binder.tvOverAllPerformance.text=performance
         })
 
         mInterstitialAd = InterstitialAd(activity)
@@ -115,5 +113,10 @@ class ScoreCardFragment :Fragment() {
         }
 
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
-//ca-app-pub-7872107105590310/4646905684

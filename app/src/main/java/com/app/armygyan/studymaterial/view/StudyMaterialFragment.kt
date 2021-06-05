@@ -9,22 +9,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.armygyan.QuizApplication
-import com.app.armygyan.R
 import com.app.armygyan.studymaterial.viewmodel.StudyMaterialViewModel
 import com.app.armygyan.annotation.FragmentType
 import com.app.armygyan.annotation.Status
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentStudyMaterialBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.network.WebHeader
 import com.app.armygyan.studymaterial.model.StudyMaterialCategory
 import com.google.android.gms.ads.AdRequest
-import kotlinx.android.synthetic.main.fragment_study_material.adView
-import kotlinx.android.synthetic.main.fragment_study_material.cl_root
-import kotlinx.android.synthetic.main.fragment_study_material.ibtn_close
-import kotlinx.android.synthetic.main.fragment_study_material.rv_category
-import kotlinx.android.synthetic.main.fragment_study_material.shimmer_frame_layout
-import kotlinx.android.synthetic.main.fragment_study_material.tv_empty_view
 import java.util.HashMap
 
 
@@ -35,12 +29,15 @@ class StudyMaterialFragment : BaseFragment() {
     private var categoryAdapter: CategoryAdapter? = null
     private lateinit var accessToken: String
     private var headerMap: HashMap<String, String>? = null
+    private var _binding: FragmentStudyMaterialBinding? = null
+    private val binder get() = _binding!!
+
     companion object {
         fun newInstance() = StudyMaterialFragment()
     }
 
     override fun getRootView(): View {
-        return cl_root
+        return binder.clRoot
     }
 
     override fun onAttach(context: Context) {
@@ -62,24 +59,25 @@ class StudyMaterialFragment : BaseFragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_study_material, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentStudyMaterialBinding.inflate(inflater, container, false)
+         return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initObserver()
-        ibtn_close?.setOnClickListener {
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
 
         val adRequest = AdRequest.Builder().build()
-        adView?.loadAd(adRequest)
+        binder.adView.loadAd(adRequest)
     }
 
     private fun initRecyclerView() {
-        rv_category?.apply {
+        binder.rvCategory.apply {
             layoutManager=LinearLayoutManager(requireActivity())
             adapter = categoryAdapter
             categoryAdapter?.setOnItemClickListener(itemClickListener)
@@ -88,23 +86,16 @@ class StudyMaterialFragment : BaseFragment() {
     }
 
     private fun initObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) shimmer_frame_layout?.visibility = View.VISIBLE
-                else shimmer_frame_layout?.visibility = View.GONE
-
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.shimmerFrameLayout.visibility = View.VISIBLE
+                else binder.shimmerFrameLayout.visibility = View.GONE
             })
 
-        viewModel.isListEmpty.observe(viewLifecycleOwner, Observer { if (it) tv_empty_view?.visibility = View.VISIBLE })
+        viewModel.isListEmpty.observe(viewLifecycleOwner,
+            { if (it) binder.tvEmptyView.visibility = View.VISIBLE })
 
-//        viewModel.resultFavouriteCategory.observe(viewLifecycleOwner, Observer {
-//            when (it.status) {
-//                Status.SUCCESS -> it.data?.message?.let { showSnackBar(it,R.color.colorGreen) }
-//                Status.FAILURE -> it.errorMsg?.let { showSnackBar(it)}
-//            }
-//        })
 
-        viewModel.lstOfCategories.observe(viewLifecycleOwner, Observer {
+        viewModel.lstOfCategories.observe(viewLifecycleOwner, {
            if(it.isNotEmpty()) {
                categoryAdapter?.clearAll()
                val topList: List<StudyMaterialCategory> = it.filter { it.isFavourite }
@@ -140,6 +131,10 @@ class StudyMaterialFragment : BaseFragment() {
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
 }

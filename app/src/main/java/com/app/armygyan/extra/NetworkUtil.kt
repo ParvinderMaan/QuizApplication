@@ -1,9 +1,7 @@
 package com.app.armygyan.extra
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import com.app.armygyan.QuizApplication
 
 class NetworkUtil {
 

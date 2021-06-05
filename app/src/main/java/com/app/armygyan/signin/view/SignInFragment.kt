@@ -9,11 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
@@ -21,6 +17,7 @@ import com.app.armygyan.annotation.FragmentType
 import com.app.armygyan.annotation.Status.FAILURE
 import com.app.armygyan.annotation.Status.SUCCESS
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentSignInBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.network.WebHeader
@@ -35,7 +32,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 import kotlinx.coroutines.*
 import java.util.HashMap
 import kotlin.coroutines.resume
@@ -49,13 +45,15 @@ class SignInFragment : BaseFragment() {
     private var sharedPrefs: SharedPrefHelper? = null
     private var mFragmentListener: HomeFragmentSelectedListener? = null
     private lateinit var viewModel: SignInViewModel
+    private var _binding: FragmentSignInBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = SignInFragment()
     }
 
     override fun getRootView(): View {
-       return cl_parent
+       return binder.clParent
     }
 
     override fun onAttach(context: Context) {
@@ -79,8 +77,9 @@ class SignInFragment : BaseFragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
 
@@ -88,7 +87,7 @@ class SignInFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeDeviceToken()
         initObserver()
-        fbtn_sign_in?.setOnClickListener {
+        binder.fbtnSignIn.setOnClickListener {
           viewModel.isLoading.value=true
           val signInIntent: Intent? = googleSignInClient?.signInIntent
           startActivityForResult(signInIntent, REQEST_CODE_SIGN_IN)
@@ -105,24 +104,22 @@ class SignInFragment : BaseFragment() {
             withContext(Dispatchers.Main) {
                 val transition= ChangeBounds()
                 transition.duration=800
-                TransitionManager.beginDelayedTransition(cl_parent,transition) //,transition
-                constraintSetEnd.applyTo(cl_parent)
+                TransitionManager.beginDelayedTransition(binder.clParent,transition) //,transition
+                constraintSetEnd.applyTo(binder.clParent)
             }
         }
 
     }
 
     private fun initObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) progress_bar?.visibility = View.VISIBLE
-                else progress_bar?.visibility = View.INVISIBLE
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.progressBar.visibility = View.VISIBLE
+                else binder.progressBar.visibility = View.INVISIBLE
             })
 
-        viewModel.isViewEnable.observe(viewLifecycleOwner,
-            Observer { fbtn_sign_in?.isClickable = it })
+        viewModel.isViewEnable.observe(viewLifecycleOwner, { binder.fbtnSignIn.isClickable = it })
 
-        viewModel.resultantSignIn.observe(viewLifecycleOwner, Observer {
+        viewModel.resultantSignIn.observe(viewLifecycleOwner, {
             when (it.status) {
                 SUCCESS -> handleSigInResult(it.data?.data, it.data?.token)
                 FAILURE -> showSnackBar(it.errorMsg.toString())
@@ -160,9 +157,6 @@ class SignInFragment : BaseFragment() {
             val acc = completedTask.getResult(ApiException::class.java)
             deviceId=sharedPrefs?.read(SharedPrefHelper.KEY_DEVICE_ID,"");
             viewModel.signInRequest = SignInRequest(acc?.displayName, acc?.email, acc?.photoUrl.toString(), deviceId)
-          //  viewModel.attemptSignIn()
-          // new
-            // IO,Main,Default
             CoroutineScope(Dispatchers.Default).launch {
                 // async code can be written here ....
                 val isGoogleSignOut = async { attemptGoogleSignOut() }
@@ -215,4 +209,10 @@ class SignInFragment : BaseFragment() {
                 }
             }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

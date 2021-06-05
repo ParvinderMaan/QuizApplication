@@ -1,15 +1,15 @@
 package com.app.armygyan.network
 
-/*
+/**
   this class has private constructor
  in order to restrict its object creation
  it contains all the url used for network request
-*/
+**/
 class WebUrl private constructor() {
 
     companion object {
         // base urls
-        const val BASE = "https://quiz.christosonline.com/api/"    // https://api.stackexchange.com/
+        const val BASE = "https://christosonline.com/armygyan/public/api/"    //
 
         // child urls
         const val SIGN_IN = "register"

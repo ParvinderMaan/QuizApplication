@@ -14,8 +14,7 @@ class AlterLanguageDialogFragment : DialogFragment() {
 
     companion object {
         fun newInstance(): AlterLanguageDialogFragment {
-            val fragment = AlterLanguageDialogFragment()
-            return fragment
+            return AlterLanguageDialogFragment()
         }
     }
 

@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
 import com.app.armygyan.R
-import com.app.armygyan.annotation.FragmentType
 import com.app.armygyan.base.BaseFragment
-import com.app.armygyan.dialog.AlterLanguageDialogFragment
+import com.app.armygyan.databinding.FragmentAnswerBinding
 import com.app.armygyan.dialog.ExplanationBottomSheetFragment
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.quizz.model.QuestionSet
@@ -22,9 +21,6 @@ import com.app.armygyan.quizz.viewmodel.AnswerViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import kotlinx.android.synthetic.main.fragment_answer.*
-import kotlinx.android.synthetic.main.fragment_answer.ibtn_close
-import kotlinx.android.synthetic.main.fragment_answer.tv_header_title
 import java.util.ArrayList
 
 
@@ -36,14 +32,16 @@ class AnswerFragment : BaseFragment() {
     private lateinit var viewModel: AnswerViewModel
     private var mVisiblePos:Int=0
     private lateinit var mInterstitialAd: InterstitialAd
+    private var _binding: FragmentAnswerBinding? = null
+    private val binder get() = _binding!!
 
 
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun newInstance(payload: Any?):AnswerFragment{
-            var fragment =AnswerFragment()
+            val fragment =AnswerFragment()
             val bundle = Bundle()
-            var quizDetail = payload as ArrayList<QuestionSet>
+            val quizDetail = payload as ArrayList<QuestionSet>
             bundle.putParcelableArrayList("KEY", quizDetail)
             fragment.arguments = bundle
             return fragment
@@ -63,7 +61,6 @@ class AnswerFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AnswerViewModel::class.java)
 
-        // collect our intent
         if (arguments != null) {
             quizDetail = arguments?.getParcelableArrayList("KEY")
             quizDetail?.let { viewModel.quizDetail.value=it
@@ -73,24 +70,24 @@ class AnswerFragment : BaseFragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_answer, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
+        _binding = FragmentAnswerBinding.inflate(inflater, container, false)
+        return binder.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_header_title?.text=resources.getString(R.string.title_answers)
-        tv_previous?.setOnClickListener {
-            if(mVisiblePos>=1) rv_answer_set?.smoothScrollToPosition(mVisiblePos-1)
+        binder.tvHeaderTitle.text=resources.getString(R.string.title_answers)
+        binder.tvPrevious.setOnClickListener {
+            if(mVisiblePos>=1) binder.rvAnswerSet.smoothScrollToPosition(mVisiblePos-1)
 
 
         }
-        tv_next?.setOnClickListener {
-            if(mVisiblePos<answerAdapter.itemCount)  rv_answer_set?.smoothScrollToPosition(mVisiblePos+1)
+        binder.tvNext.setOnClickListener {
+            if(mVisiblePos<answerAdapter.itemCount)  binder.rvAnswerSet.smoothScrollToPosition(mVisiblePos+1)
         }
 
-       ibtn_close?.setOnClickListener {
-                mFragmentListener?.popTopMostFragment()
-        }
+        binder.ibtnClose.setOnClickListener { mFragmentListener?.popTopMostFragment() }
 
         initAnsSetRecyclerView()
         viewModel.quizDetail.observe(viewLifecycleOwner, Observer {
@@ -98,7 +95,6 @@ class AnswerFragment : BaseFragment() {
                 answerAdapter.addAll(it)
             }
         })
-
 
         mInterstitialAd = InterstitialAd(activity)
         mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/103317371" // test ca-app-pub-3940256099942544/103317371
@@ -112,27 +108,27 @@ class AnswerFragment : BaseFragment() {
 
 
     private fun initAnsSetRecyclerView() {
-        rv_answer_set?.apply {
+        binder.rvAnswerSet.apply {
             linearLayoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             layoutManager=linearLayoutManager
             answerAdapter = AnswerAdapter()
             answerAdapter.setOnItemClickListener(itemClickListener)
             adapter = answerAdapter
-            rv_answer_set.setHasFixedSize(true)
+            binder.rvAnswerSet.setHasFixedSize(true)
             val mPagerSnapHelper = PagerSnapHelper()
-            mPagerSnapHelper.attachToRecyclerView(rv_answer_set);
-            rv_answer_set.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            mPagerSnapHelper.attachToRecyclerView(binder.rvAnswerSet)
+            binder.rvAnswerSet.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     mVisiblePos= linearLayoutManager.findLastCompletelyVisibleItemPosition()
                     if((answerAdapter.items.size-1)==mVisiblePos){
-                        if(tv_next.isEnabled)  tv_next.isEnabled=false
+                        if(binder.tvNext.isEnabled)  binder.tvNext.isEnabled=false
                     }else{
-                        if(!tv_next.isEnabled)  tv_next.isEnabled=true
+                        if(!binder.tvNext.isEnabled)  binder.tvNext.isEnabled=true
                     }
                     if(0==mVisiblePos){
-                        if(tv_previous.isEnabled)  tv_previous.isEnabled=false
+                        if(binder.tvPrevious.isEnabled)  binder.tvPrevious.isEnabled=false
                     }else{
-                        if(!tv_previous.isEnabled)  tv_previous.isEnabled=true
+                        if(!binder.tvPrevious.isEnabled)  binder.tvPrevious.isEnabled=true
                     }
 
                 }
@@ -140,7 +136,6 @@ class AnswerFragment : BaseFragment() {
 
         }
     }
-
 
     var itemClickListener:AnswerAdapter.OnItemClickListener= object :AnswerAdapter.OnItemClickListener{
         override fun onItemClick(model: QuestionSet,pos:Int) {
@@ -151,4 +146,10 @@ class AnswerFragment : BaseFragment() {
         }
 
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

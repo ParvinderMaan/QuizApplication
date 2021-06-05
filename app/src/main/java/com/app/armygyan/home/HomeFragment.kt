@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.app.armygyan.QuizApplication
-import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
-
+import com.app.armygyan.databinding.FragmentHomeBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment :Fragment() {
@@ -21,6 +19,8 @@ class HomeFragment :Fragment() {
     private lateinit var viewModel: HomeViewModel
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
     private var sharedPrefs: SharedPrefHelper? = null
+    private var _binding: FragmentHomeBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -38,44 +38,49 @@ class HomeFragment :Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
-        tv_usr_welcome?.append(" ")
-        tv_usr_welcome?.append(usrName?.split(" ")?.get(0))
+        binder.tvUsrWelcome.append(" ")
+        binder.tvUsrWelcome.append(usrName?.split(" ")?.get(0))
         initListener()
 
     }
 
     private fun initListener() {
 
-        tv_setting?.setOnClickListener {
+        binder.tvSetting.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.SETTING_FRAGMENT,null)
         }
 
-        tv_my_profile?.setOnClickListener {
+        binder.tvMyProfile.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.PROFILE_FRAGMENT,null)
         }
-        tv_about_us?.setOnClickListener {
+        binder.tvAboutUs.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.ABOUT_US_FRAGMENT,null)
         }
 
-        tv_notification?.setOnClickListener {
+        binder.tvNotification.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.NOTIFICATION_FRAGMENT,null)
         }
 
-        tv_study_material?.setOnClickListener {
+        binder.tvStudyMaterial.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.STUDY_MATERIAL_FRAGMENT,null)
         }
 
-        btn_play_quiz?.setOnClickListener {
+        binder.btnPlayQuiz.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.QUIZ_CATEGORY_FRAGMENT,null)
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

@@ -9,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
+import com.app.armygyan.databinding.FragmentSplashBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.viewmodel.SplashViewModel
-import kotlinx.android.synthetic.main.fragment_splash.*
 import kotlinx.coroutines.*
 
 
@@ -28,6 +27,8 @@ class SplashFragment :  Fragment() {
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
     private lateinit var viewModel: SplashViewModel
     private var sharedPrefs: SharedPrefHelper? =null
+    private var _binding: FragmentSplashBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = SplashFragment()
@@ -47,8 +48,9 @@ class SplashFragment :  Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentSplashBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,30 +68,30 @@ class SplashFragment :  Fragment() {
             withContext(Dispatchers.Main) {
                 val transition= ChangeBounds()
                 transition.duration=800
-                TransitionManager.beginDelayedTransition(cl_root,transition) //,transition
-                constraintSetEnd.applyTo(cl_root)
+                TransitionManager.beginDelayedTransition(binder.clRoot,transition) //,transition
+                constraintSetEnd.applyTo(binder.clRoot)
             }
         }
 
 
-        viewModel.action.observe(viewLifecycleOwner,
-            Observer<Int> {
+        viewModel.action.observe(viewLifecycleOwner, {
                 when(isUserSignIn) {
                     true ->   mFragmentListener?.showFragment(FragmentType.HOME_FRAGMENT,null)
                     false ->   mFragmentListener?.showFragment(FragmentType.SIGN_IN_FRAGMENT,null)
                 }
             })
 
-        // IO,Main,Default
         CoroutineScope(Dispatchers.Default).launch {
             delay(DELAY_INTERVAL)
-            withContext(Dispatchers.Main) {
-               viewModel.showFragment()
-            }
+            viewModel.showFragment()
         }
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 
 

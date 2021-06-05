@@ -10,7 +10,7 @@ class SplashViewModel : ViewModel() {
     }
 
     fun showFragment() {
-        action.value=1;
+        action.postValue(1)
     }
 
 }

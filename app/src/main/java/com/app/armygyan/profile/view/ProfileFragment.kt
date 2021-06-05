@@ -5,26 +5,16 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
-import com.app.armygyan.annotation.Language
-import com.app.armygyan.annotation.Status
-import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentProfileBinding
 import com.app.armygyan.helper.SharedPrefHelper
-import com.app.armygyan.signin.viewmodel.SignInViewModel
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.profile.viewmodel.ProfileViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_notification.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_setting.ibtn_close
 
 
 class ProfileFragment : Fragment() {
@@ -35,6 +25,8 @@ class ProfileFragment : Fragment() {
     private var mFragmentListener: HomeFragmentSelectedListener? = null
     private lateinit var viewModel: ProfileViewModel
     private var sharedPrefs: SharedPrefHelper? = null
+    private var _binding: FragmentProfileBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -57,61 +49,38 @@ class ProfileFragment : Fragment() {
          usrProfileUrl = sharedPrefs?.read(SharedPrefHelper.KEY_PROFILE_PIC, "https://www.abc.com")
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
 
-        ibtn_close?.setOnClickListener {
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
-        fbtn_back?.setOnClickListener {
+        binder.fbtnBack.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
 
-        edt_usr_id?.setText("#"+usrId)
-        edt_usr_name?.setText(usrName)
-        edt_usr_email?.setText(usrEmail)
+        binder.edtUsrId.setText("#$usrId")
+        binder.edtUsrName.setText(usrName)
+        binder.edtUsrEmail.setText(usrEmail)
 
         Picasso.get().load(usrProfileUrl)
             .resize(120, 120)
             .centerCrop()
             .placeholder(R.color.colorCyan)
             .error(R.color.colorRed)
-            .into(civ_profile_pic)
-
-
-
+            .into(binder.civProfilePic)
     }
 
-
-    private fun initObserver() {
-
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-
-            })
-
-//        viewModel.resultGetProfile.observe(viewLifecycleOwner, Observer {
-//            when(it.status){
-//                Status.SUCCESS -> it.data?.data
-//                Status.FAILURE -> if (it.errorMsg != null)
-//                    Snackbar.make(clRoot,""+it.errorMsg , Snackbar.LENGTH_LONG).show()
-//            }
-//        })
-//
-//        viewModel.resultUpdateProfile.observe(viewLifecycleOwner, Observer {
-//            when(it.status){
-//                Status.SUCCESS -> it.data?.message
-//                Status.FAILURE -> if (it.errorMsg != null)
-//                    Snackbar.make(clRoot,""+it.errorMsg , Snackbar.LENGTH_LONG).show()
-//            }
-//        })
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+
 
 }

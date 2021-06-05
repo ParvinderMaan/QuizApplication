@@ -9,18 +9,16 @@ import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.QuizApplication
-import com.app.armygyan.R
 import com.app.armygyan.annotation.Status
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentTermAndConditionBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.model.TermAndConditionResponse
 import com.app.armygyan.miscellaneous.viewmodel.TermAndConditionViewModel
 import com.app.armygyan.network.WebHeader
-import kotlinx.android.synthetic.main.fragment_term_and_condition.*
 import java.util.*
 
 class TermAndConditionFragment : BaseFragment() {
@@ -29,6 +27,8 @@ class TermAndConditionFragment : BaseFragment() {
     private var headerMap: HashMap<String, String>? = null
     private var mFragmentListener: HomeFragmentSelectedListener? = null
     private lateinit var viewModel: TermAndConditionViewModel
+    private var _binding: FragmentTermAndConditionBinding? = null
+    private val binder get() = _binding!!
 
 
     companion object {
@@ -37,7 +37,7 @@ class TermAndConditionFragment : BaseFragment() {
     }
 
     override fun getRootView(): View {
-        return cl_root
+        return binder.clRoot
     }
 
     override fun onAttach(context: Context) {
@@ -57,8 +57,9 @@ class TermAndConditionFragment : BaseFragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_term_and_condition, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentTermAndConditionBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,8 +67,8 @@ class TermAndConditionFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         headerMap?.let { viewModel.fetchTermAndCondition(it) }
         initObserver()
-        textView?.movementMethod = ScrollingMovementMethod()
-        ibtn_close?.setOnClickListener {
+        binder.textView.movementMethod = ScrollingMovementMethod()
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
 
@@ -75,13 +76,13 @@ class TermAndConditionFragment : BaseFragment() {
 
     private fun initObserver() {
         viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) shimmer_frame_layout?.visibility = View.VISIBLE
-                else shimmer_frame_layout?.visibility = View.GONE
+            {
+                if (it) binder.shimmerFrameLayout.visibility = View.VISIBLE
+                else binder.shimmerFrameLayout.visibility = View.GONE
 
             })
 
-        viewModel.resultantTermAndCondition.observe(viewLifecycleOwner, Observer {
+        viewModel.resultantTermAndCondition.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> loadTermAndConditions(it.data?.data?.get(0))
                 Status.FAILURE -> it.errorMsg?.let { showSnackBar(it) }
@@ -92,10 +93,16 @@ class TermAndConditionFragment : BaseFragment() {
 
     private fun loadTermAndConditions(termsAndCondition: TermAndConditionResponse.TermAndConditionInfo?) {
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(termsAndCondition?.termsAndCondition, Html.FROM_HTML_MODE_LEGACY)
+            binder.textView.text = Html.fromHtml(termsAndCondition?.termsAndCondition, Html.FROM_HTML_MODE_LEGACY)
         } else {
             @Suppress("DEPRECATION")
-            textView.text = Html.fromHtml(termsAndCondition?.termsAndCondition)
+            binder.textView.text = Html.fromHtml(termsAndCondition?.termsAndCondition)
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

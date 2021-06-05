@@ -13,23 +13,24 @@ import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
 import com.app.armygyan.annotation.Language
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentChooseLanguageBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
-import kotlinx.android.synthetic.main.fragment_choose_language.*
 import kotlinx.coroutines.*
 
 
 class ChooseLanguageFragment :  BaseFragment() {
     private var sharedPrefs: SharedPrefHelper? = null
     private var mFragmentListener: HomeFragmentSelectedListener? = null
-
+    private var _binding: FragmentChooseLanguageBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = ChooseLanguageFragment()
     }
 
     override fun getRootView(): View {
-        return fl_main
+        return binder.flMain
     }
 
     override fun onAttach(context: Context) {
@@ -38,15 +39,10 @@ class ChooseLanguageFragment :  BaseFragment() {
         sharedPrefs = (context.applicationContext as QuizApplication).getSharedPrefInstance()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-    }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_choose_language, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
+        _binding = FragmentChooseLanguageBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,44 +52,33 @@ class ChooseLanguageFragment :  BaseFragment() {
         constraintSetStart.clone(activity,R.layout.fragment_choose_language)
         constraintSetEnd.clone(activity,R.layout.fragment_choose_language_alt)
 
-        btn_hindi?.setOnClickListener {
+        binder.btnHindi.setOnClickListener {
             sharedPrefs?.write(SharedPrefHelper.KEY_LANGUAGE, Language.HINDI) // English
             mFragmentListener?.resetLocale(Language.HINDI)
             Toast.makeText(activity,getString(R.string.title_change_language),Toast.LENGTH_LONG).show()
-
-//            val transition= ChangeBounds()
-//            transition.duration=1200
-//            TransitionManager.beginDelayedTransition(fl_main,transition) //,transition
-//            constraintSetStart.applyTo(fl_main)
         }
 
-        btn_english?.setOnClickListener {
+        binder.btnEnglish.setOnClickListener {
             sharedPrefs?.write(SharedPrefHelper.KEY_LANGUAGE, Language.ENGLISH) // English
             mFragmentListener?.resetLocale(Language.ENGLISH)
             Toast.makeText(activity,getString(R.string.title_change_language),Toast.LENGTH_LONG).show()
-
-//            val transition= ChangeBounds()
-//            transition.duration=1200
-//            TransitionManager.beginDelayedTransition(fl_main,transition) //,transition
-//            constraintSetStart.applyTo(fl_main)
         }
 
-
-
-
-        // IO,Main,Default
         CoroutineScope(Dispatchers.Default).launch {
             delay(800)
             withContext(Dispatchers.Main) {
                 val transition= ChangeBounds()
                 transition.duration=1200
-                if(fl_main!=null){
-                    TransitionManager.beginDelayedTransition(fl_main,transition) //,transition
-                    constraintSetEnd.applyTo(fl_main)
-                }
+                TransitionManager.beginDelayedTransition(binder.flMain,transition)
+                constraintSetEnd.applyTo(binder.flMain)
 
             }
         }
 
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

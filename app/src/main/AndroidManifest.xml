@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.app.armygyan">
-
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.app.armygyan.QuizApplication"
@@ -29,7 +28,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7872107105590310~7454932232" />
-
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="${crashlyticsCollectionEnabled}" />
         <service
             android:name=".notification.QuizFirebaseMessagingService"
             android:exported="false">

@@ -5,54 +5,30 @@ import android.graphics.Color
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.armygyan.R
+import com.app.armygyan.databinding.ListItemAnswerSetBinding
 import com.app.armygyan.quizz.model.QuestionSet
-import kotlinx.android.synthetic.main.list_item_answer_set.view.*
-import kotlinx.android.synthetic.main.list_item_answer_set.view.tv_category_name_
-import kotlinx.android.synthetic.main.list_item_question_set.view.fbtn_ans_four
-import kotlinx.android.synthetic.main.list_item_question_set.view.fbtn_ans_one
-import kotlinx.android.synthetic.main.list_item_question_set.view.fbtn_ans_three
-import kotlinx.android.synthetic.main.list_item_question_set.view.fbtn_ans_two
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ans_four
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ans_one
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ans_three
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ans_two
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ques_name
-import kotlinx.android.synthetic.main.list_item_question_set.view.tv_ques_no
 
 class AnswerAdapter() : RecyclerView.Adapter<AnswerViewHolder>() {
     private var mItemClickListener: OnItemClickListener? = null
-    val items: ArrayList<QuestionSet>
-
-    init {
-        this.items = ArrayList()
-    }
+    val items: ArrayList<QuestionSet> = ArrayList()
 
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
-        return AnswerViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item_answer_set,
-                parent, false
-            )
-        )
+        val binding = ListItemAnswerSetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AnswerViewHolder(binding)
+
     }
 
 
     override fun onBindViewHolder(holder: AnswerViewHolder, pos: Int) {
-        var item = items.get(pos)
-        val viewHolder = holder as AnswerViewHolder
-        item.let {
-            viewHolder.bindView(it,mItemClickListener,itemCount)
-
-        }
-
+        val item = items[pos]
+        holder.bindView(item,mItemClickListener,itemCount)
     }
 
     interface OnItemClickListener {
@@ -77,71 +53,68 @@ class AnswerAdapter() : RecyclerView.Adapter<AnswerViewHolder>() {
 
 }
 
-class AnswerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class AnswerViewHolder(val binder: ListItemAnswerSetBinding) : RecyclerView.ViewHolder(binder.root) {
 
-    @Suppress("DEPRECATION")
     fun bindView(model: QuestionSet, itemClickListener: AnswerAdapter.OnItemClickListener?, totCount: Int) {
         val quesTitle = itemView.context.resources.getString(R.string.title_question)
-        itemView.tv_ques_no?.text = (quesTitle).plus(" ").plus(adapterPosition + 1)
-        itemView.tv_category_name_.text =itemView.context.getString(R.string.slash).plus(totCount.toString())
+        binder.tvQuesNo.text = (quesTitle).plus(" ").plus(adapterPosition + 1)
+        binder.tvCategoryName.text =itemView.context.getString(R.string.slash).plus(totCount.toString())
 
 
-        itemView.tv_explain?.setOnClickListener {
+        binder.tvExplain.setOnClickListener {
             itemClickListener?.onItemClick(model,adapterPosition)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_one?.text = Html.fromHtml(model.optOne, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_two?.text = Html.fromHtml(model.optTwo, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_three?.text = Html.fromHtml(model.optThree, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_four?.text = Html.fromHtml(model.optFour, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvQuesName.text = Html.fromHtml(model.quesName, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsOne.text = Html.fromHtml(model.optOne, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsTwo.text = Html.fromHtml(model.optTwo, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsThree.text = Html.fromHtml(model.optThree, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsFour.text = Html.fromHtml(model.optFour, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName)
-            itemView.tv_ans_one?.text = Html.fromHtml(model.optOne)
-            itemView.tv_ans_two?.text = Html.fromHtml(model.optTwo)
-            itemView.tv_ans_three?.text = Html.fromHtml(model.optThree)
-            itemView.tv_ans_four?.text = Html.fromHtml(model.optFour)
+            binder.tvQuesName.text = Html.fromHtml(model.quesName)
+            binder.tvAnsOne.text = Html.fromHtml(model.optOne)
+            binder.tvAnsTwo.text = Html.fromHtml(model.optTwo)
+            binder.tvAnsThree.text = Html.fromHtml(model.optThree)
+            binder.tvAnsFour.text = Html.fromHtml(model.optFour)
         }
         when (model.ansOption) {
             "a" -> {
-                itemView.fbtn_ans_one?.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
-                itemView.fbtn_ans_one?.setImageResource(R.drawable.ic_check)
-                itemView.fbtn_ans_one?.show()
-                itemView.fbtn_ans_two.hide()
-                itemView.fbtn_ans_three.hide()
-                itemView.fbtn_ans_four.hide()
+                binder.fbtnAnsOne.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
+                binder.fbtnAnsOne.setImageResource(R.drawable.ic_check)
+                binder.fbtnAnsOne.show()
+                binder.fbtnAnsTwo.hide()
+                binder.fbtnAnsThree.hide()
+                binder.fbtnAnsFour.hide()
 
 
             }
             "b" -> {
-                itemView.fbtn_ans_two?.backgroundTintList =
-                    ColorStateList.valueOf(Color.parseColor("#22da93"))
-                itemView.fbtn_ans_two?.setImageResource(R.drawable.ic_check)
+                binder.fbtnAnsTwo.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
+                binder.fbtnAnsTwo.setImageResource(R.drawable.ic_check)
 
-                itemView.fbtn_ans_one.hide()
-                itemView.fbtn_ans_two.show()
-                itemView.fbtn_ans_three.hide()
-                itemView.fbtn_ans_four.hide()
+                binder.fbtnAnsOne.hide()
+                binder.fbtnAnsTwo.show()
+                binder.fbtnAnsThree.hide()
+                binder.fbtnAnsFour.hide()
 
             }
             "c" -> {
-                itemView.fbtn_ans_three.backgroundTintList =
-                    ColorStateList.valueOf(Color.parseColor("#22da93"))
-                itemView.fbtn_ans_three?.setImageResource(R.drawable.ic_check)
+                binder.fbtnAnsThree.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
+                binder.fbtnAnsThree.setImageResource(R.drawable.ic_check)
 
-                itemView.fbtn_ans_one.hide()
-                itemView.fbtn_ans_two.hide()
-                itemView.fbtn_ans_three.show()
-                itemView.fbtn_ans_four.hide()
+                binder.fbtnAnsOne.hide()
+                binder.fbtnAnsTwo.hide()
+                binder.fbtnAnsThree.show()
+                binder.fbtnAnsFour.hide()
             }
             "d" -> {
-                itemView.fbtn_ans_four.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
-                itemView.fbtn_ans_four?.setImageResource(R.drawable.ic_check)
-                itemView.fbtn_ans_one.hide()
-                itemView.fbtn_ans_two.hide()
-                itemView.fbtn_ans_three.hide()
-                itemView.fbtn_ans_four.show()
+                binder.fbtnAnsFour.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#22da93"))
+                binder.fbtnAnsFour.setImageResource(R.drawable.ic_check)
+                binder.fbtnAnsOne.hide()
+                binder.fbtnAnsTwo.hide()
+                binder.fbtnAnsThree.hide()
+                binder.fbtnAnsFour.show()
             }
 
         }
@@ -149,32 +122,32 @@ class AnswerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             1 -> {
 
                 if (model.ansOption != "a"){
-                    itemView.fbtn_ans_one.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
-                    itemView.fbtn_ans_one.setImageResource(R.drawable.ic_un_check)
-                    itemView.fbtn_ans_one?.show()
+                    binder.fbtnAnsOne.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
+                    binder.fbtnAnsOne.setImageResource(R.drawable.ic_un_check)
+                    binder.fbtnAnsOne.show()
                 }
 
             }
             2 -> {
                 if (model.ansOption != "b"){
-                    itemView.fbtn_ans_two.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
-                    itemView.fbtn_ans_two.setImageResource(R.drawable.ic_un_check)
-                    itemView.fbtn_ans_two.show()
+                    binder.fbtnAnsTwo.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
+                    binder.fbtnAnsTwo.setImageResource(R.drawable.ic_un_check)
+                    binder.fbtnAnsTwo.show()
                 }
 
             }
             3 -> {
                 if (model.ansOption != "c"){
-                    itemView.fbtn_ans_three.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
-                    itemView.fbtn_ans_three.setImageResource(R.drawable.ic_un_check)
-                    itemView.fbtn_ans_three.show()
+                    binder.fbtnAnsThree.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
+                    binder.fbtnAnsThree.setImageResource(R.drawable.ic_un_check)
+                    binder.fbtnAnsThree.show()
                 }
             }
             4 -> {
                 if (model.ansOption != "d"){
-                    itemView.fbtn_ans_four.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
-                    itemView.fbtn_ans_four.setImageResource(R.drawable.ic_un_check)
-                    itemView.fbtn_ans_four.show()
+                    binder.fbtnAnsFour.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#de5246"))
+                    binder.fbtnAnsFour.setImageResource(R.drawable.ic_un_check)
+                    binder.fbtnAnsFour.show()
                 }
 
 

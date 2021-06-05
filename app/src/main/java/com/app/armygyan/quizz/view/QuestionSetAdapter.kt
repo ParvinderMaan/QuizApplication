@@ -2,46 +2,32 @@ package com.app.armygyan.quizz.view
 
 import android.os.Build
 import android.text.Html
-import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.armygyan.R
+import com.app.armygyan.databinding.ListItemQuestionSetBinding
 import com.app.armygyan.quizz.model.QuestionSet
-import kotlinx.android.synthetic.main.list_item_question_set.view.*
 
-class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
+class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder>() {
     private var mItemClickListener: OnItemClickListener? = null
-    val items: ArrayList<QuestionSet>
-
-    constructor() : super() {
-        this.items = ArrayList();
-    }
+    val items: ArrayList<QuestionSet> = ArrayList()
 
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionSetViewHolder {
-        return QuestionSetViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item_question_set,
-                parent, false
-            )
-        )
+        val binding = ListItemQuestionSetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return QuestionSetViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: QuestionSetViewHolder, pos: Int, payloads: MutableList<Any>) {
        // Log.e("onBindViewHolder", "............extended.............."+pos)
-        var item = items.get(pos)
-        val viewHolder = holder
-        if(!payloads.isEmpty() ){
-            item.let {
-                viewHolder.bindTwoView(it,pos)
-            }
-
+        val item = items[pos]
+        if(payloads.isNotEmpty()){
+            holder.bindTwoView(item,pos)
         }else{
             super.onBindViewHolder(holder, pos, payloads)
         }
@@ -50,78 +36,73 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
     // Update ALL VIEW holder
     override fun onBindViewHolder(holder: QuestionSetViewHolder, pos: Int) {
       //  Log.e("onBindViewHolder", ".............normal............."+pos)
-        var item = items.get(pos)
-        val viewHolder = holder
-        item.let {
+        val item = items[pos]
+        holder.bindOneView(item, itemCount)
+        holder.bindTwoView(item, pos)
 
-            viewHolder.bindOneView(it, itemCount)
-            viewHolder.bindTwoView(it, pos)
-        }
-
-        // listener
-        viewHolder.itemView.tv_ans_one?.setOnClickListener {
+        holder.binder.tvAnsOne.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 && item.ansOptSelected != 4) {
                 item.ansOptSelected = 1
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
 
         }
-        viewHolder.itemView.tv_ans_two?.setOnClickListener {
+        holder.binder.tvAnsTwo.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 2
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
-        viewHolder.itemView.tv_ans_three?.setOnClickListener {
+        holder.binder.tvAnsThree.setOnClickListener {
             if (item.ansOptSelected !=1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 3
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
-        viewHolder.itemView.tv_ans_four?.setOnClickListener {
+        holder.binder.tvAnsFour.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 4
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
 
-        viewHolder.itemView.iv_one?.setOnClickListener {
+        holder.binder.ivOne.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 && item.ansOptSelected != 4) {
                 item.ansOptSelected = 1
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
 
         }
-        viewHolder.itemView.iv_two?.setOnClickListener {
+        holder.binder.ivTwo.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 2
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
-        viewHolder.itemView.iv_three?.setOnClickListener {
+        holder.binder.ivThree.setOnClickListener {
             if (item.ansOptSelected !=1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 3
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
-        viewHolder.itemView.iv_four?.setOnClickListener {
+        holder.binder.ivFour.setOnClickListener {
             if (item.ansOptSelected != 1 && item.ansOptSelected != 2 && item.ansOptSelected != 3 &&
                 item.ansOptSelected != 4) {
                 item.ansOptSelected = 4
-                notifyItemChanged(viewHolder.adapterPosition,1)
-                mItemClickListener?.onItemClick(item,viewHolder.adapterPosition)
+                notifyItemChanged(holder.adapterPosition,1)
+                mItemClickListener?.onItemClick(item, holder.adapterPosition)
             }
         }
     }
@@ -150,28 +131,25 @@ class QuestionSetAdapter : RecyclerView.Adapter<QuestionSetViewHolder> {
 
 }
 
-class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    @Suppress("DEPRECATION")
-    fun bindOneView(model: QuestionSet, totCount: Int) {
-        // views
+class QuestionSetViewHolder(val binder: ListItemQuestionSetBinding) : RecyclerView.ViewHolder(binder.root) {
 
-        var quesTitle = itemView.context.resources.getString(R.string.title_question)
-        itemView.tv_ques_no?.text = (quesTitle).plus(" ").plus(adapterPosition+1)
-        itemView.tv_category_name_.text =itemView.context.getString(R.string.slash).plus(totCount.toString())
+    fun bindOneView(model: QuestionSet, totCount: Int) {
+        val quesTitle = itemView.context.resources.getString(R.string.title_question)
+        binder.tvQuesNo.text = (quesTitle).plus(" ").plus(adapterPosition+1)
+        binder.tvCategoryName.text =itemView.context.getString(R.string.slash).plus(totCount.toString())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_one?.text =Html.fromHtml(model.optOne, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_two?.text =Html.fromHtml(model.optTwo, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_three?.text =Html.fromHtml(model.optThree, Html.FROM_HTML_MODE_LEGACY)
-            itemView.tv_ans_four?.text =Html.fromHtml(model.optFour, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvQuesName.text = Html.fromHtml(model.quesName, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsOne.text =Html.fromHtml(model.optOne, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsTwo.text =Html.fromHtml(model.optTwo, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsThree.text =Html.fromHtml(model.optThree, Html.FROM_HTML_MODE_LEGACY)
+            binder.tvAnsFour.text =Html.fromHtml(model.optFour, Html.FROM_HTML_MODE_LEGACY)
         } else {
-
-            itemView.tv_ques_name?.text = Html.fromHtml(model.quesName)
-            itemView.tv_ans_one?.text =Html.fromHtml(model.optOne)
-            itemView.tv_ans_two?.text =Html.fromHtml(model.optTwo)
-            itemView.tv_ans_three?.text =Html.fromHtml(model.optThree)
-            itemView.tv_ans_four?.text =Html.fromHtml(model.optFour)
+            binder.tvQuesName.text = Html.fromHtml(model.quesName)
+            binder.tvAnsOne.text =Html.fromHtml(model.optOne)
+            binder.tvAnsTwo.text =Html.fromHtml(model.optTwo)
+            binder.tvAnsThree.text =Html.fromHtml(model.optThree)
+            binder.tvAnsFour.text =Html.fromHtml(model.optFour)
         }
 
 
@@ -179,51 +157,51 @@ class QuestionSetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindTwoView(model: QuestionSet, pos:Int){
         when (model.ansOptSelected) {
             1 -> {
-                itemView.fbtn_ans_one?.show()
-                    if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
-                itemView.fbtn_ans_two.hide()
-                    if (itemView.fbtn_ans_three.visibility == View.VISIBLE)
-                itemView.fbtn_ans_three.hide()
-                    if (itemView.fbtn_ans_four.visibility == View.VISIBLE)
-                itemView.fbtn_ans_four.hide()
+                binder.fbtnAnsOne.show()
+                    if (binder.fbtnAnsTwo.visibility == View.VISIBLE)
+                        binder.fbtnAnsTwo.hide()
+                    if (binder.fbtnAnsThree.visibility == View.VISIBLE)
+                        binder.fbtnAnsThree.hide()
+                    if (binder.fbtnAnsFour.visibility == View.VISIBLE)
+                        binder.fbtnAnsFour.hide()
             }
             2 -> {
-                    if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
-                itemView.fbtn_ans_one.hide()
-                itemView.fbtn_ans_two.show()
-                    if (itemView.fbtn_ans_three.visibility == View.VISIBLE)
-                itemView.fbtn_ans_three.hide()
-                    if (itemView.fbtn_ans_four.visibility == View.VISIBLE)
-                itemView.fbtn_ans_four.hide()
+                    if (binder.fbtnAnsOne.visibility == View.VISIBLE)
+                        binder.fbtnAnsOne.hide()
+                        binder.fbtnAnsTwo.show()
+                    if (binder.fbtnAnsThree.visibility == View.VISIBLE)
+                        binder.fbtnAnsThree.hide()
+                    if (binder.fbtnAnsFour.visibility == View.VISIBLE)
+                        binder.fbtnAnsFour.hide()
 
             }
            3 -> {
-                    if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
-                itemView.fbtn_ans_one.hide()
-                    if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
-                itemView.fbtn_ans_two.hide()
-                itemView.fbtn_ans_three.show()
-                    if (itemView.fbtn_ans_four.visibility == View.VISIBLE)
-                itemView.fbtn_ans_four.hide()
+                    if (binder.fbtnAnsOne.visibility == View.VISIBLE)
+                        binder.fbtnAnsOne.hide()
+                    if (binder.fbtnAnsTwo.visibility == View.VISIBLE)
+                        binder.fbtnAnsTwo.hide()
+               binder.fbtnAnsThree.show()
+                    if (binder.fbtnAnsFour.visibility == View.VISIBLE)
+                        binder.fbtnAnsFour.hide()
             }
            4 -> {
-                    if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
-                itemView.fbtn_ans_one.hide()
-                    if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
-                itemView.fbtn_ans_two.hide()
-                    if (itemView.fbtn_ans_three.visibility == View.VISIBLE)
-                itemView.fbtn_ans_three.hide()
-                itemView.fbtn_ans_four.show()
+                    if (binder.fbtnAnsOne.visibility == View.VISIBLE)
+                        binder.fbtnAnsOne.hide()
+                    if (binder.fbtnAnsTwo.visibility == View.VISIBLE)
+                        binder.fbtnAnsTwo.hide()
+                    if (binder.fbtnAnsThree.visibility == View.VISIBLE)
+                        binder.fbtnAnsThree.hide()
+               binder.fbtnAnsFour.show()
             }
             else -> {
-                if (itemView.fbtn_ans_one.visibility == View.VISIBLE)
-                itemView.fbtn_ans_one.hide()
-                if (itemView.fbtn_ans_two.visibility == View.VISIBLE)
-                itemView.fbtn_ans_two.hide()
-                if (itemView.fbtn_ans_three.visibility == View.VISIBLE)
-                itemView.fbtn_ans_three.hide()
-                if (itemView.fbtn_ans_four.visibility == View.VISIBLE)
-                itemView.fbtn_ans_four.hide()
+                if (binder.fbtnAnsOne.visibility == View.VISIBLE)
+                    binder.fbtnAnsOne.hide()
+                if (binder.fbtnAnsTwo.visibility == View.VISIBLE)
+                    binder.fbtnAnsTwo.hide()
+                if (binder.fbtnAnsThree.visibility == View.VISIBLE)
+                    binder.fbtnAnsThree.hide()
+                if (binder.fbtnAnsFour.visibility == View.VISIBLE)
+                    binder.fbtnAnsFour.hide()
             }
         }
 

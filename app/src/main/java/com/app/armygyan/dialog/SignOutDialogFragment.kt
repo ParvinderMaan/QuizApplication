@@ -14,15 +14,10 @@ class SignOutDialogFragment : DialogFragment() {
 
     companion object {
         fun newInstance(): SignOutDialogFragment {
-            val fragment = SignOutDialogFragment()
-            return fragment
+            return SignOutDialogFragment()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         isCancelable = false

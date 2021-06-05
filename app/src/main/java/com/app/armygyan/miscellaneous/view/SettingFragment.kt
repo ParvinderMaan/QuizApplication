@@ -2,7 +2,6 @@ package com.app.armygyan.miscellaneous.view
 
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.BuildConfig
 import com.app.armygyan.QuizApplication
@@ -20,6 +18,7 @@ import com.app.armygyan.annotation.Language
 import com.app.armygyan.annotation.NotificationStatus
 import com.app.armygyan.annotation.Status
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentSettingBinding
 import com.app.armygyan.dialog.AlterLanguageDialogFragment
 import com.app.armygyan.dialog.SignOutDialogFragment
 import com.app.armygyan.helper.SharedPrefHelper
@@ -27,7 +26,6 @@ import com.app.armygyan.helper.SharedPrefHelper.Companion.KEY_NOTIFICATION_STATU
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.viewmodel.SettingViewModel
 import com.app.armygyan.network.WebHeader
-import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.coroutines.Runnable
 import java.util.*
 
@@ -38,12 +36,16 @@ class SettingFragment :  BaseFragment() {
     private var mFragmentListener: HomeFragmentSelectedListener? = null
     private lateinit var accessToken: String
     private var headerMap: HashMap<String, String>? = null
+    private var _binding: FragmentSettingBinding? = null
+    private val binder get() = _binding!!
+
+
     companion object {
         fun newInstance() = SettingFragment()
     }
 
     override fun getRootView(): View {
-       return cl_root
+       return binder.clRoot
     }
 
     override fun onAttach(context: Context) {
@@ -69,8 +71,9 @@ class SettingFragment :  BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+    ): View {
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,47 +81,47 @@ class SettingFragment :  BaseFragment() {
         initObserver()
 
         when (sharedPrefs?.read(SharedPrefHelper.KEY_LANGUAGE, Language.ENGLISH)) {
-            Language.ENGLISH -> tv_language_sel?.text = getString(R.string.title_english)
-            Language.HINDI -> tv_language_sel?.text = getString(R.string.title_hindi)
+            Language.ENGLISH -> binder.tvLanguageSel.text = getString(R.string.title_english)
+            Language.HINDI -> binder.tvLanguageSel?.text = getString(R.string.title_hindi)
         }
 
 
-        when (sharedPrefs?.read(SharedPrefHelper.KEY_NOTIFICATION_STATUS, NotificationStatus.ON)) {
-            NotificationStatus.OFF -> switch_push_notification?.isChecked = false
-            NotificationStatus.ON -> switch_push_notification?.isChecked = true
+        when (sharedPrefs?.read(KEY_NOTIFICATION_STATUS, NotificationStatus.ON)) {
+            NotificationStatus.OFF -> binder.switchPushNotification.isChecked = false
+            NotificationStatus.ON -> binder.switchPushNotification.isChecked = true
         }
 
         initListener()
 
-        val appVersion: String? = BuildConfig.VERSION_NAME
-        tv_app_version.text=resources.getString(R.string.title_version).plus(" ").plus(appVersion)
+        val appVersion: String = BuildConfig.VERSION_NAME
+        binder.tvAppVersion.text=resources.getString(R.string.title_version).plus(" ").plus(appVersion)
     }
 
     private fun initListener() {
-        ibtn_close?.setOnClickListener {
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
-        tv_term_and_condition?.setOnClickListener {
+        binder.tvTermAndCondition.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.TERM_CONDITION_FRAGMENT, null)
         }
-        tv_sign_out?.setOnClickListener {
+        binder.tvSignOut.setOnClickListener {
             showSignOutDialog()
         }
-        tv_language_sel?.setOnClickListener {
+        binder.tvLanguageSel.setOnClickListener {
             showLanguagePopupMenu()
         }
 
-        tv_invite?.setOnClickListener {
+        binder.tvInvite.setOnClickListener {
           mFragmentListener?.shareApp()
         }
-        switch_push_notification?.setOnCheckedChangeListener { view, isChecked ->
+        binder.switchPushNotification.setOnCheckedChangeListener { view, isChecked ->
             if (!currentTypingState) {
                     onIsSwitchModified(true);
                     currentTypingState = true;
                 }
 
                 handlerX.removeCallbacks(stoppedTypingNotifier);
-                handlerX.postDelayed(stoppedTypingNotifier, 2000);
+                handlerX.postDelayed(stoppedTypingNotifier, 2000)
 
         }
     }
@@ -131,12 +134,12 @@ class SettingFragment :  BaseFragment() {
     }
 
     private fun showLanguagePopupMenu() {
-        val popupMenu = PopupMenu(requireActivity(), tv_language_sel)
+        val popupMenu = PopupMenu(requireActivity(), binder.tvLanguageSel)
         val menu = popupMenu.menu
         menu.add(0, 1, 0, getString(R.string.title_english))
         menu.add(0, 2, 0, getString(R.string.title_hindi))
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
-            tv_language_sel?.text = item.title
+            binder.tvLanguageSel.text = item.title
             when (item.itemId) {
                 1 -> {
                     sharedPrefs?.write(SharedPrefHelper.KEY_LANGUAGE, Language.ENGLISH) // English
@@ -185,12 +188,11 @@ class SettingFragment :  BaseFragment() {
     }
 
     private fun initObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) progress_bar?.visibility = View.VISIBLE
-                else progress_bar?.visibility = View.INVISIBLE
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.progressBar.visibility = View.VISIBLE
+                else binder.progressBar.visibility = View.INVISIBLE
             })
-        viewModel.resultNotificationStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.resultNotificationStatus.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.message?.let { showSnackBar(it, R.color.colorGreen) }
@@ -206,7 +208,7 @@ class SettingFragment :  BaseFragment() {
 
         })
 
-        viewModel.resultSignOut.observe(viewLifecycleOwner, Observer {
+        viewModel.resultSignOut.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     mFragmentListener?.popTillFragment(FragmentType.SIGN_IN_FRAGMENT, 0)

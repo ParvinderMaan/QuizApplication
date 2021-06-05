@@ -19,6 +19,7 @@ import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
 import com.app.armygyan.annotation.Status
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentQuestionSetBinding
 import com.app.armygyan.dialog.InstructionDialogFragment
 import com.app.armygyan.dialog.TimeOverDialogFragment
 import com.app.armygyan.helper.SharedPrefHelper
@@ -27,8 +28,6 @@ import com.app.armygyan.network.WebHeader
 import com.app.armygyan.quizz.model.QuestionSet
 import com.app.armygyan.quizz.model.QuizDetail
 import com.app.armygyan.quizz.viewmodel.QuestionSetViewModel
-import kotlinx.android.synthetic.main.fragment_question_set.*
-import kotlinx.android.synthetic.main.layout_quiz_discription_i.*
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -49,6 +48,11 @@ class QuestionSetFragment : BaseFragment() {
     private lateinit var timer: CountDownTimer
     private var secondsRemaining: Long = 0
     var mVisiblePos:Int=0
+    private var _binding: FragmentQuestionSetBinding? = null
+    private val binder get() = _binding!!
+
+
+
     companion object {
         fun newInstance(payload: Any?): QuestionSetFragment {
             val fragment = QuestionSetFragment()
@@ -60,7 +64,7 @@ class QuestionSetFragment : BaseFragment() {
     }
 
     override fun getRootView(): View {
-        return cl_root
+        return binder.clRoot
     }
 
     override fun onAttach(context: Context) {
@@ -81,8 +85,9 @@ class QuestionSetFragment : BaseFragment() {
         headerMap?.put(WebHeader.KEY_AUTHORIZATION,accessToken)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_question_set, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentQuestionSetBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,9 +96,8 @@ class QuestionSetFragment : BaseFragment() {
         initObserver()
         initQuesSetRecyclerView()
         initQuesNoRecyclerView()
-        view_flipper?.flipInterval = 3000
+        binder.viewFlipper.flipInterval = 3000
 
-        // IO,Main,Default
         CoroutineScope(Dispatchers.Default).launch {
             delay(1000)
             withContext(Dispatchers.Main) {
@@ -105,12 +109,12 @@ class QuestionSetFragment : BaseFragment() {
 
 
     private fun initListener() {
-        ibtn_close?.setOnClickListener { showPopupMenu() }
-        fbtn_finish?.setOnClickListener { showResult() }
+        binder.ibtnClose.setOnClickListener { showPopupMenu() }
+        binder.fbtnFinish.setOnClickListener { showResult() }
     }
 
     private fun initQuesNoRecyclerView() {
-        rv_question_no?.apply {
+        binder.llQuizDiscriptionI.rvQuestionNo.apply {
             llManagerQuesNo=LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             layoutManager=llManagerQuesNo
             quesNoAdapter = QuestionNoAdapter()
@@ -119,7 +123,7 @@ class QuestionSetFragment : BaseFragment() {
              quesNoAdapter.setOnItemClickListener(object:
                 QuestionNoAdapter.OnItemClickListener{
                 override fun onItemClick(pos: Int) {
-                    rv_question_set?.scrollToPosition(pos)
+                    binder.rvQuestionSet.scrollToPosition(pos)
                 }
             })
 
@@ -133,7 +137,7 @@ class QuestionSetFragment : BaseFragment() {
     }
 
     private fun initQuesSetRecyclerView() {
-        rv_question_set?.apply {
+        binder.rvQuestionSet.apply {
             llManagerQuesSet = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             layoutManager=llManagerQuesSet
              quesSetAdapter = QuestionSetAdapter()
@@ -141,13 +145,12 @@ class QuestionSetFragment : BaseFragment() {
             quesSetAdapter.setOnItemClickListener(object:QuestionSetAdapter.OnItemClickListener{
                 override fun onItemClick(model: QuestionSet, adapterPosition: Int) {
                  quesNoAdapter.refreshItemStatus(model,adapterPosition)
-
                 }
             })
-            rv_question_set.setHasFixedSize(true)
+            binder.rvQuestionSet.setHasFixedSize(true)
             val mPagerSnapHelper = PagerSnapHelper()
-            mPagerSnapHelper.attachToRecyclerView(rv_question_set);
-            rv_question_set.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            mPagerSnapHelper.attachToRecyclerView(binder.rvQuestionSet);
+            binder.rvQuestionSet.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     mVisiblePos= llManagerQuesSet.findLastCompletelyVisibleItemPosition()
@@ -165,7 +168,7 @@ class QuestionSetFragment : BaseFragment() {
                         CoroutineScope(Dispatchers.Default).launch {
                             delay(1000)
                             withContext(Dispatchers.Main) {
-                                rv_question_no?.smoothScrollToPosition(visiblePos+5)
+                                binder.llQuizDiscriptionI.rvQuestionNo.smoothScrollToPosition(visiblePos+5)
                             }
                         }
                     }
@@ -180,10 +183,9 @@ class QuestionSetFragment : BaseFragment() {
     }
 
     private fun showPopupMenu() {
-        val popupMenu = PopupMenu(requireActivity(), ibtn_close)
+        val popupMenu = PopupMenu(requireActivity(), binder.ibtnClose)
         val menu = popupMenu.menu
         menu.add(0, 1, 0, getString(R.string.title_show_results))
-//        menu.add(0, 2, 0, getString(R.string.title_restart))
         menu.add(0, 2, 0, getString(R.string.title_quit_quiz))
         popupMenu.setOnMenuItemClickListener { item: MenuItem ->
 
@@ -205,16 +207,14 @@ class QuestionSetFragment : BaseFragment() {
 
 
     private fun initObserver() {
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) shimmer_frame_layout?.visibility = View.VISIBLE
-                else shimmer_frame_layout?.visibility = View.GONE
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.shimmerFrameLayout.visibility = View.VISIBLE
+                else binder.shimmerFrameLayout.visibility = View.GONE
             })
 
-        viewModel.isInstructDialogVisibility.observe(viewLifecycleOwner, Observer {
+        viewModel.isInstructDialogVisibility.observe(viewLifecycleOwner, {
                 it?.let {
                     if(it) {
-                      //  var noOfQues = viewModel.lstOfQuestions.value?.size;
                         val quizDetail = viewModel.quizDetail.value
                         alertDialogFragment = InstructionDialogFragment.newInstance(quizDetail)
                         alertDialogFragment?.show(childFragmentManager, "TAG")
@@ -227,12 +227,8 @@ class QuestionSetFragment : BaseFragment() {
                         })
                     }else{
                         alertDialogFragment?.dismiss()
-                     //   val noOfQues = viewModel.quizDetail.value?.quesCount?.toInt()
                         val duration = viewModel.quizDetail.value?.duration?.toInt()
-                        duration?.let {
-//                            tv_timer?.text=it.toString().plus(":00");
-                            startTimer(it.toLong() * 60000)
-                        }
+                        duration?.let { startTimer(it.toLong() * 60000) }
                     }
                 }
             })
@@ -257,18 +253,16 @@ class QuestionSetFragment : BaseFragment() {
         })
 
 
-        viewModel.quizDetail.observe(viewLifecycleOwner,
-            Observer {
-                tv_header_title?.text=it.name
+        viewModel.quizDetail.observe(viewLifecycleOwner, {
+                binder.tvHeaderTitle.text=it.name
 //                when (it.level) {
 //                    "1" -> tv_level_count?.text=resources.getString(R.string.level_beginner)
 //                    "2" -> tv_level_count?.text=resources.getString(R.string.level_medium)
 //                    "3" -> tv_level_count?.text=resources.getString(R.string.level_expert)
 //                }
-
             })
 
-        viewModel.resultQuizDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.resultQuizDetail.observe(viewLifecycleOwner, {
             when(it.status){
                 Status.SUCCESS ->{
                     viewModel.lstOfQuestions.value=it.data?.data?.quizQuestion
@@ -277,17 +271,16 @@ class QuestionSetFragment : BaseFragment() {
             }
         })
 
-        viewModel.lstOfQuestions.observe(viewLifecycleOwner, Observer {
+        viewModel.lstOfQuestions.observe(viewLifecycleOwner, {
            if(it.isNotEmpty()) {
-              // tv_ques_no_count?.text= it.size.toString()
-               tv_timer?.text=it.size.toString().plus(":").plus("00")
+               binder.tvTimer.text=it.size.toString().plus(":").plus("00")
                quesSetAdapter.addAll(it)
                quesNoAdapter.addAll(it)
-               var item = quesNoAdapter.getItem(0)
+               val item = quesNoAdapter.getItem(0)
                quesNoAdapter.refreshItemIndex(item,mVisiblePos)
-               group_content?.visibility=View.VISIBLE
+               binder.groupContent.visibility=View.VISIBLE
            }else{
-               tv_empty_view?.visibility = View.VISIBLE
+               binder.tvEmptyView.visibility = View.VISIBLE
            }
         })
 
@@ -297,25 +290,28 @@ class QuestionSetFragment : BaseFragment() {
     private fun startTimer(duration:Long) {
         timer = object : CountDownTimer(duration, 1000) {
             override fun onFinish(){
-                tv_timer?.text="00:00"
+                binder.tvTimer.text="00:00"
                 //show Dialog !!!!!
                 viewModel.isTimeOverDialogVisibility.value=true
             }
 
             override fun onTick(millisUntilFinished: Long) {
-              //  Log.e("onTick","millisUntilFinished");
                 secondsRemaining = millisUntilFinished / 1000
                 val minutesUntilFinished = secondsRemaining / 60
                 val secondsInMinuteUntilFinished = secondsRemaining - minutesUntilFinished * 60
                 val secondsStr = secondsInMinuteUntilFinished.toString()
-                var abc = "$minutesUntilFinished:${if (secondsStr.length == 2) secondsStr else "0" + secondsStr}"
-                tv_timer?.text =abc
+                val abc = "$minutesUntilFinished:${if (secondsStr.length == 2) secondsStr else "0" + secondsStr}"
+                binder.tvTimer.text =abc
              //   if(minutesUntilFinished==1L) showSnackBar(getString(R.string.alert_one_minute),R.color.colorYellow)
 
             }
         }.start()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
 

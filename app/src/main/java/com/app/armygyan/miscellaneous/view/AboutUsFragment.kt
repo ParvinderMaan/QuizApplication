@@ -11,20 +11,17 @@ import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.armygyan.QuizApplication
-import com.app.armygyan.R
 import com.app.armygyan.annotation.Status.FAILURE
 import com.app.armygyan.annotation.Status.SUCCESS
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentAboutUsBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.model.AboutUsResponse
 import com.app.armygyan.miscellaneous.viewmodel.AboutUsViewModel
 import com.app.armygyan.network.WebHeader
-import com.app.armygyan.network.WebUrl
-import kotlinx.android.synthetic.main.fragment_about_us.*
 import java.util.*
 
 
@@ -34,13 +31,15 @@ class AboutUsFragment :  BaseFragment() {
     private var sharedPrefHelper: SharedPrefHelper?=null
     private lateinit var accessToken: String
     private var headerMap: HashMap<String, String>? = null
+    private var _binding: FragmentAboutUsBinding? = null
+    private val binder get() = _binding!!
 
     companion object {
         fun newInstance() = AboutUsFragment()
     }
 
     override fun getRootView(): View {
-        return cl_root
+        return binder.clRoot
     }
 
 
@@ -60,8 +59,9 @@ class AboutUsFragment :  BaseFragment() {
         headerMap?.put(WebHeader.KEY_AUTHORIZATION,accessToken)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about_us, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentAboutUsBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,18 +69,12 @@ class AboutUsFragment :  BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         headerMap?.let { viewModel.fetchAboutUs(it) }
         initObserver()
-        textView?.movementMethod = ScrollingMovementMethod()
-        ibtn_close?.setOnClickListener {
+        binder.textView.movementMethod = ScrollingMovementMethod()
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
 
-//        iv_facebook?.setOnClickListener {
-//            val url = "https://www.facebook.com/dashmeshchauke"
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-//            startActivity(Intent.createChooser(intent, "Open with"))
-//        }
-
-        iv_instagram?.setOnClickListener {
+        binder.ivInstagram.setOnClickListener {
             val url = "https://www.instagram.com/army_gyan/?hl=en"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(Intent.createChooser(intent, "Open with"))
@@ -91,15 +85,13 @@ class AboutUsFragment :  BaseFragment() {
 
     private fun initObserver() {
 
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) shimmer_frame_layout?.visibility = View.VISIBLE
-                else shimmer_frame_layout?.visibility = View.GONE
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.shimmerFrameLayout.visibility = View.VISIBLE
+                else binder.shimmerFrameLayout.visibility = View.GONE
 
             })
 
-        viewModel.resultantAboutUs.observe(viewLifecycleOwner, Observer {
-
+        viewModel.resultantAboutUs.observe(viewLifecycleOwner, {
             when(it.status){
                 SUCCESS -> loadAboutUs(it.data?.data?.get(0))
                 FAILURE -> it.errorMsg?.let { showSnackBar(it)}
@@ -110,12 +102,17 @@ class AboutUsFragment :  BaseFragment() {
 
     private fun loadAboutUs(info: AboutUsResponse.AboutUsInfo?) {
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(info?.aboutUs, Html.FROM_HTML_MODE_LEGACY)
+            binder.textView.text = Html.fromHtml(info?.aboutUs, Html.FROM_HTML_MODE_LEGACY)
         } else {
             @Suppress("DEPRECATION")
-            textView.text = Html.fromHtml(info?.aboutUs)
+            binder.textView.text = Html.fromHtml(info?.aboutUs)
         }
 
 
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

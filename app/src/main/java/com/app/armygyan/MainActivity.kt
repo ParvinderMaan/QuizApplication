@@ -33,7 +33,6 @@ import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
 
@@ -300,7 +299,7 @@ class MainActivity : BaseActivity(), HomeFragmentSelectedListener {
     }
 
     override fun getRootView(): View {
-        return fl_container
+        return findViewById(R.id.fl_container)
     }
 
     override fun onDestroy() {

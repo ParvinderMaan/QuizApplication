@@ -5,23 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.armygyan.R
+import com.app.armygyan.databinding.DialogInstructionsBinding
 import com.app.armygyan.quizz.model.QuizDetail
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_instructions.*
 
 class InstructionDialogFragment : BottomSheetDialogFragment() {
     private var  dialogListener:InstructionDialogFragmentListener?=null
     var quizDetail:QuizDetail?=null
     var noOfMinutes:Int = 0
     var noOfQuestions:Int = 0
+    private var _binding: DialogInstructionsBinding? = null
+    private val  binder get() = _binding!!
     companion object {
         fun newInstance(quizDetail: QuizDetail?): InstructionDialogFragment {
             val fragment = InstructionDialogFragment()
             val bundle=Bundle()
-            quizDetail?.let { bundle.putParcelable("KEY", it) }
+            quizDetail?.let { bundle.putParcelable(KEY_ARGS, it) }
             fragment.arguments=bundle
             return fragment
         }
+        const val KEY_ARGS="KEY"
     }
 
 
@@ -30,8 +33,7 @@ class InstructionDialogFragment : BottomSheetDialogFragment() {
         setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogTheme);
 
         arguments?.let {
-            quizDetail=it.getParcelable("KEY")
-           // noOfMinutes=(noOfQuestions*30)/60
+            quizDetail=it.getParcelable(KEY_ARGS)
         }
         quizDetail?.quesCount?.toInt()?.let { noOfQuestions=it }
         quizDetail?.duration?.toInt()?.let { noOfMinutes=it }
@@ -39,26 +41,31 @@ class InstructionDialogFragment : BottomSheetDialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_instructions, container, false)
+        _binding = DialogInstructionsBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isCancelable=false
-        btn_start_quiz?.setOnClickListener {
+        binder.btnStartQuiz.setOnClickListener {
             dialogListener?.onStartClick()
         }
 
-        tv_details?.text=resources.getString(R.string.title_i)+" "+noOfQuestions+" "+resources.getString(R.string.title_questions)
-        tv_details?.append("\n")
-        tv_details?.append(resources.getString(R.string.title_ii))
-        tv_details?.append("\n")
-        tv_details?.append(resources.getString(R.string.title_iii))
-        tv_details?.append("\n")
-        tv_details?.append(resources.getString(R.string.title_iv) +" "+ noOfMinutes +" "+resources.getString(R.string.title_minutes))
-        tv_details?.append("\n")
-        tv_details?.append(resources.getString(R.string.title_v))
+        binder.tvDetails.text=resources.getString(R.string.title_i)+" "+noOfQuestions+" "+resources.getString(R.string.title_questions)
+        binder.tvDetails.append("\n")
+        binder.tvDetails.append(resources.getString(R.string.title_ii))
+        binder.tvDetails.append("\n")
+        binder.tvDetails.append(resources.getString(R.string.title_iii))
+        binder.tvDetails.append("\n")
+        binder.tvDetails.append(resources.getString(R.string.title_iv) +" "+ noOfMinutes +" "+resources.getString(R.string.title_minutes))
+        binder.tvDetails.append("\n")
+        binder.tvDetails.append(resources.getString(R.string.title_v))
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     interface InstructionDialogFragmentListener {

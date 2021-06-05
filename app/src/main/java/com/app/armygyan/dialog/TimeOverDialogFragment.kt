@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.app.armygyan.R
-import kotlinx.android.synthetic.main.dialog_time_over.*
+import com.app.armygyan.databinding.DialogTimeOverBinding
 
 class TimeOverDialogFragment : DialogFragment() {
     private var  dialogListener:TimeOverDialogFragmentListener?=null
-
+    private var _binding: DialogTimeOverBinding? = null
+    private val  binder get() = _binding!!
 
     companion object {
         fun newInstance(): TimeOverDialogFragment {
@@ -26,18 +27,21 @@ class TimeOverDialogFragment : DialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_time_over, container, false)
+        _binding = DialogTimeOverBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isCancelable=false
-        btn_submit_quiz?.setOnClickListener {
+        binder.btnSubmitQuiz.setOnClickListener {
             dialogListener?.onSubmitClick()
         }
 
-
-
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     interface TimeOverDialogFragmentListener {

@@ -6,27 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.armygyan.QuizApplication
-import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
 import com.app.armygyan.annotation.NotificationType
 import com.app.armygyan.annotation.Status
 import com.app.armygyan.base.BaseFragment
+import com.app.armygyan.databinding.FragmentNotificationBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.network.WebHeader
 import com.app.armygyan.notification.model.NotificationResponse
 import com.app.armygyan.notification.viewmodel.NotificationViewModel
 import com.google.android.gms.ads.AdRequest
-import kotlinx.android.synthetic.main.fragment_notification.*
-import kotlinx.android.synthetic.main.fragment_notification.cl_root
-import kotlinx.android.synthetic.main.fragment_notification.ibtn_close
-import kotlinx.android.synthetic.main.fragment_notification.shimmer_frame_layout
-import kotlinx.android.synthetic.main.fragment_notification.tv_empty_view
 import java.util.*
 
 class NotificationFragment : BaseFragment() {
@@ -36,11 +29,15 @@ class NotificationFragment : BaseFragment() {
     private var sharedPrefHelper: SharedPrefHelper?=null
     private lateinit var accessToken: String
     private var headerMap: HashMap<String, String>? = null
+    private var _binding: FragmentNotificationBinding? = null
+    private val binder get() = _binding!!
+
+
     companion object {
         fun newInstance() = NotificationFragment()
     }
     override fun getRootView(): View {
-        return cl_root
+        return binder.clRoot
     }
 
     override fun onAttach(context: Context) {
@@ -63,17 +60,18 @@ class NotificationFragment : BaseFragment() {
         headerMap?.let { viewModel.fetchNotifications(it) }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
+        return binder.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
-        ibtn_close?.setOnClickListener {
+        binder.ibtnClose.setOnClickListener {
             mFragmentListener?.popTopMostFragment()
         }
 
-        rv_notification?.apply {
+        binder.rvNotification.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             adapter = notificationAdapter
             notificationAdapter?.clear()
@@ -92,19 +90,18 @@ class NotificationFragment : BaseFragment() {
 
 
         val adRequest = AdRequest.Builder().build()
-        adView?.loadAd(adRequest)
+        binder.adView.loadAd(adRequest)
     }
 
 
     private fun initObserver() {
 
-        viewModel.isLoading.observe(viewLifecycleOwner,
-            Observer {
-                if (it) shimmer_frame_layout?.visibility = View.VISIBLE
-                else shimmer_frame_layout?.visibility = View.GONE
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+                if (it) binder.shimmerFrameLayout.visibility = View.VISIBLE
+                else binder.shimmerFrameLayout.visibility = View.GONE
             })
 
-        viewModel.resultAllNotification.observe(viewLifecycleOwner, Observer {
+        viewModel.resultAllNotification.observe(viewLifecycleOwner, {
 
             when(it.status){
                 Status.SUCCESS -> viewModel.lstOfNotifications.value=it.data?.notifications
@@ -112,15 +109,17 @@ class NotificationFragment : BaseFragment() {
             }
         })
 
-        viewModel.lstOfNotifications.observe(viewLifecycleOwner, Observer {
+        viewModel.lstOfNotifications.observe(viewLifecycleOwner, {
             if(it.isNotEmpty())  notificationAdapter?.addAll(it)
-            else tv_empty_view?.visibility=View.VISIBLE
+            else binder.tvEmptyView.visibility=View.VISIBLE
         })
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
+
 
 }
