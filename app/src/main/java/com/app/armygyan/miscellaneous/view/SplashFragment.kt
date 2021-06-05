@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
 import com.app.armygyan.annotation.FragmentType
@@ -17,6 +18,14 @@ import com.app.armygyan.databinding.FragmentSplashBinding
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.viewmodel.SplashViewModel
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
 import kotlinx.coroutines.*
 
 
@@ -29,6 +38,8 @@ class SplashFragment :  Fragment() {
     private var sharedPrefs: SharedPrefHelper? =null
     private var _binding: FragmentSplashBinding? = null
     private val binder get() = _binding!!
+
+
 
     companion object {
         fun newInstance() = SplashFragment()
@@ -62,13 +73,12 @@ class SplashFragment :  Fragment() {
         constraintSetStart.clone(activity,R.layout.fragment_splash)
         constraintSetEnd.clone(activity,R.layout.fragment_splash_alt)
 
-        // IO,Main,Default
-        CoroutineScope(Dispatchers.Default).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             delay(100)
             withContext(Dispatchers.Main) {
                 val transition= ChangeBounds()
                 transition.duration=800
-                TransitionManager.beginDelayedTransition(binder.clRoot,transition) //,transition
+                TransitionManager.beginDelayedTransition(binder.clRoot,transition)
                 constraintSetEnd.applyTo(binder.clRoot)
             }
         }
@@ -81,7 +91,7 @@ class SplashFragment :  Fragment() {
                 }
             })
 
-        CoroutineScope(Dispatchers.Default).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             delay(DELAY_INTERVAL)
             viewModel.showFragment()
         }

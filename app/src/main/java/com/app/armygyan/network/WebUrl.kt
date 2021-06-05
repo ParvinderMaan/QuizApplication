@@ -8,8 +8,9 @@ package com.app.armygyan.network
 class WebUrl private constructor() {
 
     companion object {
+
         // base urls
-        const val BASE = "https://christosonline.com/armygyan/public/api/"    //
+        const val BASE = "https://christosonline.com/armygyan/public/api/"
 
         // child urls
         const val SIGN_IN = "register"
@@ -28,6 +29,7 @@ class WebUrl private constructor() {
         const val DELETE_ALL_NOTIFICATIONS = ""
         const val ABOUT_US = "page-details"
         const val TERMS_AND_CONDITIONS = "page-details"
+        const val INSTAGRAM_URL: String="https://www.instagram.com/army_gyan/?hl=en"
 
     }
 

@@ -43,9 +43,6 @@ class MainActivity : BaseActivity(), HomeFragmentSelectedListener {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        Log.e("MainActivity", "onNewIntent called....")
-
-
         val bundle = intent.extras
         intent.extras?.let {
             if (it.containsKey("profile")) {
@@ -60,7 +57,6 @@ class MainActivity : BaseActivity(), HomeFragmentSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("MainActivity", "onCreate called....")
         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE) // no capture
         setContentView(R.layout.activity_main)
         checkPlayServices()
@@ -72,8 +68,6 @@ class MainActivity : BaseActivity(), HomeFragmentSelectedListener {
         // test ca-app-pub-3940256099942544/103317371
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         registerReceiver(broadcastReceiver, intentFilter)
-
-
 
 
     }
@@ -326,8 +320,7 @@ class MainActivity : BaseActivity(), HomeFragmentSelectedListener {
 }
 
 /*
-                    .setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,
-                        R.anim.enter_from_left,R.anim.exit_to_right)
+
 
                         BACKGROUND ------> onCreate called....
                         FOREGROUND ------> onNewIntent onCreate

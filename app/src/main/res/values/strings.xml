@@ -111,6 +111,8 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_questions">questions</string>
     <string name="title_version">version :</string>
     <string name="action_google_sign_in" translatable="false">Google Sign In</string>
+    <string name="uri_google_market">market://details?id=</string>
+    <string name="uri_google_store">https://play.google.com/store/apps/details?id=</string>
 
 
 </resources>

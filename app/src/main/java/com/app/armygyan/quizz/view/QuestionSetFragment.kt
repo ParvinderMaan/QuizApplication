@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,7 @@ import java.util.*
 
 
 class QuestionSetFragment : BaseFragment() {
+    private var instructDialogJob: Job?=null
     private lateinit var quesSetAdapter: QuestionSetAdapter
     private lateinit var quesNoAdapter: QuestionNoAdapter
     private lateinit var viewModel: QuestionSetViewModel
@@ -98,11 +100,10 @@ class QuestionSetFragment : BaseFragment() {
         initQuesNoRecyclerView()
         binder.viewFlipper.flipInterval = 3000
 
-        CoroutineScope(Dispatchers.Default).launch {
+        instructDialogJob=viewLifecycleOwner.lifecycleScope.launch {
             delay(1000)
-            withContext(Dispatchers.Main) {
-                viewModel.isInstructDialogVisibility.value=true
-            }
+            viewModel.isInstructDialogVisibility.postValue(true)
+
         }
 
     }
@@ -164,13 +165,13 @@ class QuestionSetFragment : BaseFragment() {
                     val visiblePos = llManagerQuesNo.findLastVisibleItemPosition()
                     if(visiblePos==llManagerQuesSet.findFirstCompletelyVisibleItemPosition()){
 
-                        // IO,Main,Default
-                        CoroutineScope(Dispatchers.Default).launch {
-                            delay(1000)
-                            withContext(Dispatchers.Main) {
-                                binder.llQuizDiscriptionI.rvQuestionNo.smoothScrollToPosition(visiblePos+5)
-                            }
-                        }
+
+//                        smoothScrollJob=CoroutineScope(Dispatchers.Default).launch {
+//                            delay(1000)
+//                            withContext(Dispatchers.Main) {
+//                                binder.llQuizDiscriptionI.rvQuestionNo.smoothScrollToPosition(visiblePos+5)
+//                            }
+//                        }
                     }
 //                    val visiblePoss = llManagerQuesNo.findFirstVisibleItemPosition()
 //                    if(visiblePoss==llManagerQuesSet.findFirstVisibleItemPosition()){
@@ -309,6 +310,7 @@ class QuestionSetFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
+        instructDialogJob?.cancel()
         super.onDestroyView()
         _binding = null
     }

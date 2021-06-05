@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.lifecycleScope
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.R
 import com.app.armygyan.annotation.Language
@@ -64,16 +65,16 @@ class ChooseLanguageFragment :  BaseFragment() {
             Toast.makeText(activity,getString(R.string.title_change_language),Toast.LENGTH_LONG).show()
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             delay(800)
             withContext(Dispatchers.Main) {
                 val transition= ChangeBounds()
                 transition.duration=1200
                 TransitionManager.beginDelayedTransition(binder.flMain,transition)
                 constraintSetEnd.applyTo(binder.flMain)
-
             }
         }
+
 
     }
     override fun onDestroyView() {

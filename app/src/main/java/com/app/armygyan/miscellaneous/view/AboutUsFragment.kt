@@ -17,11 +17,13 @@ import com.app.armygyan.annotation.Status.FAILURE
 import com.app.armygyan.annotation.Status.SUCCESS
 import com.app.armygyan.base.BaseFragment
 import com.app.armygyan.databinding.FragmentAboutUsBinding
+import com.app.armygyan.extra.AppNavigatorUtil
 import com.app.armygyan.helper.SharedPrefHelper
 import com.app.armygyan.interfacor.HomeFragmentSelectedListener
 import com.app.armygyan.miscellaneous.model.AboutUsResponse
 import com.app.armygyan.miscellaneous.viewmodel.AboutUsViewModel
 import com.app.armygyan.network.WebHeader
+import com.app.armygyan.network.WebUrl
 import java.util.*
 
 
@@ -36,12 +38,15 @@ class AboutUsFragment :  BaseFragment() {
 
     companion object {
         fun newInstance() = AboutUsFragment()
+        const val PACKAGE_INSTAGRAM="com.instagram.android"
     }
 
     override fun getRootView(): View {
         return binder.clRoot
     }
-
+    private val navigationUtil by lazy {
+        AppNavigatorUtil(requireActivity())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -75,9 +80,14 @@ class AboutUsFragment :  BaseFragment() {
         }
 
         binder.ivInstagram.setOnClickListener {
-            val url = "https://www.instagram.com/army_gyan/?hl=en"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(Intent.createChooser(intent, "Open with"))
+            val packageName=PACKAGE_INSTAGRAM
+            if (navigationUtil.isPackageExist(packageName)) {
+                navigationUtil.packageName=packageName
+                navigationUtil.openLink(WebUrl.INSTAGRAM_URL)
+            } else {
+                navigationUtil.packageName=packageName
+                navigationUtil.openStore()
+            }
         }
 
 
