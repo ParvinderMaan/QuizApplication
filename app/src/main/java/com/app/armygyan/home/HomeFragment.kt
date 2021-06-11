@@ -54,26 +54,26 @@ class HomeFragment :Fragment() {
 
     private fun initListener() {
 
-        binder.tvSetting.setOnClickListener {
+        binder.cvSetting.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.SETTING_FRAGMENT,null)
         }
 
-        binder.tvMyProfile.setOnClickListener {
+        binder.cvMyProfile.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.PROFILE_FRAGMENT,null)
         }
-        binder.tvAboutUs.setOnClickListener {
+        binder.cvAboutUs.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.ABOUT_US_FRAGMENT,null)
         }
 
-        binder.tvNotification.setOnClickListener {
+        binder.cvNotification.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.NOTIFICATION_FRAGMENT,null)
         }
 
-        binder.tvStudyMaterial.setOnClickListener {
+        binder.cvStudyMaterial.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.STUDY_MATERIAL_FRAGMENT,null)
         }
 
-        binder.btnPlayQuiz.setOnClickListener {
+        binder.cvPlayQuiz.setOnClickListener {
             mFragmentListener?.showFragment(FragmentType.QUIZ_CATEGORY_FRAGMENT,null)
         }
     }

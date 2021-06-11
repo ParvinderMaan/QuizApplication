@@ -2,12 +2,12 @@ package com.app.armygyan.network
 
 import android.util.Log
 import androidx.annotation.NonNull
+import com.app.armygyan.BuildConfig
 import com.app.armygyan.QuizApplication
 import com.app.armygyan.base.SingletonHolder
 import com.app.armygyan.extra.NetworkUtil
 import com.app.armygyan.exception.NoInternetException
 import com.google.gson.GsonBuilder
-import com.intuit.sdp.BuildConfig
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

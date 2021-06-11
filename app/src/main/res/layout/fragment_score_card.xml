@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
@@ -268,16 +269,16 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_ok"
+        android:id="@+id/fbtn_save_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minHeight="0dp"
+        android:paddingStart="@dimen/_5sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
+        android:paddingEnd="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
-        android:text="@string/action_back"
+        android:text="@string/action_save_result_in_gallery"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -314,6 +315,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview"
         app:rippleColor="@color/colorWhite" />
+
+    <ProgressBar
+        android:id="@+id/pb_save"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/fbtn_save_result"
+        app:layout_constraintEnd_toEndOf="@+id/fbtn_save_result"
+        app:layout_constraintStart_toStartOf="@+id/fbtn_save_result"
+        app:layout_constraintTop_toTopOf="@+id/fbtn_save_result" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

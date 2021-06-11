@@ -2,6 +2,7 @@ package com.app.armygyan.miscellaneous.view
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
 import android.view.LayoutInflater
@@ -26,13 +27,15 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 
 
 class SplashFragment :  Fragment() {
     private var isLanguageSelected: String?=null
     private var isUserSignIn: Boolean? = null
-    private var DELAY_INTERVAL=2500L
+    private var DELAY_INTERVAL=2000L
     private  var mFragmentListener: HomeFragmentSelectedListener?=null
     private lateinit var viewModel: SplashViewModel
     private var sharedPrefs: SharedPrefHelper? =null
@@ -68,22 +71,6 @@ class SplashFragment :  Fragment() {
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
 
-        val constraintSetStart= ConstraintSet()
-        val constraintSetEnd= ConstraintSet()
-        constraintSetStart.clone(activity,R.layout.fragment_splash)
-        constraintSetEnd.clone(activity,R.layout.fragment_splash_alt)
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            delay(100)
-            withContext(Dispatchers.Main) {
-                val transition= ChangeBounds()
-                transition.duration=800
-                TransitionManager.beginDelayedTransition(binder.clRoot,transition)
-                constraintSetEnd.applyTo(binder.clRoot)
-            }
-        }
-
-
         viewModel.action.observe(viewLifecycleOwner, {
                 when(isUserSignIn) {
                     true ->   mFragmentListener?.showFragment(FragmentType.HOME_FRAGMENT,null)
@@ -93,7 +80,7 @@ class SplashFragment :  Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             delay(DELAY_INTERVAL)
-            viewModel.showFragment()
+          viewModel.showFragment()
         }
     }
 
@@ -102,6 +89,8 @@ class SplashFragment :  Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 
 
 

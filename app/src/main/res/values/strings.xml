@@ -94,8 +94,6 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="alert_back_press">Click back again to exit</string>
     <string name="title_share_with">Share with</string>
     <string name="alert_google_play_services">install google play services</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_select_your_language">Select Language</string>
     <string name="alert_no_internet">No Internet</string>
     <string name="alert_internet">Internet Available</string>
@@ -111,8 +109,12 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_questions">questions</string>
     <string name="title_version">version :</string>
     <string name="action_google_sign_in" translatable="false">Google Sign In</string>
-    <string name="uri_google_market">market://details?id=</string>
-    <string name="uri_google_store">https://play.google.com/store/apps/details?id=</string>
-
+    <string name="uri_google_market" translatable="false">market://details?id=</string>
+    <string name="uri_google_store" translatable="false">https://play.google.com/store/apps/details?id=</string>
+    <string name="action_save_result_in_gallery">Save result in Gallery</string>
+    <string name="alert_result_saved">Result is saved in gallery</string>
+    <string name="alert_cannot_create_output">cannot create output</string>
+    <string name="label_storage_access">Storage access is needed</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

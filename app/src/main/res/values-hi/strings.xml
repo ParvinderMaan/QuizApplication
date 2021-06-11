@@ -90,6 +90,7 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="alert_no_internet">इंटरनेट उपलब्ध नहीं है</string>
     <string name="alert_internet">इंटरनेट उपलब्ध है</string>
     <string name="minutes">मिनट</string>
+    <string name="action_save_result_in_gallery">गैलरी में परिणाम सहेजें</string>
 
     <string name="title_i">\u2022 प्रश्नोत्तरी में</string>
     <string name="title_ii">\u2022 प्रत्येक प्रश्न 2 अंक का होता है</string>
@@ -99,5 +100,8 @@ The aim of the ConstraintLayout is to help reduce the number of nested views, wh
     <string name="title_minutes">मिनट</string>
     <string name="title_questions">प्रश्न हैं</string>
     <string name="title_version">संस्करण :</string>
-
+    <string name="alert_result_saved">परिणाम गैलरी में सहेजा गया है</string>
+    <string name="alert_cannot_create_output">आउटपुट नहीं बना सकता</string>
+    <string name="label_storage_access">संग्रहण पहुंच की आवश्यकता है</string>
+    <string name="action_settings">समायोजन</string>
 </resources>
